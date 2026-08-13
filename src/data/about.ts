@@ -3,7 +3,30 @@ import avatarImg from '@/assets/avatar.jpeg'
 export type Skill = {
   category: string;
   strengths: string[];
-  tried: string[];
+  tried?: string[];
+}
+
+export type Experience = {
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+}
+
+export type Hobby = {
+  name: string;
+  description: string;
+}
+
+export type ProfileData = {
+  name: string;
+  role: string;
+  avatarUrl: string;
+  location: string;
+  bio: string;
+  skills: Skill[];
+  experience: Experience[];
+  hobbies: Hobby[];
 }
 
 export const PROFILE_DATA = {
@@ -44,4 +67,4 @@ export const PROFILE_DATA = {
     { name: 'Tinkering', description: 'Working on home deployments like Jellyfin, or modding games through Arch on the Steam Deck, or just tinkering with CLIs and tools on Windows and Linux.' },
     { name: 'Football', description: 'Playing weekly and following my beloved West Ham' },
   ],
-}
+} as ProfileData;
