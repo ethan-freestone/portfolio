@@ -24,11 +24,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v5
-        with:
-          version: 9
-
       - name: Setup Node
         uses: actions/setup-node@v5
         with:
@@ -36,16 +31,16 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
       - name: Build static site
-        run: pnpm build
+        run: npm run build
 
       - name: Prepare output for GitHub Pages
         run: |
           # Prevent GitHub Pages from ignoring files with underscores
           touch .output/public/.nojekyll
-          # Copy index.html to 404.html so SPA client-side routing works on route refresh
+          # Copy index.html to 404.html so SPA client-side routing works on refresh
           cp .output/public/index.html .output/public/404.html
 
       - name: Setup Pages
