@@ -1,5 +1,6 @@
-import packages from '@/assets/projects/applications/folio-erm/packages.png'
-import pkg from '@/assets/projects/applications/folio-erm/package.png'
+
+import * as Folio from '@/assets/projects/applications/folio-erm';
+
 
 import { FolderGit2, Library, Sparkles } from "lucide-react";
 
@@ -39,14 +40,44 @@ export const PROJECTS_DATA: Project[] = [
     description: 'Electronic Resource Management suite built for libraries to track their agreements and licenses.',
     media: [
       {
-        url: packages,
+        url: Folio.packages,
         type: 'image',
         alt: 'ERM Package Manager'
       },
       {
-        url: pkg,
+        url: Folio.pkg,
         type: 'image',
         alt: 'ERM Package View'
+      },
+      {
+        url: Folio.agreementView1,
+        type: 'image',
+        alt: 'ERM Agreement View'
+      },
+      {
+        url: Folio.agreementView2,
+        type: 'image',
+        alt: 'ERM Agreement Line Table View'
+      },
+      {
+        url: Folio.agreementSelector,
+        type: 'image',
+        alt: 'ERM Agreement Selector Plugin'
+      },
+      {
+        url: Folio.agreementsSettings,
+        type: 'image',
+        alt: 'ERM Agreement Settings'
+      },
+      {
+        url: Folio.agreementLineView,
+        type: 'image',
+        alt: 'ERM Agreement Line View'
+      },
+      {
+        url: Folio.licenseForm,
+        type: 'image',
+        alt: 'ERM Licenses Form'
       }
     ],
     tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'PostgreSQL'],
