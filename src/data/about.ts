@@ -55,7 +55,8 @@ export const PROFILE_DATA = {
         'Tailwind CSS',
         'ViTest',
         'Frontside Interactors',
-        'Stripes'
+        'Stripes',
+        'Semantic Release'
       ],
       tried: ['Tanstack Start', 'NextJS', 'Vue', 'Nuxt']
     },
@@ -66,6 +67,7 @@ export const PROFILE_DATA = {
         'Micronaut',
         'Grails',
         'PostgreSQL',
+        'SQL',
         'Project Reactor',
         'API Design'
       ],
@@ -84,7 +86,8 @@ export const PROFILE_DATA = {
         'GitHub Actions',
         'Vite',
         'Kubernetes',
-        'Bruno/Postman'
+        'Bruno/Postman',
+        'Conventional Commits'
       ],
       tried: [
         'AI Assisted Development',
