@@ -49,18 +49,45 @@ function About() {
           <h2 className="text-2xl font-bold tracking-tight">Skills & Tech Stack</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {PROFILE_DATA.skills.map((group) => (
-            <Card key={group.category} className="bg-card/50">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base font-semibold">{group.category}</CardTitle>
+            <Card key={group.category} className="flex flex-col justify-between">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg font-bold border-b pb-2">
+                  {group.category}
+                </CardTitle>
               </CardHeader>
-              <CardContent className="flex flex-wrap gap-1.5">
-                {group.items.map((skill) => (
-                  <Badge key={skill} variant="secondary" className="text-xs">
-                    {skill}
-                  </Badge>
-                ))}
+
+              <CardContent className="space-y-6">
+                {/* Core Skills */}
+                <div className="space-y-2">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Core Proficiencies
+                  </h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {group.strengths.map((skill) => (
+                      <Badge key={skill} variant="default" className="text-xs font-medium">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Secondary / Light Skills */}
+                {group.tried && group.tried.length > 0 && (
+                  <div className="space-y-2 pt-2 border-t border-border/50">
+                    <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">
+                      Working Knowledge
+                    </h3>
+                    <div className="flex flex-wrap gap-1.5">
+                      {group.tried.map((skill) => (
+                        <Badge key={skill} variant="outline" className="text-xs text-muted-foreground border-dashed">
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}
@@ -109,6 +136,7 @@ function About() {
           {PROFILE_DATA.hobbies.map((hobby) => (
             <Card key={hobby.name}>
               <CardHeader className="pb-2">
+                {hobby.Icon && <hobby.Icon className="h-5 w-5 text-primary mb-2" />}
                 <CardTitle className="text-base font-semibold">{hobby.name}</CardTitle>
               </CardHeader>
               <CardContent>
@@ -120,7 +148,6 @@ function About() {
           ))}
         </div>
       </section>
-
     </div>
   )
 }

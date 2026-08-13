@@ -1,4 +1,41 @@
 import avatarImg from '@/assets/avatar.jpeg'
+import {
+  CodeXml,
+  Gamepad2,
+  Pickaxe,
+  Volleyball,
+  type LucideIcon,
+} from 'lucide-react'
+
+export type Skill = {
+  category: string;
+  strengths: string[];
+  tried?: string[];
+}
+
+export type Experience = {
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+}
+
+export type Hobby = {
+  name: string;
+  Icon?: LucideIcon;
+  description: string;
+}
+
+export type ProfileData = {
+  name: string;
+  role: string;
+  avatarUrl: string;
+  location: string;
+  bio: string;
+  skills: Skill[];
+  experience: Experience[];
+  hobbies: Hobby[];
+}
 
 export const PROFILE_DATA = {
   name: 'Ethan Freestone',
@@ -8,9 +45,57 @@ export const PROFILE_DATA = {
   bio: "Building robust web applications and backend solutions with a focus on clean architecture, modern frontend frameworks, and maintainable systems.",
 
   skills: [
-    { category: 'Frontend', items: ['React', 'TypeScript', 'Jest', 'Tailwind CSS', 'ViTest', 'Bigtest Interactors', 'Tanstack Start', 'Stripes'] },
-    { category: 'Backend', items: ['Java', 'Micronaut', 'Grails', 'PostgreSQL', 'Project Reactor'] },
-    { category: 'Tooling & DevOps', items: ['Linux Development', 'Gradle', 'Bash', 'GitLab CI', 'GitHub Actions', 'Vite', 'Kubernetes'] },
+    {
+      category: 'Frontend',
+      strengths: [
+        'React',
+        'TypeScript',
+        'Jest',
+        'Headless Components',
+        'Tailwind CSS',
+        'ViTest',
+        'Frontside Interactors',
+        'Stripes',
+        'Semantic Release'
+      ],
+      tried: ['Tanstack Start', 'NextJS', 'Vue', 'Nuxt']
+    },
+    {
+      category: 'Backend',
+      strengths: [
+        'Java',
+        'Micronaut',
+        'Grails',
+        'PostgreSQL',
+        'SQL',
+        'Project Reactor',
+        'API Design'
+      ],
+      tried: [
+        'FaunaDB',
+        'Supabase',
+      ]
+    },
+    {
+      category: 'Tooling & DevOps',
+      strengths: [
+        'Linux Development',
+        'Gradle',
+        'Bash',
+        'GitLab CI',
+        'GitHub Actions',
+        'Vite',
+        'Kubernetes',
+        'Bruno/Postman',
+        'Conventional Commits'
+      ],
+      tried: [
+        'AI Assisted Development',
+        'Caddy',
+        'NGINX',
+        'curl'
+      ]
+    },
   ],
 
   experience: [
@@ -29,8 +114,25 @@ export const PROFILE_DATA = {
   ],
 
   hobbies: [
-    { name: 'Gaming', description: 'Playing indie gems on the Steam Deck, or sports games on the PS5.' },
-    { name: 'Tinkering', description: 'Working on home deployments like Jellyfin, or modding games through Arch on the Steam Deck, or just tinkering with CLIs and tools on Windows and Linux.' },
-    { name: 'Football', description: 'Playing weekly and following my beloved West Ham' },
+    {
+      Icon: Gamepad2,
+      name: 'Gaming',
+      description: 'Playing indie gems on the Steam Deck, or sports games on the PS5.'
+    },
+    {
+      Icon: CodeXml,
+      name: 'Web Development',
+      description: 'Sometimes I get the bug on my own time, and side projects have included a Quote Wall application written with FaunaDB (now defunct) and a project with a friend to set up a silly fantasy league game using Supabase and Vue.'
+    },
+    {
+      Icon: Pickaxe,
+      name: 'Tinkering',
+      description: 'Working on home deployments like Jellyfin, or modding games through Arch on the Steam Deck, or just tinkering with CLIs and tools on Windows and Linux.'
+    },
+    {
+      Icon: Volleyball,
+      name: 'Football',
+      description: 'Playing weekly and following my beloved West Ham'
+    },
   ],
-}
+} as ProfileData;
