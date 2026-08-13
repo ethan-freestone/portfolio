@@ -1,5 +1,11 @@
 import avatarImg from '@/assets/avatar.jpeg'
 
+export type Skill = {
+  category: string;
+  strengths: string[];
+  tried: string[];
+}
+
 export const PROFILE_DATA = {
   name: 'Ethan Freestone',
   role: 'Full-Stack Software Engineer',
@@ -8,9 +14,13 @@ export const PROFILE_DATA = {
   bio: "Building robust web applications and backend solutions with a focus on clean architecture, modern frontend frameworks, and maintainable systems.",
 
   skills: [
-    { category: 'Frontend', items: ['React', 'TypeScript', 'Jest', 'Tailwind CSS', 'ViTest', 'Bigtest Interactors', 'Tanstack Start', 'Stripes'] },
-    { category: 'Backend', items: ['Java', 'Micronaut', 'Grails', 'PostgreSQL', 'Project Reactor'] },
-    { category: 'Tooling & DevOps', items: ['Linux Development', 'Gradle', 'Bash', 'GitLab CI', 'GitHub Actions', 'Vite', 'Kubernetes'] },
+    {
+      category: 'Frontend',
+      strengths: ['React', 'TypeScript', 'Jest', 'Tailwind CSS', 'ViTest', 'Bigtest Interactors', 'Stripes'],
+      tried: ['Tanstack Start', 'Vue']
+    },
+    { category: 'Backend', strengths: ['Java', 'Micronaut', 'Grails', 'PostgreSQL', 'Project Reactor'] },
+    { category: 'Tooling & DevOps', strengths: ['Linux Development', 'Gradle', 'Bash', 'GitLab CI', 'GitHub Actions', 'Vite', 'Kubernetes'] },
   ],
 
   experience: [
@@ -30,6 +40,7 @@ export const PROFILE_DATA = {
 
   hobbies: [
     { name: 'Gaming', description: 'Playing indie gems on the Steam Deck, or sports games on the PS5.' },
+    { name: 'Web Development', description: 'Sometimes I get the bug on my own time, and side projects have included a Quote Wall application written with FaunaDB (now defunct) and a project with a friend to set up a silly fantasy league game using Supabase and Vue.' },
     { name: 'Tinkering', description: 'Working on home deployments like Jellyfin, or modding games through Arch on the Steam Deck, or just tinkering with CLIs and tools on Windows and Linux.' },
     { name: 'Football', description: 'Playing weekly and following my beloved West Ham' },
   ],
