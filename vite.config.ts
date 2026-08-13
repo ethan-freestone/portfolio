@@ -12,7 +12,6 @@ const config = defineConfig({
   plugins: [
     devtools(),
     nitro({
-      preset: 'static',
       rollupConfig: { external: [/^@sentry\//] }
     }),
     tailwindcss(),
