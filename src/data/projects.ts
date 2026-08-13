@@ -25,19 +25,20 @@ export const CATEGORIES = [
 export const PROJECTS_DATA: Project[] = [
   // --- APPLICATIONS ---
   {
-    id: 'foliage-app',
-    title: 'FOLIO ERM App',
+    id: 'folio-app',
+    title: 'FOLIO ERM App Suite',
     category: 'applications',
-    description: 'Electronic Resource Management suite built for university libraries to track agreements, licenses, and e-holdings.',
+    description: 'Electronic Resource Management suite built for libraries to track their agreements and licenses.',
     mediaUrl: 'https://placehold.co/800x450/173a40/4fb8b2?text=ERM+App+Demo+GIF',
     mediaType: 'gif',
-    tags: ['React', 'TypeScript', 'Stripes', 'Java', 'PostgreSQL'],
+    tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'PostgreSQL'],
     highlights: [
-      'Architected complex data workflows for electronic agreements',
-      'Integrated accessible form controls and keyboard navigation',
+      'Lead app development for many years on the front and back end.',
+      'Created "Dashboard" application for FOLIO designed to seamlessly show ERM data at a glance and be expandable to other FOLIO applications',
+      'Managed integrations with external systems such as GoKB'
     ],
   },
-  {
+  /*{
     id: 'quote-wall',
     title: 'Quote Wall',
     category: 'applications',
@@ -69,5 +70,5 @@ export const PROJECTS_DATA: Project[] = [
     mediaUrl: 'https://placehold.co/800x450/2f6a4a/6ec89a?text=License+Diff+Feature',
     mediaType: 'gif',
     tags: ['React', 'Diffing Algorithms', 'Tailwind CSS'],
-  },
+  },*/
 ]
