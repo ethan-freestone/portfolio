@@ -18,11 +18,15 @@ export type Project = {
   title: string
   category: ProjectCategory
   description: string
-  media: ProjectMedia[] // Array of images/GIFs for the carousel
+  longDescription?: string // Markdown or longer text narrative
+  media: ProjectMedia[]
   tags: string[]
   liveUrl?: string
   githubUrl?: string
   highlights?: string[]
+  architecture?: string[]
+  role?: string
+  timeframe?: string
 }
 
 export const CATEGORIES = [

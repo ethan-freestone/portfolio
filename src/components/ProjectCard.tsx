@@ -1,6 +1,10 @@
-import { ExternalLink, Github, Play } from 'lucide-react'
+import React from 'react'
+import { Link } from '@tanstack/react-router'
+import Autoplay from 'embla-carousel-autoplay'
+import { ExternalLink, Github, Maximize2, Play } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
   Carousel,
   CarouselContent,
@@ -13,12 +17,19 @@ import type { Project } from '@/data/projects'
 export function ProjectCard({ project }: { project: Project }) {
   const hasMultipleMedia = project.media.length > 1
 
+  // Initialize Autoplay plugin (stop on hover/interaction so users can view images)
+  const plugin = React.useRef(
+    Autoplay({ delay: 3500, stopOnInteraction: true, stopOnMouseEnter: true })
+  )
+
   return (
-    <Card className="feature-card flex flex-col overflow-hidden border border-border">
-      {/* Media Carousel Header */}
-      <div className="relative aspect-video w-full bg-muted border-b border-border group">
-        <Carousel className="w-full h-full">
-          <CarouselContent className="-ml-0 h-full">
+    <Card className="feature-card flex flex-col overflow-hidden border border-border group/card">
+      <div className="relative aspect-video w-full bg-muted border-b border-border group/carousel">
+        <Carousel
+          plugins={hasMultipleMedia ? [plugin.current] : []}
+          className="w-full h-full"
+        >
+          <CarouselContent className="ml-0 h-full">
             {project.media.map((item, index) => (
               <CarouselItem key={index} className="pl-0 relative aspect-video w-full">
                 <img
@@ -27,14 +38,12 @@ export function ProjectCard({ project }: { project: Project }) {
                   className="h-full w-full object-cover"
                 />
 
-                {/* GIF Indicator Badge */}
                 {item.type === 'gif' && (
                   <span className="absolute top-3 right-3 z-10 flex items-center gap-1 bg-background/90 backdrop-blur-md text-foreground text-[10px] font-bold px-2 py-0.5 rounded-full border border-border shadow-sm">
                     <Play className="h-2.5 w-2.5 fill-current text-primary" /> GIF
                   </span>
                 )}
 
-                {/* Optional Media Caption */}
                 {item.caption && (
                   <span className="absolute bottom-2 left-2 z-10 bg-background/85 backdrop-blur-sm text-foreground text-[11px] px-2 py-0.5 rounded border border-border/60">
                     {item.caption}
@@ -44,64 +53,71 @@ export function ProjectCard({ project }: { project: Project }) {
             ))}
           </CarouselContent>
 
-          {/* Render controls only when more than one image exists */}
           {hasMultipleMedia && (
             <>
-              <CarouselPrevious className="left-2 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 hover:bg-background border-border" />
-              <CarouselNext className="right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 hover:bg-background border-border" />
+              <CarouselPrevious className="left-2 opacity-0 group-hover/carousel:opacity-100 transition-opacity bg-background/80 hover:bg-background border-border" />
+              <CarouselNext className="right-2 opacity-0 group-hover/carousel:opacity-100 transition-opacity bg-background/80 hover:bg-background border-border" />
             </>
           )}
         </Carousel>
+
+        <Link
+          to="/projects/$category/$projectId"
+          params={{ category: project.category, projectId: project.id }}
+          className="absolute top-3 left-3 z-10 opacity-0 group-hover/card:opacity-100 transition-opacity"
+        >
+          <Button size="icon" variant="secondary" className="h-8 w-8 bg-background/80 backdrop-blur-md hover:bg-background border border-border" title="Open Fullscreen View">
+            <Maximize2 className="h-4 w-4" />
+          </Button>
+        </Link>
       </div>
 
       <CardHeader className="space-y-2 pb-2">
         <div className="flex items-start justify-between gap-2">
-          <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
+          <Link
+            to="/projects/$category/$projectId"
+            params={{ category: project.category, projectId: project.id }}
+            className="hover:underline underline-offset-4"
+          >
+            <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
+          </Link>
+
           <div className="flex items-center gap-2">
             {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="GitHub Repository"
-              >
+              <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground">
                 <Github className="h-4 w-4" />
               </a>
             )}
             {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Live Demo"
-              >
+              <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground">
                 <ExternalLink className="h-4 w-4" />
               </a>
             )}
           </div>
         </div>
+
         <CardDescription className="text-sm text-muted-foreground leading-relaxed">
           {project.description}
         </CardDescription>
       </CardHeader>
 
       <CardContent className="mt-auto space-y-4 pt-2">
-        {project.highlights && project.highlights.length > 0 && (
-          <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside bg-muted/40 p-2.5 rounded-md border border-border/50">
-            {project.highlights.map((point, idx) => (
-              <li key={idx}>{point}</li>
-            ))}
-          </ul>
-        )}
-
-        <div className="flex flex-wrap gap-1.5 pt-2">
+        <div className="flex flex-wrap gap-1.5">
           {project.tags.map((tag) => (
             <Badge key={tag} variant="secondary" className="text-[11px] font-medium">
               {tag}
             </Badge>
           ))}
+        </div>
+
+        <div className="pt-2 border-t border-border/50 flex justify-end">
+          <Link
+            to="/projects/$category/$projectId"
+            params={{ category: project.category, projectId: project.id }}
+            className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1"
+          >
+            View full project breakdown &rarr;
+          </Link>
         </div>
       </CardContent>
     </Card>
