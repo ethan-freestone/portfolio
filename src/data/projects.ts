@@ -2,7 +2,7 @@ import * as Folio from '@/assets/projects/applications/folio-erm';
 import * as Dashboard from '@/assets/projects/applications/dashboard';
 import * as Serials from '@/assets/projects/applications/folio-serials';
 import * as PushKB from '@/assets/projects/applications/pushkb';
-
+import * as DocDel from '@/assets/projects/applications/docdel';
 
 import { FolderGit2, FolderKanban, Library, type LucideIcon, Sparkles } from "lucide-react";
 
@@ -384,8 +384,28 @@ export const PROJECTS_DATA: Project[] = [
     title: 'DocDel Secure Document Delivery',
     category: 'applications',
     description: 'OpenRS microservice dedicated to the upload, storage and retrieval of digital documents, primarily for ILL',
-    tags: ['React', 'Micronaut', 'NGINX', 'Gitlab CI'],
+    descriptionDeep: [
+      'A standalone microservice designed for the next step of integration with different LMS providers.',
+      'My focus was primarily on refactors and choice of frontend frameworks, including a new design language, choosing form and fetch libraries and ensuring a cohesive developer experience',
+      'Development followed a prototype/cleanup pattern, whereby one developer would rapidly prototype alongside myself providing refactors and UX improvements'
+    ],
+    media: [
+      {
+        url: DocDel.layoutShift,
+        type: 'gif',
+        alt: 'A demonstration of the power of Halfway to define layout shifts with the same underlying code.'
+      },
+      {
+        url: DocDel.docdelHome,
+        alt: 'The DocDel splash screen'
+      }
+    ],
+    liveUrl: 'https://docdel-dev.kihosting.net/',
+    tags: ['React', 'HalfwayUI', 'Headless Components', 'Micronaut', 'NGINX', 'Gitlab CI'],
     highlights: [
+      'Developing HalfwayUI as a headless component library',
+      'Beginning to get to grips with AI Assisted Development',
+      'Understanding UX flows and usability concerns'
     ],
     role: [
       {
