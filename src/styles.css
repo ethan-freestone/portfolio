@@ -7,57 +7,51 @@
 
 :root {
   /* ==========================================================================
-     1. BASE COLOR DEFINITIONS (Hues & Saturation)
-        Change these to re-theme the entire application.
+     1. FULL BASE OKLCH COLORS
+        Change these full-value colors to re-skin your entire design system.
      ========================================================================== */
-  /* Primary Identity: Oceanic Teal */
-  --hue-primary: 192;
-  --chroma-primary: 0.11;
-
-  /* Secondary Accent: Forest / Palm */
-  --hue-accent: 162;
-  --chroma-accent: 0.09;
-
-  /* Neutral Base: Deep Sea Slate (used for text & dark surfaces) */
-  --hue-neutral: 215;
-  --chroma-neutral: 0.04;
+  --base-primary:   oklch(0.74 0.11 192); /* Vibrant Lagoon Teal */
+  --base-accent:    oklch(0.46 0.09 162); /* Palm Forest Green */
+  --base-neutral:   oklch(0.30 0.05 215); /* Deep Sea Ink */
+  --base-surface:   oklch(1.00 0.00 000); /* Pure White Surface Base */
 
   /* ==========================================================================
-     2. LIGHT MODE SEMANTIC TOKENS
-        Semantic names describe ROLE on the page rather than color names.
+     2. DERIVED SHADES & TINTS (LIGHT MODE)
+        Using CSS relative color syntax & color-mix from base colors.
      ========================================================================== */
 
-  /* --- Typography / Text Tokens --- */
-  --text-main:          oklch(0.30 var(--chroma-neutral) var(--hue-neutral));
-  --text-muted:         oklch(0.48 var(--chroma-neutral) var(--hue-neutral));
-  --text-kicker:        oklch(0.46 var(--chroma-accent)  var(--hue-accent) / 0.9);
-  --text-link:          oklch(0.58 var(--chroma-primary) var(--hue-primary));
-  --text-link-hover:    oklch(0.45 var(--chroma-primary) var(--hue-primary));
+  /* --- Typography / Text --- */
+  --text-main:          var(--base-neutral);
+  --text-muted:         color-mix(in oklab, var(--base-neutral) 65%, var(--base-surface));
+  --text-kicker:        var(--base-accent);
+  --text-link:          color-mix(in oklab, var(--base-primary) 80%, black);
+  --text-link-hover:    color-mix(in oklab, var(--base-primary) 95%, black);
 
-  /* --- Interactive & Accent Brand Tokens --- */
-  --color-primary:      oklch(0.74 var(--chroma-primary) var(--hue-primary));
-  --color-primary-deep: oklch(0.58 var(--chroma-primary) var(--hue-primary));
-  --color-accent:       oklch(0.46 var(--chroma-accent)  var(--hue-accent));
+  /* --- Interactive & Accent States --- */
+  --color-primary:      var(--base-primary);
+  --color-primary-deep: color-mix(in oklab, var(--base-primary) 70%, black);
+  --color-accent:       var(--base-accent);
 
-  /* --- Surface & Background Tokens --- */
-  --bg-app:             oklch(0.95 0.012 165);
-  --bg-sand-tint:       oklch(0.95 0.015 var(--hue-accent));
-  --bg-foam-tint:       oklch(0.98 0.008 var(--hue-accent));
+  /* --- Backgrounds & Surfaces --- */
+  --bg-app:             color-mix(in oklab, var(--base-accent) 6%, oklch(0.97 0.005 165));
+  --bg-sand-tint:       color-mix(in oklab, var(--base-accent) 10%, oklch(0.96 0 0));
+  --bg-foam-tint:       color-mix(in oklab, var(--base-accent) 4%, oklch(0.99 0 0));
 
-  --surface-card:       oklch(1 0 0 / 0.74);
-  --surface-card-strong:oklch(1 0 0 / 0.90);
-  --surface-header:     oklch(0.99 0.005 150 / 0.84);
-  --surface-chip:       oklch(1 0 0 / 0.80);
+  /* Translucent Surfaces using Relative Color Syntax */
+  --surface-card:        oklch(from var(--base-surface) l c h / 0.74);
+  --surface-card-strong: oklch(from var(--base-surface) l c h / 0.90);
+  --surface-header:      oklch(from color-mix(in oklab, var(--base-surface) 95%, var(--base-accent)) l c h / 0.84);
+  --surface-chip:        oklch(from var(--base-surface) l c h / 0.80);
 
-  /* --- Borders & Decorative Gradients --- */
-  --border-subtle:      oklch(0.30 var(--chroma-neutral) var(--hue-neutral) / 0.14);
-  --border-chip:        oklch(0.46 var(--chroma-accent)  var(--hue-accent) / 0.18);
-  --inset-glint:        oklch(1 0 0 / 0.82);
+  /* --- Borders & Decorative Effects --- */
+  --border-subtle:      oklch(from var(--base-neutral) l c h / 0.14);
+  --border-chip:        oklch(from var(--base-accent) l c h / 0.18);
+  --inset-glint:        oklch(from var(--base-surface) l c h / 0.82);
 
-  --hero-glow-a:        oklch(0.74 var(--chroma-primary) var(--hue-primary) / 0.36);
-  --hero-glow-b:        oklch(0.46 var(--chroma-accent)  var(--hue-accent) / 0.20);
+  --hero-glow-a:        oklch(from var(--base-primary) l c h / 0.36);
+  --hero-glow-b:        oklch(from var(--base-accent) l c h / 0.20);
 
-  /* --- Component Framework (Shadcn Mappings) --- */
+  /* --- Component Framework Integration (Shadcn Mappings) --- */
   --background:           var(--bg-app);
   --foreground:           var(--text-main);
   --card:                 var(--surface-card-strong);
@@ -65,7 +59,7 @@
   --popover:              var(--surface-card-strong);
   --popover-foreground:   var(--text-main);
   --primary:              var(--text-main);
-  --primary-foreground:   oklch(0.98 0.005 var(--hue-accent));
+  --primary-foreground:   var(--base-surface);
   --secondary:            var(--bg-sand-tint);
   --secondary-foreground: var(--text-main);
   --muted:                var(--bg-sand-tint);
@@ -81,41 +75,37 @@
 
 .dark {
   /* ==========================================================================
-     3. DARK MODE SEMANTIC TOKENS
-        Hues stay identical, Lightness values flip for dark surfaces.
+     3. DARK MODE BASE OVERRIDES
+        Override full base colors for dark mode; derived shades recalculate automatically.
      ========================================================================== */
+  --base-primary:   oklch(0.82 0.12 192); /* Bright Lagoon for dark contrast */
+  --base-accent:    oklch(0.78 0.10 162); /* Light Palm */
+  --base-neutral:   oklch(0.92 0.03 192); /* Bright Text Neutral */
+  --base-surface:   oklch(0.15 0.02 215); /* Dark Slate Surface Base */
 
-  /* --- Typography / Text Tokens --- */
-  --text-main:          oklch(0.92 0.03 var(--hue-primary));
-  --text-muted:         oklch(0.80 0.03 var(--hue-primary));
-  --text-kicker:        oklch(0.90 0.05 var(--hue-primary));
-  --text-link:          oklch(0.88 0.09 var(--hue-primary));
-  --text-link-hover:    oklch(0.95 0.05 var(--hue-primary));
+  /* --- Derived Dark Mode Adjustments --- */
+  --text-main:          var(--base-neutral);
+  --text-muted:         color-mix(in oklab, var(--base-neutral) 60%, transparent);
+  --text-kicker:        var(--base-primary);
+  --text-link:          var(--base-primary);
+  --text-link-hover:    color-mix(in oklab, var(--base-primary) 80%, white);
 
-  /* --- Interactive & Accent Brand Tokens --- */
-  --color-primary:      oklch(0.82 var(--chroma-primary) var(--hue-primary));
-  --color-primary-deep: oklch(0.88 var(--chroma-primary) var(--hue-primary));
-  --color-accent:       oklch(0.78 var(--chroma-accent)  var(--hue-accent));
+  --bg-app:             oklch(0.12 0.02 215);
+  --bg-sand-tint:       color-mix(in oklab, var(--base-surface) 90%, black);
+  --bg-foam-tint:       color-mix(in oklab, var(--base-surface) 80%, black);
 
-  /* --- Surface & Background Tokens --- */
-  --bg-app:             oklch(0.12 var(--chroma-neutral) var(--hue-neutral));
-  --bg-sand-tint:       oklch(0.16 var(--chroma-neutral) var(--hue-neutral));
-  --bg-foam-tint:       oklch(0.18 var(--chroma-neutral) var(--hue-neutral));
+  --surface-card:        oklch(from var(--base-surface) l c h / 0.80);
+  --surface-card-strong: oklch(from var(--base-surface) l c h / 0.92);
+  --surface-header:      oklch(from var(--bg-app) l c h / 0.80);
+  --surface-chip:        oklch(from var(--base-surface) l c h / 0.90);
 
-  --surface-card:       oklch(0.18 var(--chroma-neutral) var(--hue-neutral) / 0.80);
-  --surface-card-strong:oklch(0.15 var(--chroma-neutral) var(--hue-neutral) / 0.92);
-  --surface-header:     oklch(0.12 var(--chroma-neutral) var(--hue-neutral) / 0.80);
-  --surface-chip:       oklch(0.17 var(--chroma-neutral) var(--hue-neutral) / 0.90);
+  --border-subtle:      oklch(from var(--base-primary) l c h / 0.18);
+  --border-chip:        oklch(from var(--base-primary) l c h / 0.24);
+  --inset-glint:        oklch(from var(--base-primary) l c h / 0.14);
 
-  /* --- Borders & Decorative Gradients --- */
-  --border-subtle:      oklch(0.88 var(--chroma-primary) var(--hue-primary) / 0.18);
-  --border-chip:        oklch(0.88 var(--chroma-primary) var(--hue-primary) / 0.24);
-  --inset-glint:        oklch(0.92 0.05 var(--hue-primary) / 0.14);
+  --hero-glow-a:        oklch(from var(--base-primary) l c h / 0.18);
+  --hero-glow-b:        oklch(from var(--base-accent) l c h / 0.12);
 
-  --hero-glow-a:        oklch(0.82 var(--chroma-primary) var(--hue-primary) / 0.18);
-  --hero-glow-b:        oklch(0.78 var(--chroma-accent)  var(--hue-accent)  / 0.12);
-
-  /* --- Component Framework Mappings (Dark) --- */
   --background:           var(--bg-app);
   --foreground:           var(--text-main);
   --card:                 var(--surface-card-strong);
@@ -123,7 +113,7 @@
   --popover:              var(--surface-card-strong);
   --popover-foreground:   var(--text-main);
   --primary:              var(--text-main);
-  --primary-foreground:   oklch(0.14 var(--chroma-neutral) var(--hue-neutral));
+  --primary-foreground:   var(--bg-app);
   --secondary:            var(--bg-sand-tint);
   --secondary-foreground: var(--text-main);
   --muted:                var(--bg-sand-tint);
@@ -132,7 +122,7 @@
   --accent-foreground:    var(--text-main);
   --border:               var(--border-subtle);
   --input:                var(--border-subtle);
-  --ring:                 var(--color-primary);
+  --ring:                 var(--base-primary);
 }
 
 @theme inline {
@@ -172,7 +162,7 @@ body {
   background:
           radial-gradient(1100px 620px at -8% -10%, var(--hero-glow-a), transparent 58%),
           radial-gradient(1050px 620px at 112% -12%, var(--hero-glow-b), transparent 62%),
-          radial-gradient(720px 380px at 50% 115%, oklch(0.74 var(--chroma-primary) var(--hue-primary) / 0.1), transparent 68%),
+          radial-gradient(720px 380px at 50% 115%, oklch(from var(--base-primary) l c h / 0.1), transparent 68%),
           linear-gradient(180deg, color-mix(in oklab, var(--bg-sand-tint) 68%, white) 0%, var(--bg-foam-tint) 44%, var(--bg-app) 100%);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -180,7 +170,7 @@ body {
 
 a {
   color: var(--text-link);
-  text-decoration-color: oklch(0.58 var(--chroma-primary) var(--hue-primary) / 0.4);
+  text-decoration-color: oklch(from var(--base-primary) l c h / 0.4);
 }
 
 a:hover {
@@ -197,16 +187,16 @@ code {
   background: linear-gradient(165deg, var(--surface-card-strong), var(--surface-card));
   box-shadow:
           0 1px 0 var(--inset-glint) inset,
-          0 22px 44px oklch(0.30 var(--chroma-accent) var(--hue-accent) / 0.1),
-          0 6px 18px oklch(0.20 var(--chroma-neutral) var(--hue-neutral) / 0.08);
+          0 22px 44px oklch(from var(--base-accent) l c h / 0.1),
+          0 6px 18px oklch(from var(--base-neutral) l c h / 0.08);
 }
 
 .feature-card {
   background: linear-gradient(165deg, color-mix(in oklab, var(--surface-card-strong) 93%, white 7%), var(--surface-card));
   box-shadow:
           0 1px 0 var(--inset-glint) inset,
-          0 18px 34px oklch(0.30 var(--chroma-accent) var(--hue-accent) / 0.1),
-          0 4px 14px oklch(0.20 var(--chroma-neutral) var(--hue-neutral) / 0.06);
+          0 18px 34px oklch(from var(--base-accent) l c h / 0.1),
+          0 4px 14px oklch(from var(--base-neutral) l c h / 0.06);
 }
 
 .feature-card:hover {
@@ -222,7 +212,7 @@ code {
 }
 
 .nav-link::after {
-  background: linear-gradient(90deg, var(--color-primary), oklch(0.80 0.09 165));
+  background: linear-gradient(90deg, var(--color-primary), color-mix(in oklab, var(--base-accent) 50%, white));
 }
 
 .nav-link:hover,
