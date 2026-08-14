@@ -56,11 +56,32 @@ function About() {
                 <CardTitle className="text-base font-semibold">{group.category}</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-wrap gap-1.5">
-                {group.items.map((skill) => (
-                  <Badge key={skill} variant="secondary" className="text-xs">
-                    {skill}
-                  </Badge>
-                ))}
+                <Card key={`${group.category}-strengths`}>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm font-light">Strong Experience With</CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex flex-wrap gap-1.5">
+                    {group.strengths.map((skill) => (
+                      <Badge key={skill} variant="secondary" className="text-xs">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </CardContent>
+                </Card>
+                {group.tried && (
+                  <Card key={`${group.category}-tried`}>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm font-light">Light Experience With</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex flex-wrap gap-1.5">
+                      {group.tried.map((skill) => (
+                        <Badge key={skill} variant="secondary" className="text-xs">
+                          {skill}
+                        </Badge>
+                      ))}
+                    </CardContent>
+                  </Card>
+                )}
               </CardContent>
             </Card>
           ))}
