@@ -229,6 +229,24 @@ export const PROJECTS_DATA: Project[] = [
       'Includes a centralized Directory service to manage institutional metadata, library configurations, copyright compliance rules, and host LMS integration settings.',
       'Integrates with a Shared Index to execute real-time availability lookups and intelligent load-balancing across participating supplier libraries.'
     ],
+    githubUrl: [
+      {
+        url: 'https://gitlab.com/knowledge-integration/libraries/networks/mod-ill',
+        label: 'Mod ILL'
+      },
+      {
+        url: 'https://gitlab.com/knowledge-integration/libraries/networks/ill-ui',
+        label: 'ILL UI'
+      },
+      {
+        url: 'https://gitlab.com/knowledge-integration/libraries/networks/ill-directory',
+        label: 'ILL Directory'
+      },
+      {
+        url: 'https://gitlab.com/knowledge-integration/libraries/networks/stripes-ill',
+        label: 'Stripes ILL'
+      },
+    ],
     media: [
       {
         url: ILL.supplierFlow,
@@ -278,6 +296,12 @@ export const PROJECTS_DATA: Project[] = [
       {
         role: 'ILL Senior Engineer and Frontend Lead',
         timeframe: '2024-2026'
+      }
+    ],
+    wikiLinks: [
+      {
+        url: 'https://openlibraryfoundation.atlassian.net/wiki/spaces/ILL/pages',
+        label: 'ILL JIRA Pages'
       }
     ],
     tags: ['Grails', 'ISO Standards', 'React', 'Stripes', 'PostgreSQL'],
@@ -480,7 +504,21 @@ export const PROJECTS_DATA: Project[] = [
         timeframe: '2025'
       },
     ],
-    timeframe: '2025-2026'
+    timeframe: '2025-2026',
+    wikiLinks: [
+      {
+        url: 'https://gitlab.com/knowledge-integration/libraries/pushkb/-/blob/v1.0.0/README.md',
+        label: 'PushKB README'
+      },
+      {
+        url: 'https://gitlab.com/knowledge-integration/libraries/pushkb/-/blob/v1.0.0/docs/pushkb_documentation.md',
+        label: 'PushKB Documentation'
+      },
+      {
+        url: 'https://gitlab.com/knowledge-integration/libraries/pushkb/-/blob/v1.0.0/docs/gokb_to_folio_workflow.md',
+        label: 'GOKB to FOLIO Documentation'
+      }
+    ]
   },
   {
     id: 'docdel',
@@ -612,29 +650,18 @@ export const PROJECTS_DATA: Project[] = [
     ],
     timeframe: "2022",
   },
-  /*
     // --- LIBRARIES ---
     {
-      id: 'frontside-interactors-custom',
-      title: 'FOLIO UI Component Kit',
+      id: 'halfway-ui',
+      title: 'Halfway UI',
       category: 'libraries',
-      description: 'Shared UI component and headless utility library powering modular frontends across microservices.',
-      mediaUrl: 'https://placehold.co/800x450/173a40/60d7cf?text=Component+Library',
-      tags: ['TypeScript', 'Headless Components', 'Jest', 'Semantic Release'],
+      description: 'Shared heeadless UI component and utility library powering microservice frontends.',
+      tags: ['TypeScript', 'Headless Components', 'ViTest', 'Semantic Release', 'RadixUI'],
       highlights: [
-        'Automated semantic releases via GitHub Actions',
-        'Zero-dependency headless hook abstractions',
+        'Fully accessible and easy to use component library based on Radix',
+        'Implementation allows themes to fully decide layout as well as style, driving different UX in order to fit within multiple LMS systems',
+        'Semi-Automated semantic releases via Gitlab Pipelines',
       ],
+      githubUrl: 'https://gitlab.com/knowledge-integration/libraries/lib-halfway-ui'
     },
-
-    // --- FEATURES ---
-    {
-      id: 'license-comparer',
-      title: 'License Comparison Engine',
-      category: 'features',
-      description: 'A visual diff-checking feature allowing librarians to compare terms between competing resource providers.',
-      mediaUrl: 'https://placehold.co/800x450/2f6a4a/6ec89a?text=License+Diff+Feature',
-      mediaType: 'gif',
-      tags: ['React', 'Diffing Algorithms', 'Tailwind CSS'],
-    },*/
 ]
