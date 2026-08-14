@@ -1,6 +1,7 @@
 import * as Folio from '@/assets/projects/applications/folio-erm';
 import * as Dashboard from '@/assets/projects/applications/dashboard';
 import * as Serials from '@/assets/projects/applications/folio-serials';
+import * as PushKB from '@/assets/projects/applications/pushkb';
 
 
 import { FolderGit2, Library, Sparkles } from "lucide-react";
@@ -348,6 +349,21 @@ export const PROJECTS_DATA: Project[] = [
         label: 'PushKB Repository',
         url: 'https://gitlab.com/knowledge-integration/libraries/pushkb'
       },
+    ],
+    media: [
+      {
+        url: PushKB.pushKBIngest,
+        alt: 'PushKB Source Record GET showing rapid ingest of data',
+        type: 'gif'
+      },
+      {
+        url: PushKB.pushKBAlgo,
+        alt: 'Diagram of the PushKB Push algorithm'
+      },
+      {
+        url: PushKB.pushKBExample,
+        alt: 'Demonstration of the algorithm in action chunking updates'
+      }
     ],
     role: [
       {
