@@ -671,6 +671,7 @@ export const PROJECTS_DATA: Project[] = [
       highlights: [
         'Fully accessible and easy to use component library based on Radix',
         'Implementation allows themes to fully decide layout as well as style, driving different UX in order to fit within multiple LMS systems',
+        'Multiple theme systems allowing for drastically different look and feel',
         'Semi-Automated semantic releases via Gitlab Pipelines',
       ],
       githubUrl: 'https://gitlab.com/knowledge-integration/libraries/lib-halfway-ui',
@@ -770,6 +771,13 @@ export const PROJECTS_DATA: Project[] = [
           url: 'https://gitlab.com/knowledge-integration/libraries/lib-halfway-ui/-/blob/v0.6.1/README.md',
           label: 'HalfwayUI README'
         },
+      ],
+      timeframe: '2026',
+      role: [
+        {
+          role: 'Original Author',
+          timeframe: '2026'
+        }
       ]
     },
 ]
