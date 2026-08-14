@@ -16,7 +16,8 @@ import {
 } from '@/assets/projects/libraries';
 
 import {
-  Bruno
+  Bruno,
+  PipelineUtils
 } from '@/assets/projects/other';
 
 import { FolderGit2, FolderKanban, Library, type LucideIcon, Sparkles } from "lucide-react";
@@ -1031,15 +1032,77 @@ export const PROJECTS_DATA: Project[] = [
     role: [
       {
         role: 'Initiative Lead',
-        timeframe: '2023-2024' // Adjust these dates if needed
+        timeframe: '2025-2026'
       }
     ],
-    timeframe: '2023-2026',
+    timeframe: '2025-2026',
     wikiLinks: [
       {
         label: '@k-int/bruno-shared-scripts on NPM',
         url: 'https://www.npmjs.com/package/@k-int/bruno-shared-scripts'
       }
     ]
+  },
+  {
+    id: 'shared-pipeline-utils',
+    title: 'Shared CI/CD Pipeline Infrastructure',
+    category: 'other',
+    description: 'Centralized cross-platform pipeline infrastructure enabling reusable GitLab Components and GitHub Actions for automated API documentation, SBOM generation, and vulnerability scanning.',
+    descriptionDeep: [
+      'Designed a "write once, run anywhere" automation architecture separating proprietary execution logic (bash scripts) from structural workflow definitions to keep code DRY and secure.',
+      'Built a centralized catalog of GitLab CI/CD Components and GitHub Reusable Workflows that abstract core DevOps tasks and repository change delivery.',
+      'Developed automated Git-delivery engines that dynamically clone repositories, stage modified files, commit differentials, and safely manage merge gates via GitHub PRs and GitLab MRs.',
+      'Set up reusable dependency scanning using Grype and Syft to generate standard CycloneDX Software Bill of Materials (SBOM) layers, running on an automated weekly matrix schedule.',
+      'Engineered a decoupled OpenAPI pipeline utilizing Redocly to compile, validate, and deploy FOLIO API documentation directly to AWS S3.'
+    ],
+    tags: [
+      'GitHub Actions',
+      'GitLab CI/CD',
+      'Bash',
+      'DevSecOps',
+      'Syft & Grype',
+      'Redocly',
+      'SBOM'
+    ],
+    highlights: [
+      'Migrated complex CI/CD logic into a shared infrastructure repository, preventing workflow duplication across the organization.',
+      'Implemented a zero-configuration authentication architecture utilizing native CI_JOB_TOKENs and group-level masks to remove manual secret provisioning.',
+      'Built automated loop-prevention guardrails for background CI/CD Git write-backs.',
+      'Standardized automated OpenAPI documentation generation and deployment across several FOLIO modules.'
+    ],
+    media: [
+      {
+        url: PipelineUtils.vulnerabilitiesPipeline,
+        type: 'gif',
+        alt: 'Vulnerability scanning pipeline running in an automated weekly matrix.'
+      },
+      {
+        url: PipelineUtils.vulnerabilitiesReport,
+        type: 'image',
+        alt: 'SBOM vulnerability scan output report.'
+      },
+      {
+        url: PipelineUtils.folioApiDocumentation,
+        type: 'image',
+        alt: 'Folio OpenAPI documentation pipeline orchestrator.'
+      },
+      {
+        url: PipelineUtils.helloWorldGithub,
+        type: 'image',
+        alt: 'Hello World structural blueprint execution on GitHub Actions.'
+      },
+      {
+        url: PipelineUtils.helloWorldGitlab,
+        type: 'image',
+        alt: 'Hello World graph pipeline model execution on GitLab CI/CD.'
+      }
+    ],
+    role: [
+      {
+        role: 'DevOps Architect',
+        timeframe: '2026'
+      }
+    ],
+    timeframe: '2026'
   }
 ]
