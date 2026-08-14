@@ -146,6 +146,7 @@ export const PROJECTS_DATA: Project[] = [
       'Helper hooks and functions donated back to stripes-core',
       'Testing pattern inversion with Jest'
     ],
+    timeframe: "2019-2026"
   },
   {
     id: 'folio-dashboard',
@@ -190,6 +191,7 @@ export const PROJECTS_DATA: Project[] = [
       'Designed robust app interaction mechanism using JSON Schema and multi-interfaces',
       'First foray into Tanstack Query for per-widget querying'
     ],
+    timeframe: "2021-2026"
   },
   {
     id: 'folio-serials',
@@ -248,6 +250,7 @@ export const PROJECTS_DATA: Project[] = [
       'Focus on leadership and communication skills',
       'Complex branching structure for domain designed in an extensible manner'
     ],
+    timeframe: "2022-2026"
   },
   /*{
     id: 'quote-wall',
