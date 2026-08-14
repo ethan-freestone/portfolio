@@ -1,4 +1,11 @@
 import avatarImg from '@/assets/avatar.jpeg'
+import {
+  CodeXml,
+  Gamepad2,
+  Pickaxe,
+  Volleyball,
+  type LucideIcon,
+} from 'lucide-react'
 
 export type Skill = {
   category: string;
@@ -15,6 +22,7 @@ export type Experience = {
 
 export type Hobby = {
   name: string;
+  Icon?: LucideIcon;
   description: string;
 }
 
@@ -62,9 +70,25 @@ export const PROFILE_DATA = {
   ],
 
   hobbies: [
-    { name: 'Gaming', description: 'Playing indie gems on the Steam Deck, or sports games on the PS5.' },
-    { name: 'Web Development', description: 'Sometimes I get the bug on my own time, and side projects have included a Quote Wall application written with FaunaDB (now defunct) and a project with a friend to set up a silly fantasy league game using Supabase and Vue.' },
-    { name: 'Tinkering', description: 'Working on home deployments like Jellyfin, or modding games through Arch on the Steam Deck, or just tinkering with CLIs and tools on Windows and Linux.' },
-    { name: 'Football', description: 'Playing weekly and following my beloved West Ham' },
+    {
+      Icon: Gamepad2,
+      name: 'Gaming',
+      description: 'Playing indie gems on the Steam Deck, or sports games on the PS5.'
+    },
+    {
+      Icon: CodeXml,
+      name: 'Web Development',
+      description: 'Sometimes I get the bug on my own time, and side projects have included a Quote Wall application written with FaunaDB (now defunct) and a project with a friend to set up a silly fantasy league game using Supabase and Vue.'
+    },
+    {
+      Icon: Pickaxe,
+      name: 'Tinkering',
+      description: 'Working on home deployments like Jellyfin, or modding games through Arch on the Steam Deck, or just tinkering with CLIs and tools on Windows and Linux.'
+    },
+    {
+      Icon: Volleyball,
+      name: 'Football',
+      description: 'Playing weekly and following my beloved West Ham'
+    },
   ],
 } as ProfileData;
