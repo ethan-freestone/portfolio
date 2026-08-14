@@ -16,7 +16,8 @@ import {
 } from '@/assets/projects/libraries';
 
 import {
-  ResourceDeletion
+  ResourceDeletion,
+  TIRSResolvers
 } from '@/assets/projects/features';
 
 import {
@@ -991,6 +992,65 @@ export const PROJECTS_DATA: Project[] = [
   },
   // --- FEATURES ---
   {
+    id: 'erm-tirs-architecture',
+    title: 'Title Instance Resolver Service (TIRS)',
+    category: 'features',
+    parentApp: 'folio-erm',
+    description: 'Architectural refactor of the ERM electronic resource ingestion engine, transitioning from a monolithic service to a dynamic, interchangeable strategy pattern.',
+    descriptionDeep: [
+      'Initially, title resolution (matching incoming KBART/package data to existing database records) was handled by a single, rigid monolithic class. I architected a transition to a polymorphic interface (`TitleInstanceResolverService`) supported by an abstract `BaseTIRS` class containing shared HQL queries, identifier normalization, and data enrichment logic.',
+      'Developed multiple discrete resolution algorithms: `IdFirstTIRS` (prioritizes Class One identifiers like ISSN/ISBN), `TitleFirstTIRS` (prioritizes fuzzy text matching), and `WorkSourceIdentifierTIRS` (matches via normalized source IDs with a cascading fallback to `IdFirstTIRS`).',
+      'Engineered a dynamic Spring DSL configuration that reads environment variables (e.g., `TIRS=WorkSourceIdentifier`) at startup, allowing tenants to seamlessly swap resolution strategies without altering the compiled application footprint.',
+      'This was a sustained, multi-year architectural evolution spanning 2021 to 2024, culminating in `WorkSourceIdentifier` becoming the highly reliable, default resolution strategy across all environments.'
+    ],
+    tags: [
+      'Grails',
+      'Groovy',
+      'Software Architecture',
+      'Polymorphism',
+      'HQL',
+      'Data Import'
+    ],
+    highlights: [
+      'Refactored a monolithic data ingestion script into an extensible, object-oriented strategy pattern.',
+      'Abstracted shared logic (fuzzy title matching, sibling identifier pairing, and identifier normalization) into a robust `BaseTIRS` core.',
+      'Implemented dynamic bean swapping via Spring DSL, allowing runtime configuration of the active resolution algorithm.',
+      'Engineered complex fallback mechanisms and custom error tracking (`TIRSException`) to safely abort or redirect ingestion when encountering data collision edge cases.'
+    ],
+    media: [
+      {
+        url: TIRSResolvers.WorkSourceTIRS,
+        type: 'image',
+        alt: 'Flowchart detailing the WorkSourceIdentifierTIRS algorithmic fallback sequence and sibling wrangling.'
+      }
+    ],
+    role: [
+      {
+        role: 'Lead Architect & Engineer',
+        timeframe: '2021-2024'
+      }
+    ],
+    timeframe: '2021-2024',
+    wikiLinks: [
+      {
+        label: 'TIRSException Implementation',
+        url: 'https://github.com/folio-org/mod-agreements/blob/v7.3.4/service/src/main/groovy/org/olf/dataimport/internal/titleInstanceResolvers/TIRSException.groovy'
+      },
+      {
+        label: 'IdFirstTIRSImpl Code',
+        url: 'https://github.com/folio-org/mod-agreements/blob/v7.3.4/service/src/main/groovy/org/olf/dataimport/internal/titleInstanceResolvers/IdFirstTIRSImpl.groovy'
+      },
+      {
+        label: 'TitleFirstTIRSImpl Code',
+        url: 'https://github.com/folio-org/mod-agreements/blob/v7.3.4/service/src/main/groovy/org/olf/dataimport/internal/titleInstanceResolvers/TitleFirstTIRSImpl.groovy'
+      },
+      {
+        label: 'WorkSourceIdentifierTIRSImpl Code',
+        url: 'https://github.com/folio-org/mod-agreements/blob/v7.3.4/service/src/main/groovy/org/olf/dataimport/internal/titleInstanceResolvers/WorkSourceIdentifierTIRSImpl.groovy'
+      }
+    ]
+  },
+  {
     id: 'erm-resource-deletion',
     title: 'ERM Resource Delete',
     category: 'features',
@@ -1061,6 +1121,7 @@ export const PROJECTS_DATA: Project[] = [
       }
     ]
   },
+
 
   // --- OTHER ---
   {
