@@ -13,14 +13,19 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import type { Project } from '@/data/projects'
+import { getFallbackMedia } from "#/lib";
 
 export function ProjectCard({ project }: { project: Project }) {
-  const hasMultipleMedia = project.media.length > 1
+  const hasMultipleMedia = (project.media ?? []).length > 1
 
   // Initialize Autoplay plugin (stop on hover/interaction so users can view images)
   const plugin = React.useRef(
     Autoplay({ delay: 3500, stopOnInteraction: true, stopOnMouseEnter: true })
   )
+
+  const projectMedia = project.media?.length
+    ? project.media
+    : [getFallbackMedia({ title: project.title })];
 
   return (
     <Card className="feature-card flex flex-col overflow-hidden border border-border group/card">
@@ -30,7 +35,7 @@ export function ProjectCard({ project }: { project: Project }) {
           className="w-full h-full"
         >
           <CarouselContent className="ml-0 h-full">
-            {project.media.map((item, index) => (
+            {projectMedia.map((item, index) => (
               <CarouselItem key={index} className="pl-0 relative aspect-video w-full">
                 <img
                   src={item.url}

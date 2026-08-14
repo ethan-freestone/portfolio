@@ -20,22 +20,41 @@ export type Link = {
   url: string
 }
 
-export type Project = {
+type BaseProject = {
   id: string
   title: string
-  category: ProjectCategory
   description: string
-  longDescription?: string // Markdown or longer text narrative
-  media: ProjectMedia[]
+  longDescription?: string
+  media?: ProjectMedia[]
   tags: string[]
-  liveUrl?: string
-  wikiLinks?: Link[],
-  githubUrl?: string | Link[]
-  highlights?: string[]
-  architecture?: string[]
   role?: string
   timeframe?: string
 }
+
+export type ApplicationProject = BaseProject & {
+  category: 'applications'
+  liveUrl?: string
+  wikiLinks?: Link[]
+  githubUrl?: string | Link[]
+  architecture?: string[]
+  highlights?: string[]
+}
+
+export type LibraryProject = BaseProject & {
+  category: 'libraries'
+  npmUrl?: string
+  bundleSize?: string
+  githubUrl: string
+  highlights?: string[]
+}
+
+export type FeatureProject = BaseProject & {
+  category: 'features'
+  parentApp: string,
+  wikiLinks?: Link[]
+}
+
+export type Project = ApplicationProject | LibraryProject | FeatureProject
 
 export const CATEGORIES = [
   { slug: 'applications', label: 'Applications', icon: FolderGit2 },
@@ -252,15 +271,28 @@ export const PROJECTS_DATA: Project[] = [
     ],
     timeframe: "2022-2026"
   },
-  /*{
+  // {
+  //   id: 'pushkb',
+  //   title: 'PushKB',
+  //   category: 'applications',
+  //   description: 'A standalone microservice designed to harvest, cache, transform and push data from one system into another.'
+  // },
+  {
     id: 'quote-wall',
     title: 'Quote Wall',
     category: 'applications',
-    description: 'Personal side project allowing real-time quote submission and tagging.',
-    mediaUrl: 'https://placehold.co/800x450/2f6a4a/e7f0e8?text=Quote+Wall+Preview',
-    tags: ['Vue', 'FaunaDB', 'Tailwind CSS'],
+    description: 'Personal side project based on a friendship group in-joke. Individual quotes that are funny out of context are stored, searchable and can be served as a random selection on the homescreen.',
+    tags: ['NextJS', 'FaunaDB', 'Material UI', 'Auth and User management'],
+    highlights: [
+      "Learning how to operate with a NoSQL database",
+      "Understanding Trigram searching",
+      "Hooking up basic authentication",
+      "Learning how to project manage solo",
+      "Understanding how a \"product\" launch can affect usage",
+    ],
+    timeframe: "2022"
   },
-
+/*
   // --- LIBRARIES ---
   {
     id: 'frontside-interactors-custom',

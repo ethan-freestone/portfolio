@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { ArrowLeft, ExternalLink, FolderGit2, Play, Book } from 'lucide-react'
+import { ArrowLeft, ExternalLink, FolderGit2, Play, Book, Package } from 'lucide-react'
 import { PROJECTS_DATA } from '@/data/projects'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -11,6 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import { getFallbackMedia } from "#/lib";
 
 export const Route = createFileRoute('/projects/$category/$projectId')({
   component: ProjectDetailView,
@@ -33,6 +34,10 @@ function ProjectDetailView() {
     )
   }
 
+  const projectMedia = project.media?.length
+    ? project.media
+    : [getFallbackMedia({ title: project.title })];
+
   return (
     <div className="space-y-8 rise-in max-w-5xl mx-auto">
       <div>
@@ -47,12 +52,10 @@ function ProjectDetailView() {
       </div>
 
       <Card className="overflow-hidden border border-border shadow-xl">
-        <Carousel
-          className="w-full"
-        >
-          <CarouselContent className="-ml-0">
-            {project.media.map((item, index) => (
-              <CarouselItem key={index} className="pl-0 relative aspect-[16/9] w-full bg-black/5">
+        <Carousel className="w-full">
+          <CarouselContent className="ml-0">
+            {projectMedia.map((item, index) => (
+              <CarouselItem key={index} className="pl-0 relative aspect-video w-full bg-black/5">
                 <img
                   src={item.url}
                   alt={item.alt}
@@ -74,7 +77,7 @@ function ProjectDetailView() {
             ))}
           </CarouselContent>
 
-          {project.media.length > 1 && (
+          {projectMedia.length > 1 && (
             <>
               <CarouselPrevious className="left-4 bg-background/80 hover:bg-background border-border h-10 w-10" />
               <CarouselNext className="right-4 bg-background/80 hover:bg-background border-border h-10 w-10" />
@@ -96,8 +99,7 @@ function ProjectDetailView() {
             {project.longDescription || project.description}
           </p>
 
-          {/* Key Highlights Section */}
-          {project.highlights && project.highlights.length > 0 && (
+          {project.category !== 'features' && project.highlights && project.highlights.length > 0 && (
             <div className="space-y-3 pt-4 border-t border-border">
               <h3 className="text-lg font-bold">Key Deliverables & Impact</h3>
               <ul className="space-y-2 list-disc list-inside text-sm text-muted-foreground leading-relaxed">
@@ -108,7 +110,7 @@ function ProjectDetailView() {
             </div>
           )}
 
-          {project.architecture && project.architecture.length > 0 && (
+          {project.category === 'applications' && project.architecture && project.architecture.length > 0 && (
             <div className="space-y-3 pt-4 border-t border-border">
               <h3 className="text-lg font-bold">Technical Implementation</h3>
               <ul className="space-y-2 list-disc list-inside text-sm text-muted-foreground leading-relaxed">
@@ -122,9 +124,11 @@ function ProjectDetailView() {
 
         <div className="space-y-6">
           <Card className="p-6 space-y-6 border border-border bg-card/50">
-            {/* Actions */}
+
             <div className="space-y-4">
-              {project.liveUrl && (
+
+              {/* Application specific button */}
+              {project.category === 'applications' && project.liveUrl && (
                 <Button asChild className="w-full gap-2">
                   <a href={project.liveUrl} target="_blank" rel="noreferrer">
                     <ExternalLink className="h-4 w-4" /> Live Application
@@ -132,8 +136,34 @@ function ProjectDetailView() {
                 </Button>
               )}
 
-              {/* Inside the sidebar card on the detail page */}
-              {project.githubUrl && (
+              {/* Library specific button */}
+              {project.category === 'libraries' && project.npmUrl && (
+                <Button asChild className="w-full gap-2" variant="default">
+                  <a href={project.npmUrl} target="_blank" rel="noreferrer">
+                    <Package className="h-4 w-4" /> View on NPM
+                  </a>
+                </Button>
+              )}
+
+
+              {/* Feature Context */}
+              {project.category === 'features' && project.parentApp && (
+                <div className="space-y-1">
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Parent Application</span>
+                  <p className="text-sm font-medium">{project.parentApp}</p>
+                </div>
+              )}
+
+              {/* Library Context */}
+              {project.category === 'libraries' && project.bundleSize && (
+                <div className="space-y-1">
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Bundle Size</span>
+                  <p className="text-sm font-medium">{project.bundleSize}</p>
+                </div>
+              )}
+
+              {/* Source Repositories (Shared across Apps and Libraries) */}
+              {(project.category === 'applications' || project.category === 'libraries') && project.githubUrl && (
                 <div className="space-y-2">
                   <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     Source Repositories
@@ -158,8 +188,8 @@ function ProjectDetailView() {
                           <div className="flex items-start gap-2 min-w-0">
                             <FolderGit2 className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />
                             <span className="break-all whitespace-normal leading-tight text-foreground">
-                            {repo.label}
-                          </span>
+                              {repo.label}
+                            </span>
                           </div>
                           <ExternalLink className="h-3 w-3 text-muted-foreground shrink-0 mt-0.5 opacity-70 group-hover:opacity-100 transition-opacity" />
                         </a>
@@ -169,8 +199,8 @@ function ProjectDetailView() {
                 </div>
               )}
 
-              {/* Wiki Links Section */}
-              {project.wikiLinks && project.wikiLinks.length > 0 && (
+              {/* Wiki Links Section (Shared across Apps and Features) */}
+              {(project.category === 'applications' || project.category === 'features') && project.wikiLinks && project.wikiLinks.length > 0 && (
                 <div className="space-y-2">
                   <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     Documentation & Wiki
