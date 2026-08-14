@@ -6,7 +6,6 @@ import type { Project } from '@/data/projects'
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <Card className="feature-card flex flex-col overflow-hidden border border-border">
-      {/* Media Container (supports PNG, JPG, and animated GIF) */}
       <div className="relative aspect-video w-full overflow-hidden bg-muted border-b border-border group">
         <img
           src={project.mediaUrl}
@@ -63,7 +62,6 @@ export function ProjectCard({ project }: { project: Project }) {
           </ul>
         )}
 
-        {/* Tech Stack Badges */}
         <div className="flex flex-wrap gap-1.5 pt-2">
           {project.tags.map((tag) => (
             <Badge key={tag} variant="secondary" className="text-[11px] font-medium">
