@@ -4,9 +4,14 @@ import * as Serials from '@/assets/projects/applications/folio-serials';
 import * as PushKB from '@/assets/projects/applications/pushkb';
 
 
-import { FolderGit2, Library, Sparkles } from "lucide-react";
+import { FolderGit2, FolderKanban, Library, type LucideIcon, Sparkles } from "lucide-react";
 
-export type ProjectCategory = 'applications' | 'libraries' | 'features'
+export type ProjectCategory = 'applications' | 'libraries' | 'features' | 'other'
+export type ProjectCategoryDefinition = {
+  slug: ProjectCategory
+  label: string,
+  icon: LucideIcon
+}
 
 export type ProjectMedia = {
   url: string
@@ -61,10 +66,11 @@ export type FeatureProject = BaseProject & {
 
 export type Project = ApplicationProject | LibraryProject | FeatureProject
 
-export const CATEGORIES = [
+export const CATEGORIES: ProjectCategoryDefinition[] = [
   { slug: 'applications', label: 'Applications', icon: FolderGit2 },
   { slug: 'libraries', label: 'Software Libraries', icon: Library },
-  { slug: 'features', label: 'Features & Modules', icon: Sparkles },
+  { slug: 'features', label: 'Features', icon: Sparkles },
+  { slug: 'other', label: 'Other', icon: FolderKanban }
 ]
 
 export const PROJECTS_DATA: Project[] = [
@@ -336,7 +342,7 @@ export const PROJECTS_DATA: Project[] = [
       'Designed to be extensible beyond these, potentially acting as an ITTT type API mediator in future.'
     ],
     tags: [
-      'Micronaut', 'Project Reactor', 'Reactive Programming', 'Scheduling', 'Scalability'
+      'Micronaut', 'Project Reactor', 'JSONPath', 'Reactive Programming', 'Scheduling', 'Scalability'
     ],
     highlights: [
       'Designing an entire microservice out of the FOLIO stack for the first time',
@@ -372,6 +378,22 @@ export const PROJECTS_DATA: Project[] = [
       },
     ],
     timeframe: '2025-2026'
+  },
+  {
+    id: 'docdel',
+    title: 'DocDel Secure Document Delivery',
+    category: 'applications',
+    description: 'OpenRS microservice dedicated to the upload, storage and retrieval of digital documents, primarily for ILL',
+    tags: ['React', 'Micronaut', 'NGINX', 'Gitlab CI'],
+    highlights: [
+    ],
+    role: [
+      {
+        role: 'Frontend Engineer',
+        timeframe: '2026'
+      },
+    ],
+    timeframe: "2026",
   },
   {
     id: 'quote-wall',
