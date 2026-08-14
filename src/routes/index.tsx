@@ -29,6 +29,7 @@ type HomeSectionCardProps = {
   badges: HomeSectionCardBadge[],
   linkTo: string,
   linkText: string,
+  title: string,
 }
 
 const HomeSectionCard = ({
@@ -36,7 +37,8 @@ const HomeSectionCard = ({
   description,
   badges,
   linkTo,
-  linkText
+  linkText,
+  title
 }: HomeSectionCardProps) => {
   return (
     <Card className="group relative overflow-hidden transition-all hover:shadow-md hover:border-primary/50 flex flex-col justify-between">
@@ -44,7 +46,7 @@ const HomeSectionCard = ({
         <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-2">
           <Icon className="h-5 w-5" />
         </div>
-        <CardTitle className="text-2xl">Projects & Features</CardTitle>
+        <CardTitle className="text-2xl">{title}</CardTitle>
         <CardDescription className="text-base">
           {description}
         </CardDescription>
@@ -99,6 +101,7 @@ function Home() {
           ]}
           linkTo="/projects"
           linkText="Browse projects"
+          title="Projects and Features"
         />
         <HomeSectionCard
           Icon={User}
@@ -110,6 +113,7 @@ function Home() {
           ]}
           linkTo="/about"
           linkText="Read background"
+          title="About Me"
         />
       </section>
       <section className="grid grid-cols-1">
