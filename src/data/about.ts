@@ -40,13 +40,11 @@ export type ProfileData = {
 
 export const PROFILE_DATA: ProfileData = {
   name: 'Ethan Freestone',
-  role: 'Full-Stack Software Engineer',
+  role: 'Full-Stack Software Engineer & Architect',
   avatarUrl: avatarImg,
   location: 'Sheffield, UK',
-  bio: "Building web applications, mainly in the libraries space since 2019. Delivering strong, robust front and back end solutions for customer's needs.",
-  bioDeep: "Always striving for neat, expandable and maintainable solutions, including looking for abstractions where they make sense. " +
-    "Focusing on accessibility and user needs first and foremost to deliver the best possible experience. " +
-    "Ensuring that development practises are kept and working on ways to improve developer experience over time.",
+  bio: "Building robust web applications in the library tech space since 2019. I specialize in untangling complex problem domains and designing scalable, elegant solutions that meet critical customer needs.",
+  bioDeep: "I work beest at the intersection of high-level system architecture and hands-on team leadership. Refactoring monolithic systems into extensible strategy patterns, building framework-agnostic libraries, and overhauling CI/CD infrastructure, I focus on creating abstractions that genuinely make sense. Beyond writing code, I am passionate about mentoring engineers, driving the adoption of modern developer tooling (DX), and fostering a collaborative environment to build accessible, user-first applications.",
   skills: [
     {
       category: 'Frontend',
@@ -72,7 +70,8 @@ export const PROFILE_DATA: ProfileData = {
         'PostgreSQL',
         'SQL',
         'Project Reactor',
-        'API Design'
+        'API Design',
+        'System Architecture'
       ],
       tried: [
         'FaunaDB',
@@ -103,16 +102,16 @@ export const PROFILE_DATA: ProfileData = {
 
   experience: [
     {
-      role: 'Full-Stack Software Engineer & Team Leader',
+      role: 'Senior Software Engineer & Team Leader',
       company: 'Knowledge Integration',
       period: '2024-2026',
-      description: 'Leading development on FOLIO, ILL and DocDel web applications, mentoring junior engineers, having a hand in key strategic decisions and working directly with customers to provide the best solutions possible.',
+      description: 'Architecting and leading development across FOLIO, ILL, and DocDel platforms. Acting as a core technical strategist, I translate complex domain requirements into maintainable, high-level solutions. I actively mentor engineers, champion cross-team developer experience (DX) initiatives, and collaborate directly with stakeholders to ensure our architecture delivers long-term value.',
     },
     {
       role: 'Software Engineer with DevOps Support',
       company: 'Knowledge Integration',
       period: '2019 — 2024',
-      description: 'Developing applications for FOLIO, namely the ERM suite, OA and Serials, with a strong focus on maintainability and software library development.',
+      description: 'Engineered complex applications for the FOLIO ecosystem (ERM suite, Open Access, Serials). Progressed from feature delivery to high-level system design, focusing heavily on software library development, testing architecture inversion, and standardizing shared UI components.',
     },
   ],
 
@@ -135,7 +134,7 @@ export const PROFILE_DATA: ProfileData = {
     {
       Icon: Volleyball,
       name: 'Football',
-      description: 'Playing weekly and following my beloved West Ham'
+      description: 'Playing weekly and following my beloved West Ham through the ups and downs (mostly downs).'
     },
   ],
 };
