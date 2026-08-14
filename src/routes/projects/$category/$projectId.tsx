@@ -1,6 +1,4 @@
-import React from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import Autoplay from 'embla-carousel-autoplay'
 import { ArrowLeft, ExternalLink, FolderGit2, Play, Book } from 'lucide-react'
 import { PROJECTS_DATA } from '@/data/projects'
 import { Badge } from '@/components/ui/badge'
@@ -23,10 +21,6 @@ function ProjectDetailView() {
   const navigate = useNavigate()
 
   const project = PROJECTS_DATA.find((p) => p.id === projectId)
-
-  const plugin = React.useRef(
-    Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })
-  )
 
   if (!project) {
     return (
@@ -54,7 +48,6 @@ function ProjectDetailView() {
 
       <Card className="overflow-hidden border border-border shadow-xl">
         <Carousel
-          plugins={project.media.length > 1 ? [plugin.current] : []}
           className="w-full"
         >
           <CarouselContent className="-ml-0">
