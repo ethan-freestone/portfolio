@@ -15,6 +15,10 @@ import {
   KintComponents
 } from '@/assets/projects/libraries';
 
+import {
+  Bruno
+} from '@/assets/projects/other';
+
 import { FolderGit2, FolderKanban, Library, type LucideIcon, Sparkles } from "lucide-react";
 
 export type ProjectCategory = 'applications' | 'libraries' | 'features' | 'other'
@@ -75,7 +79,14 @@ export type FeatureProject = BaseProject & {
   wikiLinks?: Link[]
 }
 
-export type Project = ApplicationProject | LibraryProject | FeatureProject
+export type OtherProject = BaseProject & {
+  category: 'other'
+  highlights?: string[]
+  githubUrl?: string | Link[]
+  npmUrl?: string
+}
+
+export type Project = ApplicationProject | LibraryProject | FeatureProject | OtherProject
 
 export const CATEGORIES: ProjectCategoryDefinition[] = [
   { slug: 'applications', label: 'Applications', icon: FolderGit2 },
@@ -972,4 +983,63 @@ export const PROJECTS_DATA: Project[] = [
     timeframe: '2020-2026'
   },
 
+  // --- OTHER ---
+  {
+    id: 'bruno-api-workspace',
+    title: 'Centralized Bruno API Workspace',
+    category: 'other',
+    description: 'Led the engineering team\'s migration from fragmented Postman instances to a centralized, Git-controlled API testing workspace using Bruno.',
+    descriptionDeep: [
+      'Recognized the friction and siloed nature of individual, free-tier Postman setups across the team and spearheaded a migration to Bruno, an open-source, Git-native API client.',
+      'Set up and structured centralized Git repositories to house shared API collections for major internal projects, including FOLIO, ILL, DocDel, PushKB, and GOKB.',
+      'To streamline the transition, I created and published a shared NPM package (@k-int/bruno-shared-scripts) to handle complex FOLIO authentication. This allowed the team to easily import standardized auth flows directly into their local collections.',
+      'Actively drove adoption across the engineering team, providing a significantly improved Developer Experience (DX) and ensuring API exploration, testing, and documentation are now version-controlled directly alongside the code.'
+    ],
+    media: [
+      {
+        url: Bruno.automatedAccessControl,
+        type: 'gif',
+        alt: 'An automated collection for creating access controlled resources in a given environment'
+      },
+      {
+        url: Bruno.folioCollection,
+        alt: 'The Bruno FOLIO collection'
+      },
+      {
+        url: Bruno.illCollection,
+        alt: 'The Bruno ILL collection'
+      },
+      {
+        url: Bruno.gokbCollection,
+        alt: 'The Bruno GOKB collection'
+      }
+    ],
+    tags: [
+      'Bruno',
+      'API Testing',
+      'Git',
+      'NPM',
+      'Developer Experience',
+      'JavaScript'
+    ],
+    highlights: [
+      'Migrated the entire engineering team to a collaborative, Git-native API workflow.',
+      'Created and maintained shared API collections covering FOLIO, ILL, DocDel, PushKB, and GOKB.',
+      'Published reusable authentication scripts to NPM (@k-int/bruno-shared-scripts) to standardize FOLIO API access.',
+      'Eliminated testing silos by making API requests reviewable, shareable, and PR-friendly.'
+    ],
+    role: [
+      {
+        role: 'Initiative Lead',
+        timeframe: '2023-2024' // Adjust these dates if needed
+      }
+    ],
+    timeframe: '2023-2026',
+    wikiLinks: [
+      {
+        label: '@k-int/bruno-shared-scripts on NPM',
+        url: 'https://www.npmjs.com/package/@k-int/bruno-shared-scripts'
+      }
+    ]
+  }
 ]
