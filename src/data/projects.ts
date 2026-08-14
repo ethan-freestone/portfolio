@@ -1,4 +1,3 @@
-
 import * as Folio from '@/assets/projects/applications/folio-erm';
 import * as Dashboard from '@/assets/projects/applications/dashboard';
 import * as Serials from '@/assets/projects/applications/folio-serials';
@@ -20,14 +19,19 @@ export type Link = {
   url: string
 }
 
+export type Role = string | {
+  role: string,
+  timeframe: string
+}[]
+
 type BaseProject = {
   id: string
   title: string
   description: string
-  longDescription?: string
+  descriptionDeep?: string | string[]
   media?: ProjectMedia[]
   tags: string[]
-  role?: string
+  role?: Role
   timeframe?: string
 }
 
@@ -69,6 +73,14 @@ export const PROJECTS_DATA: Project[] = [
     title: 'FOLIO ERM App Suite',
     category: 'applications',
     description: 'Electronic Resource Management suite built for libraries to track their agreements and licenses.',
+    descriptionDeep: [
+      'A suite of apps dedicated to the management of Electronic Resource Management inside FOLIO. These include: Agreements, Licenses, Local KB Admin and ERM Comparisons.',
+      'The Agreements app comprises of a Local KB designed to accept harvested records from external systems and commit them to a central shape, as well as CRUD for Agreement and Agreement Line objects corresponding to entitlements for those resources.' +
+      'It includes extensive matching logic, a job/task scheduling system + management, an entitlement log feed for harvesting changes, connections to Organisations apps and more.',
+      'The licenses app is an app allowing the construction of License data, including a complete custom Term creation and filtering system.',
+      'The local kb management app allows oversight and management of KB jobs, including harvests, imports, identifier reassignment and more.',
+      'The comparisons app allows for a resource by resource comparison of overlap between package titles, or titles for agreements, or a combination of the both.'
+    ],
     media: [
       {
         url: Folio.packages,
@@ -94,6 +106,16 @@ export const PROJECTS_DATA: Project[] = [
         url: Folio.agreementSelector,
         type: 'image',
         alt: 'ERM Agreement Selector Plugin'
+      },
+      {
+        url: Folio.comparisonsReport,
+        type: 'image',
+        alt: 'Comparison report between 2 packages'
+      },
+      {
+        url: Folio.comparisonsForm,
+        type: 'image',
+        alt: 'Comparison form'
       },
       {
         url: Folio.agreementsSettings,
@@ -154,6 +176,16 @@ export const PROJECTS_DATA: Project[] = [
         url: 'https://github.com/folio-org/ui-plugin-find-license'
       }
     ],
+    role: [
+      {
+        role: 'Developer',
+        timeframe: '2019-2022'
+      },
+      {
+        role: 'Tech Lead',
+        timeframe: '2022-2026'
+      }
+    ],
     tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'PostgreSQL'],
     highlights: [
       'Lead app development for many years on the front and back end.',
@@ -209,6 +241,16 @@ export const PROJECTS_DATA: Project[] = [
       'First solo app development from concept -> delivery',
       'Designed robust app interaction mechanism using JSON Schema and multi-interfaces',
       'First foray into Tanstack Query for per-widget querying'
+    ],
+    role: [
+      {
+        role: 'Original Author',
+        timeframe: '2021'
+      },
+      {
+        role: 'Tech Lead',
+        timeframe: '2021-2026'
+      }
     ],
     timeframe: "2021-2026"
   },
@@ -269,14 +311,40 @@ export const PROJECTS_DATA: Project[] = [
       'Focus on leadership and communication skills',
       'Complex branching structure for domain designed in an extensible manner'
     ],
+    role: [
+      {
+        role: 'Senior Engineer',
+        timeframe: '2022'
+      },
+      {
+        role: 'Tech Lead',
+        timeframe: '2022-2026'
+      }
+    ],
     timeframe: "2022-2026"
   },
-  // {
-  //   id: 'pushkb',
-  //   title: 'PushKB',
-  //   category: 'applications',
-  //   description: 'A standalone microservice designed to harvest, cache, transform and push data from one system into another.'
-  // },
+  {
+    id: 'pushkb',
+    title: 'PushKB',
+    category: 'applications',
+    description: 'A standalone microservice designed to harvest, cache, transform and push data from one system into another.',
+    tags: [
+      'Micronaut', 'Project Reactor', 'Reactive Programming', 'Scheduling', 'Scalability'
+    ],
+    highlights: [
+      'Designing an entire microservice out of the FOLIO stack for the first time',
+      'Getting to grips with reactive programming principles',
+      'Designing robust algorithms for ensuring no data loss',
+      'Scalability engineering for running multiple PushKB microservices in parallel'
+    ],
+    role: [
+      {
+        role: 'Original Author',
+        timeframe: '2025'
+      },
+    ],
+    timeframe: '2025-2026'
+  },
   {
     id: 'quote-wall',
     title: 'Quote Wall',
@@ -292,29 +360,29 @@ export const PROJECTS_DATA: Project[] = [
     ],
     timeframe: "2022"
   },
-/*
-  // --- LIBRARIES ---
-  {
-    id: 'frontside-interactors-custom',
-    title: 'FOLIO UI Component Kit',
-    category: 'libraries',
-    description: 'Shared UI component and headless utility library powering modular frontends across microservices.',
-    mediaUrl: 'https://placehold.co/800x450/173a40/60d7cf?text=Component+Library',
-    tags: ['TypeScript', 'Headless Components', 'Jest', 'Semantic Release'],
-    highlights: [
-      'Automated semantic releases via GitHub Actions',
-      'Zero-dependency headless hook abstractions',
-    ],
-  },
+  /*
+    // --- LIBRARIES ---
+    {
+      id: 'frontside-interactors-custom',
+      title: 'FOLIO UI Component Kit',
+      category: 'libraries',
+      description: 'Shared UI component and headless utility library powering modular frontends across microservices.',
+      mediaUrl: 'https://placehold.co/800x450/173a40/60d7cf?text=Component+Library',
+      tags: ['TypeScript', 'Headless Components', 'Jest', 'Semantic Release'],
+      highlights: [
+        'Automated semantic releases via GitHub Actions',
+        'Zero-dependency headless hook abstractions',
+      ],
+    },
 
-  // --- FEATURES ---
-  {
-    id: 'license-comparer',
-    title: 'License Comparison Engine',
-    category: 'features',
-    description: 'A visual diff-checking feature allowing librarians to compare terms between competing resource providers.',
-    mediaUrl: 'https://placehold.co/800x450/2f6a4a/6ec89a?text=License+Diff+Feature',
-    mediaType: 'gif',
-    tags: ['React', 'Diffing Algorithms', 'Tailwind CSS'],
-  },*/
+    // --- FEATURES ---
+    {
+      id: 'license-comparer',
+      title: 'License Comparison Engine',
+      category: 'features',
+      description: 'A visual diff-checking feature allowing librarians to compare terms between competing resource providers.',
+      mediaUrl: 'https://placehold.co/800x450/2f6a4a/6ec89a?text=License+Diff+Feature',
+      mediaType: 'gif',
+      tags: ['React', 'Diffing Algorithms', 'Tailwind CSS'],
+    },*/
 ]

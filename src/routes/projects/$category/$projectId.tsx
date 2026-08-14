@@ -11,7 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import { getFallbackMedia } from "#/lib";
+import { getTitleMedia } from "#/lib";
 
 export const Route = createFileRoute('/projects/$category/$projectId')({
   component: ProjectDetailView,
@@ -34,9 +34,38 @@ function ProjectDetailView() {
     )
   }
 
+  const renderRoles = () => {
+    if (!project.role) return null;
+
+    // Single string role
+    if (typeof project.role === 'string') {
+      return (
+        <div className="space-y-1">
+          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Role</span>
+          <p className="text-sm font-medium">{project.role}</p>
+        </div>
+      )
+    }
+
+    // Array of roles with timeframes
+    return (
+      <div className="space-y-3">
+        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Roles</span>
+        <div className="space-y-3">
+          {project.role.map((r, idx) => (
+            <div key={idx} className="space-y-0.5 border-l-2 border-primary/20 pl-3">
+              <p className="text-sm font-medium">{r.role}</p>
+              <p className="text-xs text-muted-foreground">{r.timeframe}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   const projectMedia = project.media?.length
-    ? project.media
-    : [getFallbackMedia({ title: project.title })];
+    ? [getTitleMedia({ title: project.title }), ...project.media]
+    : [getTitleMedia({ title: project.title })];
 
   return (
     <div className="space-y-8 rise-in max-w-5xl mx-auto">
@@ -95,9 +124,15 @@ function ProjectDetailView() {
             </h1>
           </div>
 
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            {project.longDescription || project.description}
+          <p key="description-main" className="text-lg text-muted-foreground leading-relaxed">
+            {project.description}
           </p>
+
+          {project.descriptionDeep && (Array.isArray(project.descriptionDeep) ? project.descriptionDeep : [project.descriptionDeep]).map((desc, index) => (
+            <p key={`description-${index}`} className="text-lg text-muted-foreground leading-relaxed">
+              {desc}
+            </p>
+          ))}
 
           {project.category !== 'features' && project.highlights && project.highlights.length > 0 && (
             <div className="space-y-3 pt-4 border-t border-border">
@@ -228,12 +263,7 @@ function ProjectDetailView() {
               )}
             </div>
 
-            {project.role && (
-              <div className="space-y-1">
-                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Role</span>
-                <p className="text-sm font-medium">{project.role}</p>
-              </div>
-            )}
+            {renderRoles()}
 
             {project.timeframe && (
               <div className="space-y-1">

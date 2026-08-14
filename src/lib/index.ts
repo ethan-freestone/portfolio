@@ -1,1 +1,1 @@
-export * from './fallbackMedia';
+export * from './titleMedia.ts';

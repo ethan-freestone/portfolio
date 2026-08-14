@@ -13,7 +13,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import type { Project } from '@/data/projects'
-import { getFallbackMedia } from "#/lib";
+import { getTitleMedia } from "#/lib";
 
 export function ProjectCard({ project }: { project: Project }) {
   const hasMultipleMedia = (project.media ?? []).length > 1
@@ -24,8 +24,8 @@ export function ProjectCard({ project }: { project: Project }) {
   )
 
   const projectMedia = project.media?.length
-    ? project.media
-    : [getFallbackMedia({ title: project.title })];
+    ? [getTitleMedia({ title: project.title }), ...project.media]
+    : [getTitleMedia({ title: project.title })];
 
   return (
     <Card className="feature-card flex flex-col overflow-hidden border border-border group/card">

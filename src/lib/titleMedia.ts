@@ -26,7 +26,7 @@ const getTitleHash = (str: string): number => {
   return Math.abs(hash);
 }
 
-export const getFallbackMedia = ({ title, bgColor, textColor, size }: GetFallbackMediaProps): ProjectMedia => {
+export const getTitleMedia = ({ title, bgColor, textColor, size }: GetFallbackMediaProps): ProjectMedia => {
 
   const mediaSize = size ?? '800x450';
 

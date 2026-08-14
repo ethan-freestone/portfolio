@@ -7,3 +7,5 @@ export { default as agreementView2 } from './agreement-view-2.png';
 export { default as agreementsSettings } from './agreements-settings.png';
 export { default as licenseForm } from './license-form.png';
 export { default as localKBAdmin } from './local-kb-admin.png';
+export { default as comparisonsForm } from './comparisons-form.png';
+export { default as comparisonsReport } from './comparisons-report.png';
