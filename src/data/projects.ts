@@ -9,7 +9,8 @@ import {
 } from '@/assets/projects/applications';
 
 import {
- Halfway,
+  AddressPlugins,
+  Halfway,
   KintComponents
 } from '@/assets/projects/libraries';
 
@@ -795,13 +796,14 @@ export const PROJECTS_DATA: Project[] = [
     ],
     githubUrl: 'https://gitlab.com/knowledge-integration/folio/stripes-kint-components',
     npmUrl: 'https://www.npmjs.com/package/@k-int/stripes-kint-components',
-    tags: ['React', 'TypeScript', 'FOLIO Stripes', 'NPM', 'Frontend Architecture'],
+    tags: ['React', 'JavaScript', 'i18n', 'FOLIO Stripes', 'NPM', 'Frontend Architecture', 'Semantic Releases'],
     highlights: [
       'First attempts at learning to abstract problem spaces into development tooling',
       'Authored the `SASQRoute` wrapper, dramatically reducing boilerplate for FOLIO 3-pane workflows',
       'Several innovative components introduced such as Typedown/QueryTypedown for rich combobox functionality, ActionList to replace EntryManager and more.',
       'Created during developer onboarding to standardize internal patterns and speed up development',
       'Evolved through multiple major revisions to keep maintained across major Stripes version changes',
+      'Automated release process through Gitlab CI pipelines'
     ],
     media: [
       {
@@ -837,5 +839,55 @@ export const PROJECTS_DATA: Project[] = [
       }
     ],
     timeframe: '2021-2026'
+  },
+  {
+    id: 'address-plugins',
+    title: 'Address Plugins',
+    category: 'libraries',
+    description: 'A suite of pluggable React address components and data massagers designed to simplify international address formatting and validation.',
+    descriptionDeep: [
+      'Built to solve complex internationalization challenges by modeling address forms after the OASIS CIQ TC Standard xAL data model.',
+      'Features localized plugins (e.g., British Isles, North America, Generic) that dynamically adjust field ordering, labels, and validation rules based on ISO 3166-2 country codes.',
+      'Decouples form rendering from backend persistence with modular `backendToFields` and `fieldsToBackend` translation utilities.',
+      'Designed to accept flexible input abstractions (`AddressTextField`) so it integrates seamlessly with any form framework like Final Form or React Hook Form.'
+    ],
+    githubUrl: 'https://gitlab.com/knowledge-integration/folio/addressplugins',
+    npmUrl: 'https://www.npmjs.com/package/@k-int/address-plugins',
+    tags: ['React', 'JavaScript', 'OASIS xAL Standard', 'NPM', 'Form Abstractions'],
+    highlights: [
+      'Architected internationalized address models aligned with the OASIS CIQ xAL standard',
+      'Designed dynamic region-based field layouts (e.g. State vs. Province, custom postal code rules)',
+      'Created bidirectional data transformation utilities between standardized backend representations and flat form states',
+      'Engineered framework-agnostic component bindings using custom input injection patterns'
+    ],
+    media: [
+      {
+        url: AddressPlugins.addressOptions,
+        type: 'image',
+        alt: 'Country selection dropdown switching active address formatting plugin'
+      },
+      {
+        url: AddressPlugins.englandAddress,
+        type: 'image',
+        alt: 'UK and British Isles localized address form layout'
+      },
+      {
+        url: AddressPlugins.usaAddress,
+        type: 'image',
+        alt: 'US and North America localized address form layout'
+      },
+      {
+        url: AddressPlugins.genericAddress,
+        type: 'image',
+        alt: 'Fallback generic international address form layout'
+      }
+    ],
+    role: [
+      {
+        role: 'Original Author',
+        timeframe: '2020-2026'
+      }
+    ],
+    timeframe: '2020-2026'
   },
 ]
