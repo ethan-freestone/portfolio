@@ -47,11 +47,52 @@ export const PROFILE_DATA = {
   skills: [
     {
       category: 'Frontend',
-      strengths: ['React', 'TypeScript', 'Jest', 'Tailwind CSS', 'ViTest', 'Bigtest Interactors', 'Stripes'],
-      tried: ['Tanstack Start', 'Vue']
+      strengths: [
+        'React',
+        'TypeScript',
+        'Jest',
+        'Headless Components',
+        'Tailwind CSS',
+        'ViTest',
+        'Frontside Interactors',
+        'Stripes'
+      ],
+      tried: ['Tanstack Start', 'NextJS', 'Vue', 'Nuxt']
     },
-    { category: 'Backend', strengths: ['Java', 'Micronaut', 'Grails', 'PostgreSQL', 'Project Reactor'] },
-    { category: 'Tooling & DevOps', strengths: ['Linux Development', 'Gradle', 'Bash', 'GitLab CI', 'GitHub Actions', 'Vite', 'Kubernetes'] },
+    {
+      category: 'Backend',
+      strengths: [
+        'Java',
+        'Micronaut',
+        'Grails',
+        'PostgreSQL',
+        'Project Reactor',
+        'API Design'
+      ],
+      tried: [
+        'FaunaDB',
+        'Supabase',
+      ]
+    },
+    {
+      category: 'Tooling & DevOps',
+      strengths: [
+        'Linux Development',
+        'Gradle',
+        'Bash',
+        'GitLab CI',
+        'GitHub Actions',
+        'Vite',
+        'Kubernetes',
+        'Bruno/Postman'
+      ],
+      tried: [
+        'AI Assisted Development',
+        'Caddy',
+        'NGINX',
+        'curl'
+      ]
+    },
   ],
 
   experience: [
