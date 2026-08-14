@@ -7,6 +7,7 @@ import {
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 import appCss from '../styles.css?url'
+import { HarmonySwitcher } from "#/components";
 
 type NavLinkProps = {
   title: ReactNode,
@@ -38,6 +39,7 @@ function RootComponent() {
             <NavLink linkTo="/" title="Home" />
             <NavLink linkTo="/projects" title="Projects" />
             <NavLink linkTo="/about" title="About" />
+            <HarmonySwitcher />
           </nav>
         </div>
       </header>
@@ -51,8 +53,10 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <HeadContent />
+    <html lang="en" data-harmony="triadic">
+      <head>
+        <HeadContent />
+      </head>
       <body>
         {children}
         <Scripts />

@@ -7,25 +7,107 @@
 
 :root {
   /* ==========================================================================
-     1. FULL BASE OKLCH COLORS
-        Change these full-value colors to re-skin your entire design system.
+     1. THE SINGLE SEED OKLCH BASE COLOR
+        Change this ONE color to re-skin the entire theme dynamically.
      ========================================================================== */
-  --base-primary:   oklch(0.74 0.11 192); /* Vibrant Lagoon Teal */
-  --base-accent:    oklch(0.46 0.09 162); /* Palm Forest Green */
-  --base-neutral:   oklch(0.30 0.05 215); /* Deep Sea Ink */
-  --base-surface:   oklch(1.00 0.00 000); /* Pure White Surface Base */
+  --base-color: oklch(0.74 0.11 192); /* Vibrant Lagoon Teal (Default) */
 
   /* ==========================================================================
-     2. DERIVED SHADES & TINTS (LIGHT MODE)
-        Using CSS relative color syntax & color-mix from base colors.
+     2. COLOR HARMONY ENGINE (DEFAULT: ANALOGOUS)
+        Offsets are added to the seed color's hue (h).
+        NOTE: inside oklch(from ...), the resolved `h` channel is a plain
+        NUMBER, not an <angle> — so these offsets must be unitless too.
+        Using `deg` here breaks calc(h + offset) silently.
+     ========================================================================== */
+  --h-primary-offset: 0;
+  --h-accent-offset:  -30;   /* Palm Forest direction */
+  --h-neutral-offset: 23;    /* Deep Sea direction */
+  --h-surface-offset: 0;
+
+  --c-primary-mult: 1;
+  --c-accent-mult:  0.85;
+  --c-neutral-mult: 0.45;
+}
+
+/* ============================================================================
+   3. SWITCHABLE HARMONY MODES
+      Apply via attribute on <html>: <html data-harmony="complementary">
+   ============================================================================ */
+
+/* Monochromatic: Same hue wheel position, varying lightness & chroma */
+:root[data-harmony="monochromatic"] {
+  --h-primary-offset: 0;
+  --h-accent-offset:  0;
+  --h-neutral-offset: 0;
+  --h-surface-offset: 0;
+  --c-accent-mult:    0.6;
+}
+
+/* Complementary: Accent is placed 180° directly opposite on the wheel */
+:root[data-harmony="complementary"] {
+  --h-primary-offset: 0;
+  --h-accent-offset:  180;
+  --h-neutral-offset: 20;
+  --h-surface-offset: 0;
+  --c-accent-mult:    1;
+}
+
+/* Analogous: Colors adjacent on the hue wheel (-30°, 0°, +23°) */
+:root[data-harmony="analogous"] {
+  --h-primary-offset: 0;
+  --h-accent-offset:  -30;
+  --h-neutral-offset: 23;
+  --h-surface-offset: 0;
+  --c-accent-mult:    0.85;
+}
+
+/* Triadic: Balanced 120° equidistant triangle across the wheel */
+:root[data-harmony="triadic"] {
+  --h-primary-offset: 0;
+  --h-accent-offset:  120;
+  --h-neutral-offset: 240;
+  --h-surface-offset: 0;
+  --c-accent-mult:    1;
+}
+
+/* Split-Complementary: Base + two colors adjacent to its complement */
+:root[data-harmony="split-complementary"] {
+  --h-primary-offset: 0;
+  --h-accent-offset:  150;
+  --h-neutral-offset: 210;
+  --h-surface-offset: 0;
+  --c-accent-mult:    0.9;
+}
+
+/* Tetradic / Square: Four colors spaced 90° apart */
+:root[data-harmony="tetradic"] {
+  --h-primary-offset: 0;
+  --h-accent-offset:  90;
+  --h-neutral-offset: 180;
+  --h-surface-offset: 0;
+  --c-accent-mult:    0.9;
+}
+
+:root {
+  /* ==========================================================================
+     4. DYNAMIC DERIVED BASE COLORS (LIGHT MODE)
+        Calculated dynamically from --base-color and current harmony offsets.
+     ========================================================================== */
+  --base-primary: oklch(from var(--base-color) l calc(c * var(--c-primary-mult)) calc(h + var(--h-primary-offset)));
+  --base-accent:  oklch(from var(--base-color) 0.46 calc(c * var(--c-accent-mult)) calc(h + var(--h-accent-offset)));
+  --base-neutral: oklch(from var(--base-color) 0.30 calc(c * var(--c-neutral-mult)) calc(h + var(--h-neutral-offset)));
+  --base-surface: oklch(from var(--base-color) 1.00 0.00 calc(h + var(--h-surface-offset)));
+
+  /* ==========================================================================
+     5. DERIVED SHADES & TINTS (LIGHT MODE)
      ========================================================================== */
 
   /* --- Typography / Text --- */
-  --text-main:          var(--base-neutral);
-  --text-muted:         color-mix(in oklab, var(--base-neutral) 65%, var(--base-surface));
-  --text-kicker:        var(--base-accent);
-  --text-link:          color-mix(in oklab, var(--base-primary) 80%, black);
-  --text-link-hover:    color-mix(in oklab, var(--base-primary) 95%, black);
+  --text-main:         var(--base-neutral);
+  --text-muted:        color-mix(in oklab, var(--base-neutral) 65%, var(--base-surface));
+  --text-kicker:       var(--base-accent);
+  --text-link:         color-mix(in oklab, var(--base-primary) 80%, black);
+  --text-link-hover:   color-mix(in oklab, var(--base-primary) 95%, black);
 
   /* --- Interactive & Accent States --- */
   --color-primary:      var(--base-primary);
@@ -75,13 +157,13 @@
 
 .dark {
   /* ==========================================================================
-     3. DARK MODE BASE OVERRIDES
-        Override full base colors for dark mode; derived shades recalculate automatically.
+     6. DARK MODE BASE DYNAMIC OVERRIDES
+        Recalculates contrast ratios dynamically while keeping chosen harmony.
      ========================================================================== */
-  --base-primary:   oklch(0.82 0.12 192); /* Bright Lagoon for dark contrast */
-  --base-accent:    oklch(0.78 0.10 162); /* Light Palm */
-  --base-neutral:   oklch(0.92 0.03 192); /* Bright Text Neutral */
-  --base-surface:   oklch(0.15 0.02 215); /* Dark Slate Surface Base */
+  --base-primary: oklch(from var(--base-color) 0.82 calc(c * var(--c-primary-mult)) calc(h + var(--h-primary-offset)));
+  --base-accent:  oklch(from var(--base-color) 0.78 calc(c * var(--c-accent-mult)) calc(h + var(--h-accent-offset)));
+  --base-neutral: oklch(from var(--base-color) 0.92 calc(c * var(--c-neutral-mult) * 0.3) calc(h + var(--h-neutral-offset)));
+  --base-surface: oklch(from var(--base-color) 0.15 0.02 calc(h + var(--h-surface-offset)));
 
   /* --- Derived Dark Mode Adjustments --- */
   --text-main:          var(--base-neutral);
@@ -90,7 +172,7 @@
   --text-link:          var(--base-primary);
   --text-link-hover:    color-mix(in oklab, var(--base-primary) 80%, white);
 
-  --bg-app:             oklch(0.12 0.02 215);
+  --bg-app:             oklch(from var(--base-surface) 0.12 c h);
   --bg-sand-tint:       color-mix(in oklab, var(--base-surface) 90%, black);
   --bg-foam-tint:       color-mix(in oklab, var(--base-surface) 80%, black);
 
@@ -152,7 +234,7 @@
 }
 
 /* ==========================================================================
-   Global CSS Utility Rules
+   7. Global CSS Utility Rules
    ========================================================================== */
 body {
   margin: 0;
