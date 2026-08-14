@@ -5,3 +5,5 @@ export * as PushKB from './pushkb';
 export * as DocDel from './docdel';
 export * as OA from './folio-oa';
 export * as ILL from './ill';
+
+export * as Portfolio from './portfolio';

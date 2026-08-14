@@ -5,7 +5,8 @@ import {
   ILL,
   OA,
   DocDel,
-  PushKB
+  PushKB,
+  Portfolio
 } from '@/assets/projects/applications';
 
 import {
@@ -652,6 +653,57 @@ export const PROJECTS_DATA: Project[] = [
         url: 'https://folio-org.atlassian.net/wiki/spaces/FOLIOtips/pages/5673362/Open+Access+Requests'
       }
     ]
+  },
+  {
+    id: 'portfolio-app',
+    title: 'Developer Portfolio',
+    category: 'applications',
+    description: 'A data-driven, highly customizable developer portfolio and interactive resume.',
+    descriptionDeep: [
+      'Built from the ground up using Tanstack Start to provide a seamless, data-driven routing and rendering experience with strict TypeScript support.',
+      'The UI is constructed using Tailwind CSS and shadcn/ui components, ensuring out-of-the-box accessibility, responsiveness, and a clean, modern aesthetic.',
+      'Features a bespoke, color-theory-based theming engine. Users can provide a single base color, and the application programmatically calculates a complete, mathematically sound, and accessible HSL/Oklch color palette that re-themes the entire UI on the fly.',
+      'The underlying architecture is completely data-driven, allowing for the rapid addition of new projects, skills, and experiences via typed configuration files without needing to touch the React component tree.'
+    ],
+    tags: [
+      'React',
+      'TypeScript',
+      'Tanstack Start',
+      'Tailwind CSS',
+      'shadcn/ui',
+      'Color Theory'
+    ],
+    highlights: [
+      'Architected a dynamic, runtime theming system using programmatic color manipulation.',
+      'Leveraged Tanstack Start for robust, type-safe file-based routing and data fetching.',
+      'Designed a highly scalable, data-driven content pipeline for projects and resume data.',
+      'Showcases deep knowledge of modern React ecosystem tooling and CSS architecture.'
+    ],
+    githubUrl: 'https://github.com/ethan-freestone/portfolio',
+    liveUrl: 'https://portfolio.efreestone.co.uk/',
+    media: [
+      {
+        url: Portfolio.colourChanger,
+        type: 'gif',
+        alt: 'A colour theory based colour changer for the theme based on a single input'
+      },
+      {
+        url: Portfolio.about,
+        alt: 'Dynamic "About me" page'
+      },
+      {
+        url: Portfolio.projectPage,
+        type: 'gif',
+        alt: 'Dynamic projects page'
+      }
+    ],
+    role: [
+      {
+        role: 'Creator & Developer',
+        timeframe: '2026'
+      }
+    ],
+    timeframe: '2026'
   },
   {
     id: 'quote-wall',
