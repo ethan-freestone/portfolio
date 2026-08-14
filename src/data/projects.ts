@@ -204,7 +204,14 @@ export const PROJECTS_DATA: Project[] = [
       'Helper hooks and functions donated back to stripes-core',
       'Testing pattern inversion with Jest'
     ],
-    timeframe: "2019-2026"
+    timeframe: "2019-2026",
+    liveUrl: 'https://folio-etesting-snapshot-diku.ci.folio.org/',
+    wikiLinks: [
+      {
+        url: 'https://folio-org.atlassian.net/wiki/spaces/FOLIJET/pages/513704182/Reference+environments',
+        label: 'FOLIO Reference Environments (Credentials)'
+      },
+    ]
   },
   {
     id: 'folio-dashboard',
@@ -233,6 +240,7 @@ export const PROJECTS_DATA: Project[] = [
         alt: 'Dashboard widget form'
       },
     ],
+    liveUrl: 'https://folio-etesting-snapshot-diku.ci.folio.org/dashboard',
     githubUrl: [
       {
         label: 'Dashboard Backend',
@@ -259,7 +267,21 @@ export const PROJECTS_DATA: Project[] = [
         timeframe: '2021-2026'
       }
     ],
-    timeframe: "2021-2026"
+    timeframe: "2021-2026",
+    wikiLinks: [
+      {
+        url: 'https://folio-org.atlassian.net/wiki/spaces/FOLIJET/pages/513704182/Reference+environments',
+        label: 'FOLIO Reference Environments (Credentials)'
+      },
+      {
+        url: 'https://folio-org.atlassian.net/wiki/spaces/FOLIOtips/pages/5671716/Introduction+to+Dashboard',
+        label: 'Introduction to Dashboard'
+      },
+      {
+        url: 'https://folio-org.atlassian.net/wiki/spaces/ERM/pages/5840208/Dashboard+Documentation',
+        label: 'Dashboard Documentation'
+      }
+    ]
   },
   {
     id: 'folio-serials',
