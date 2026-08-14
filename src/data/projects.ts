@@ -9,7 +9,8 @@ import {
 } from '@/assets/projects/applications';
 
 import {
- Halfway
+ Halfway,
+  KintComponents
 } from '@/assets/projects/libraries';
 
 import { FolderGit2, FolderKanban, Library, type LucideIcon, Sparkles } from "lucide-react";
@@ -780,4 +781,61 @@ export const PROJECTS_DATA: Project[] = [
         }
       ]
     },
+  {
+    id: 'stripes-kint-components',
+    title: 'Stripes Kint Components',
+    category: 'libraries',
+    description: 'Component and utility library built on top of FOLIO Stripes to streamline and accelerate 3-pane Search-And-Sort-Query (SASQ) application development.',
+    descriptionDeep: [
+      'Originally created during developer onboarding to simplify complex FOLIO Stripes patterns into intuitive, reusable abstractions.',
+      'Features the core `SASQRoute` wrapper component which handles URL state management, query parameter sync, and pane layouts out of the box.',
+      'Also features the fully fledged generateKiwtQueryParams utility function which can transform a state object into a query designed for the KIWT API shape',
+      'Includes standard components such as custom typedowns, action lists, and icon select inputs designed to standardize UI/UX across FOLIO modules.',
+      'Adopted across KInt FOLIO ecosystem, achieving over 900 weekly downloads on NPM.'
+    ],
+    githubUrl: 'https://gitlab.com/knowledge-integration/folio/stripes-kint-components',
+    npmUrl: 'https://www.npmjs.com/package/@k-int/stripes-kint-components',
+    tags: ['React', 'TypeScript', 'FOLIO Stripes', 'NPM', 'Frontend Architecture'],
+    highlights: [
+      'First attempts at learning to abstract problem spaces into development tooling',
+      'Authored the `SASQRoute` wrapper, dramatically reducing boilerplate for FOLIO 3-pane workflows',
+      'Several innovative components introduced such as Typedown/QueryTypedown for rich combobox functionality, ActionList to replace EntryManager and more.',
+      'Created during developer onboarding to standardize internal patterns and speed up development',
+      'Evolved through multiple major revisions to keep maintained across major Stripes version changes',
+    ],
+    media: [
+      {
+        url: KintComponents.sasqOa,
+        type: 'image',
+        alt: 'SASQ 3-pane layout pattern built with stripes-kint-components'
+      },
+      {
+        url: KintComponents.typedownDemo,
+        type: 'gif',
+        alt: 'Typedown component search and select demo'
+      },
+      {
+        url: KintComponents.buttonTypedownDemo,
+        type: 'gif',
+        alt: 'Button typedown variant interaction demo'
+      },
+      {
+        url: KintComponents.actionListDemo,
+        type: 'gif',
+        alt: 'Dynamic action list interaction demo'
+      },
+      {
+        url: KintComponents.iconSelectDemo,
+        type: 'gif',
+        alt: 'Icon selection component demo'
+      }
+    ],
+    role: [
+      {
+        role: 'Original Author & Maintainer',
+        timeframe: '2021-2026'
+      }
+    ],
+    timeframe: '2021-2026'
+  },
 ]
