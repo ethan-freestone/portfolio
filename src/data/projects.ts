@@ -890,4 +890,37 @@ export const PROJECTS_DATA: Project[] = [
     ],
     timeframe: '2020-2026'
   },
+  {
+    id: 'stripes-erm-testing',
+    title: 'Stripes ERM Testing',
+    category: 'libraries',
+    description: 'A specialized testing utility library for FOLIO ERM applications, standardizing Jest mocks, custom BigTest/Cypress interactors, and test setup boilerplate.',
+    descriptionDeep: [
+      'Created after identifying a fundamental structural issue in default FOLIO Stripes testing patterns, where manual Jest mocks were centralized and imported everywhere—causing hoisting conflicts and breaking module-level overrides.',
+      'Inverted the mock hierarchy to align with Jest best practices: centralizing global environment mocks while modularizing test-specific implementations.',
+      'Encapsulates custom component interactors for UI testing and houses the shared Cypress testing suite across ERM modules.',
+      'Provided a dedicated domain space for ERM page interactors without requiring breaking changes to core FOLIO central testing libraries.'
+    ],
+    githubUrl: 'https://github.com/folio-org/stripes-erm-testing',
+    tags: ['Jest', 'Cypress', 'React', 'Testing Library', 'FOLIO Stripes', 'Frontend Architecture'],
+    highlights: [
+      'Refactored FOLIO test architecture to fix Jest hoisting issues and manual mock isolation',
+      'Created reusable mock helpers and render utilities used across all ERM applications',
+      'Built custom component interactors for both Jest/React Testing Library and Cypress end-to-end suites',
+      'Author of official FOLIO K-Int Jest Test Documentation'
+    ],
+    wikiLinks: [
+      {
+        label: 'K-Int Jest Test Documentation',
+        url: 'https://folio-org.atlassian.net/wiki/spaces/ERM/pages/951713801/K-Int+Jest+Test+Documentation'
+      }
+    ],
+    role: [
+      {
+        role: 'Original Author & Maintainer',
+        timeframe: '2020-2026'
+      }
+    ],
+    timeframe: '2020-2026'
+  },
 ]
