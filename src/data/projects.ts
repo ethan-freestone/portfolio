@@ -1,5 +1,6 @@
 
 import * as Folio from '@/assets/projects/applications/folio-erm';
+import * as Dashboard from '@/assets/projects/applications/dashboard';
 
 
 import { FolderGit2, Library, Sparkles } from "lucide-react";
@@ -43,7 +44,7 @@ export const CATEGORIES = [
 export const PROJECTS_DATA: Project[] = [
   // --- APPLICATIONS ---
   {
-    id: 'folio-app',
+    id: 'folio-erm',
     title: 'FOLIO ERM App Suite',
     category: 'applications',
     description: 'Electronic Resource Management suite built for libraries to track their agreements and licenses.',
@@ -131,7 +132,56 @@ export const PROJECTS_DATA: Project[] = [
     highlights: [
       'Lead app development for many years on the front and back end.',
       'Created "Dashboard" application for FOLIO designed to seamlessly show ERM data at a glance and be expandable to other FOLIO applications',
-      'Managed integrations with external systems such as GoKB'
+      'Managed integrations with external systems such as GoKB',
+      'Large scale refactors over time to raise maintainability',
+      'stripes-connect to Tanstack query refactor',
+      'stripes-kint-components library for better Stripes DX',
+      'Helper hooks and functions donated back to stripes-core',
+      'Testing pattern inversion with Jest'
+    ],
+  },
+  {
+    id: 'folio-dashboard',
+    title: 'FOLIO Dashboard App',
+    category: 'applications',
+    description: 'An extensible dashboard app for FOLIO App integrations',
+    media: [
+      {
+        url: Dashboard.dragDropGif,
+        type: 'gif',
+        alt: 'Dashboard drag and drop functionality'
+      },
+      {
+        url: Dashboard.dashboard,
+        type: 'image',
+        alt: 'Dashboard home'
+      },
+      {
+        url: Dashboard.dashboardMenu,
+        type: 'image',
+        alt: 'Dashboard functionality menu'
+      },
+      {
+        url: Dashboard.widgetForm,
+        type: 'image',
+        alt: 'Dashboard widget form'
+      },
+    ],
+    githubUrl: [
+      {
+        label: 'Dashboard Backend',
+        url: 'https://github.com/folio-org/mod-service-interaction'
+      },
+      {
+        label: 'Dashboard Frontend',
+        url: 'https://github.com/folio-org/ui-dashboard'
+      },
+    ],
+    tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'PostgreSQL', 'Tanstack Query'],
+    highlights: [
+      'First solo app development from concept -> delivery',
+      'Designed robust app interaction mechanism using JSON Schema and multi-interfaces',
+      'First foray into Tanstack Query for per-widget querying'
     ],
   },
   /*{
