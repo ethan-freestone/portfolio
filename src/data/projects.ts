@@ -16,6 +16,10 @@ import {
 } from '@/assets/projects/libraries';
 
 import {
+  ResourceDeletion
+} from '@/assets/projects/features';
+
+import {
   Bruno,
   PipelineUtils
 } from '@/assets/projects/other';
@@ -55,7 +59,8 @@ type BaseProject = {
   tags: string[]
   role?: Role
   timeframe?: string
-  wikiLinks?: Link[]
+  wikiLinks?: Link[],
+  highlights?: string[]
 }
 
 export type ApplicationProject = BaseProject & {
@@ -63,7 +68,6 @@ export type ApplicationProject = BaseProject & {
   liveUrl?: string
   githubUrl?: string | Link[]
   architecture?: string[]
-  highlights?: string[]
 }
 
 export type LibraryProject = BaseProject & {
@@ -71,13 +75,11 @@ export type LibraryProject = BaseProject & {
   npmUrl?: string
   bundleSize?: string
   githubUrl: string
-  highlights?: string[]
 }
 
 export type FeatureProject = BaseProject & {
   category: 'features'
   parentApp: string,
-  wikiLinks?: Link[]
 }
 
 export type OtherProject = BaseProject & {
@@ -982,6 +984,78 @@ export const PROJECTS_DATA: Project[] = [
       }
     ],
     timeframe: '2020-2026'
+  },
+  // --- FEATURES ---
+  {
+    id: 'erm-resource-deletion',
+    title: 'ERM Resource Delete',
+    category: 'features',
+    parentApp: 'folio-erm',
+    description: 'A robust backend feature allowing users to safely delete harvested resources that are not in use and are no longer required.',
+    descriptionDeep: [
+      'The API allows users to select one or more PCIs, PTIs, or TIs for deletion, enforcing strict validations to ensure resources linked to active agreement lines cannot be deleted.',
+      'Implemented a four-stage recursive algorithm (markForDelete) that cascades through PCIs, PTIs, TIs, and Works. Each stage checks if the current resource is valid for deletion, and if so, uses it to identify resources at the next level that also need checking.',
+      'Engineered separate `/delete` and `/markForDelete` endpoints. This architectural decision opens the potential for future UI implementations to preview the exact cascading impact of a deletion before committing it to the database.',
+      'Package-level deletions leverage an asynchronous Job system (`/delete/pkg`) because large packages can take a long time to process, returning a job status object to prevent UI timeouts.',
+      'I engineered this feature in 2025 and utilized it as a structured onboarding task. After collaborating with the Product Owner on the architectural diagrams, I handed the implementation off to a team member and iteratively guided them through the delivery.'
+    ],
+    tags: [
+      'Grails',
+      'Java',
+      'Spock Framework',
+      'Combinatorial Testing',
+      'REST API',
+      'Data Integrity'
+    ],
+    highlights: [
+      'Designed a four-stage algorithm to safely traverse complex ERM hierarchies and isolate orphaned resources for deletion.',
+      'Separated `/markForDelete` and `/delete` API actions to enable future destructive-action preview screens.',
+      'Implemented asynchronous Job processing for package-level deletions to ensure system stability on large data payloads.',
+      'Pioneered a combinatorial integration testing strategy using the Spock framework\'s "where" blocks to mathematically verify all possible resource-to-agreement-line relationship structures.',
+      'Successfully used the technical design as an onboarding and mentorship vehicle for a newer team member.'
+    ],
+    media: [
+      {
+        url: ResourceDeletion.deleteStructures,
+        type: 'image',
+        alt: 'Diagram showing all four hierarchical structures that might exist between resources.'
+      },
+      {
+        url: ResourceDeletion.deleteResources,
+        type: 'image',
+        alt: 'Flowchart detailing the recursive mark-for-deletion algorithm across PCIs, PTIs, TIs, and Works.'
+      },
+      {
+        url: ResourceDeletion.dataModel,
+        type: 'image',
+        alt: 'The foundational ERM Domain Model illustrating structural relationships.'
+      }
+    ],
+    role: [
+      {
+        role: 'Lead Engineer & Mentor',
+        timeframe: '2025'
+      }
+    ],
+    timeframe: '2025',
+    wikiLinks: [
+      {
+        label: 'Resource Deletion documentation',
+        url: 'https://github.com/folio-org/mod-agreements/blob/v7.3.4/doc/resource-deletion-documentation.md'
+      },
+      {
+        label: 'ErmResourceService::markForDelete() Code',
+        url: 'https://github.com/folio-org/mod-agreements/blob/v7.3.4/service/grails-app/services/org/olf/ErmResourceService.groovy#L87-L111'
+      },
+      {
+        label: 'ErmResourceService::deleteResources() Code',
+        url: 'https://github.com/folio-org/mod-agreements/blob/v7.3.4/service/grails-app/services/org/olf/ErmResourceService.groovy#L291'
+      },
+      {
+        label: 'Combinatorial Testing Spec Code',
+        url: 'https://github.com/folio-org/mod-agreements/blob/v7.3.4/service/src/integration-test/groovy/org/olf/DeleteResources/ResourceDeletionSpec.groovy'
+      }
+    ]
   },
 
   // --- OTHER ---

@@ -134,7 +134,7 @@ function ProjectDetailView() {
             </p>
           ))}
 
-          {project.category !== 'features' && project.highlights && project.highlights.length > 0 && (
+          {project.highlights && project.highlights.length > 0 && (
             <div className="space-y-3 pt-4 border-t border-border">
               <h3 className="text-lg font-bold">Key Deliverables & Impact</h3>
               <ul className="space-y-2 list-disc list-inside text-sm text-muted-foreground leading-relaxed">
