@@ -249,21 +249,12 @@ export const PROJECTS_DATA: Project[] = [
         alt: 'Directory record'
       },
       {
-        url: ILL.directoryView,
-        alt: 'Directory record'
-      },
-      {
         url: ILL.adminLibraries,
         alt: 'Administrative management screen for Institution records'
       },
       {
         url: ILL.institutionSwitcher,
         alt: 'ILL allows soft-multitenancy via an "institution switcher"'
-      },
-      {
-        url: ILL.copyrightSettings,
-        type: 'gif',
-        alt: 'Stripes SASQ querying hooked up in the settings screen'
       },
       {
         url: ILL.copyrightSettings,
