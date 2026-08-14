@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import type { ReactNode } from "react";
+import { PROFILE_DATA } from "#/data/about.ts";
 
 export const Route = createFileRoute('/')({ component: Home })
 
@@ -82,11 +83,11 @@ function Home() {
         </Badge>
 
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">
-          Ethan Freestone portfolio
+          {PROFILE_DATA.name}
         </h1>
 
         <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground leading-relaxed">
-          Building web applications, mainly in the libraries space since 2019. Delivering strong, robust front and back end solutions for customer's needs.
+          {PROFILE_DATA.bio}
         </p>
       </section>
 

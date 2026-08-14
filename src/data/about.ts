@@ -42,7 +42,7 @@ export const PROFILE_DATA = {
   role: 'Full-Stack Software Engineer',
   avatarUrl: avatarImg,
   location: 'Sheffield, UK',
-  bio: "Building robust web applications and backend solutions with a focus on clean architecture, modern frontend frameworks, and maintainable systems.",
+  bio: "Building web applications, mainly in the libraries space since 2019. Delivering strong, robust front and back end solutions for customer's needs. Focus on maintainability, accessibility, great UX and modern frameworks.",
 
   skills: [
     {
