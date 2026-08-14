@@ -9,6 +9,7 @@ import {
 } from '@/assets/projects/applications';
 
 import {
+  AccessControl,
   AddressPlugins,
   Halfway,
   KintComponents
@@ -783,6 +784,53 @@ export const PROJECTS_DATA: Project[] = [
       ]
     },
   {
+    id: 'access-control-engine',
+    title: 'Access Control Engine',
+    category: 'libraries',
+    description: 'A pure Java implementation of an AccessControl engine, enabling flexible RBAC and soft multi-tenancy for FOLIO ERM apps without tight coupling to underlying frameworks.',
+    descriptionDeep: [
+      'A framework-agnostic Java library designed to handle complex access control operations. It separates core engine logic from implementation frameworks, allowing seamless use across Grails, Micronaut, and future architectures.',
+      'Features a highly modular, plugin-based architecture comprising Core, Main, Grails framework layers, and specific implementation plugins (such as FOLIO Acquisition units).',
+      'Introduces a custom `@PolicyControlled` annotation and relational ownership chains. This ensures existing domain models remain unpolluted by access control fields, delegating policy assignments to a robust join-table structure.',
+      'Translates complex domain restrictions (e.g., READ, UPDATE, CLAIM, APPLY_POLICIES) into raw SQL subqueries dynamically to pass down to the implementing framework.'
+    ],
+    media: [
+      {
+        url: AccessControl.accessControlDiagram,
+        alt: "Diagram displaying the infrastructure breakdown for access control implementation."
+      }
+    ],
+    githubUrl: 'https://gitlab.com/knowledge-integration/libraries/access-control/access-control',
+    tags: [
+      'Java',
+      'RBAC',
+      'ABAC',
+      'Grails',
+      'Project Lombok',
+      'Jackson',
+      'Software Architecture'
+    ],
+    highlights: [
+      'Architected a framework-agnostic core to future-proof authorization boundaries across KInt modules.',
+      'Implemented a complex tree-based ownership resolution system, allowing child resources to inherit or map restrictions directly from their parents.',
+      'Developed an extensible plugin system built for open-ended implementation (e.g., Keycloak, KI Grants, Acquisition Units).',
+      'Engineered an asynchronous, wrapper-friendly `FolioClient` using Java\'s HttpClient and CompletableFutures for performant cross-module fetches.'
+    ],
+    role: [
+      {
+        role: 'Architect & Original Author',
+        timeframe: '2026'
+      }
+    ],
+    timeframe: '2026',
+    wikiLinks: [
+      {
+        url: 'https://blog.kihosting.net/blog/2026-06-09-foundry-platform-services-docking-layer/',
+        label: 'Foundry platform-services docking-layer note'
+      }
+    ]
+  },
+  {
     id: 'stripes-kint-components',
     title: 'Stripes Kint Components',
     category: 'libraries',
@@ -841,6 +889,39 @@ export const PROJECTS_DATA: Project[] = [
     timeframe: '2021-2026'
   },
   {
+    id: 'stripes-erm-testing',
+    title: 'Stripes ERM Testing',
+    category: 'libraries',
+    description: 'A specialized testing utility library for FOLIO ERM applications, standardizing Jest mocks, custom BigTest/Cypress interactors, and test setup boilerplate.',
+    descriptionDeep: [
+      'Created after identifying a fundamental structural issue in default FOLIO Stripes testing patterns, where manual Jest mocks were centralized and imported everywhere—causing hoisting conflicts and breaking module-level overrides.',
+      'Inverted the mock hierarchy to align with Jest best practices: centralizing global environment mocks while modularizing test-specific implementations.',
+      'Encapsulates custom component interactors for UI testing and houses the shared Cypress testing suite across ERM modules.',
+      'Provided a dedicated domain space for ERM page interactors without requiring breaking changes to core FOLIO central testing libraries.'
+    ],
+    githubUrl: 'https://github.com/folio-org/stripes-erm-testing',
+    tags: ['Jest', 'Cypress', 'React', 'Testing Library', 'FOLIO Stripes', 'Frontend Architecture'],
+    highlights: [
+      'Refactored FOLIO test architecture to fix Jest hoisting issues and manual mock isolation',
+      'Created reusable mock helpers and render utilities used across all ERM applications',
+      'Built custom component interactors for both Jest/React Testing Library and Cypress end-to-end suites',
+      'Author of official FOLIO K-Int Jest Test Documentation'
+    ],
+    wikiLinks: [
+      {
+        label: 'K-Int Jest Test Documentation',
+        url: 'https://folio-org.atlassian.net/wiki/spaces/ERM/pages/951713801/K-Int+Jest+Test+Documentation'
+      }
+    ],
+    role: [
+      {
+        role: 'Original Author & Maintainer',
+        timeframe: '2020-2026'
+      }
+    ],
+    timeframe: '2020-2026'
+  },
+  {
     id: 'address-plugins',
     title: 'Address Plugins',
     category: 'libraries',
@@ -890,37 +971,5 @@ export const PROJECTS_DATA: Project[] = [
     ],
     timeframe: '2020-2026'
   },
-  {
-    id: 'stripes-erm-testing',
-    title: 'Stripes ERM Testing',
-    category: 'libraries',
-    description: 'A specialized testing utility library for FOLIO ERM applications, standardizing Jest mocks, custom BigTest/Cypress interactors, and test setup boilerplate.',
-    descriptionDeep: [
-      'Created after identifying a fundamental structural issue in default FOLIO Stripes testing patterns, where manual Jest mocks were centralized and imported everywhere—causing hoisting conflicts and breaking module-level overrides.',
-      'Inverted the mock hierarchy to align with Jest best practices: centralizing global environment mocks while modularizing test-specific implementations.',
-      'Encapsulates custom component interactors for UI testing and houses the shared Cypress testing suite across ERM modules.',
-      'Provided a dedicated domain space for ERM page interactors without requiring breaking changes to core FOLIO central testing libraries.'
-    ],
-    githubUrl: 'https://github.com/folio-org/stripes-erm-testing',
-    tags: ['Jest', 'Cypress', 'React', 'Testing Library', 'FOLIO Stripes', 'Frontend Architecture'],
-    highlights: [
-      'Refactored FOLIO test architecture to fix Jest hoisting issues and manual mock isolation',
-      'Created reusable mock helpers and render utilities used across all ERM applications',
-      'Built custom component interactors for both Jest/React Testing Library and Cypress end-to-end suites',
-      'Author of official FOLIO K-Int Jest Test Documentation'
-    ],
-    wikiLinks: [
-      {
-        label: 'K-Int Jest Test Documentation',
-        url: 'https://folio-org.atlassian.net/wiki/spaces/ERM/pages/951713801/K-Int+Jest+Test+Documentation'
-      }
-    ],
-    role: [
-      {
-        role: 'Original Author & Maintainer',
-        timeframe: '2020-2026'
-      }
-    ],
-    timeframe: '2020-2026'
-  },
+
 ]
