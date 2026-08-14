@@ -1,6 +1,7 @@
 
 import * as Folio from '@/assets/projects/applications/folio-erm';
 import * as Dashboard from '@/assets/projects/applications/dashboard';
+import * as Serials from '@/assets/projects/applications/folio-serials';
 
 
 import { FolderGit2, Library, Sparkles } from "lucide-react";
@@ -14,7 +15,7 @@ export type ProjectMedia = {
   caption?: string
 }
 
-export type GithubLink = {
+export type Link = {
   label: string
   url: string
 }
@@ -28,7 +29,8 @@ export type Project = {
   media: ProjectMedia[]
   tags: string[]
   liveUrl?: string
-  githubUrl?: string | GithubLink[]
+  wikiLinks?: Link[],
+  githubUrl?: string | Link[]
   highlights?: string[]
   architecture?: string[]
   role?: string
@@ -88,6 +90,11 @@ export const PROJECTS_DATA: Project[] = [
         url: Folio.licenseForm,
         type: 'image',
         alt: 'ERM Licenses Form'
+      },
+      {
+        url: Folio.localKBAdmin,
+        type: 'image',
+        alt: 'Management screen for ERM Jobs'
       }
     ],
     githubUrl: [
@@ -134,7 +141,7 @@ export const PROJECTS_DATA: Project[] = [
       'Created "Dashboard" application for FOLIO designed to seamlessly show ERM data at a glance and be expandable to other FOLIO applications',
       'Managed integrations with external systems such as GoKB',
       'Large scale refactors over time to raise maintainability',
-      'stripes-connect to Tanstack query refactor',
+      'stripes-connect to Tanstack Query refactor',
       'stripes-kint-components library for better Stripes DX',
       'Helper hooks and functions donated back to stripes-core',
       'Testing pattern inversion with Jest'
@@ -177,11 +184,69 @@ export const PROJECTS_DATA: Project[] = [
         url: 'https://github.com/folio-org/ui-dashboard'
       },
     ],
-    tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'PostgreSQL', 'Tanstack Query'],
+    tags: ['React', 'Javascript', 'Stripes', 'Java', 'JSON Schema', 'Grails', 'PostgreSQL', 'Tanstack Query'],
     highlights: [
       'First solo app development from concept -> delivery',
       'Designed robust app interaction mechanism using JSON Schema and multi-interfaces',
       'First foray into Tanstack Query for per-widget querying'
+    ],
+  },
+  {
+    id: 'folio-serials',
+    title: 'FOLIO Serials App',
+    category: 'applications',
+    description: 'A FOLIO Application for managing Serials, templating titles, managinig predicted pieces',
+    media: [
+      {
+        url: Serials.formUnits,
+        type: 'gif',
+        alt: 'Dynamic time unit form'
+      },
+      {
+        url: Serials.formChronologyEnumeration,
+        type: 'gif',
+        alt: 'Dynamic chronology/enumeration form'
+      },
+      {
+        url: Serials.formPreview,
+        type: 'gif',
+        alt: 'Preview predicted pieces'
+      }
+    ],
+    githubUrl: [
+      {
+        label: 'Serials Backend',
+        url: 'https://github.com/folio-org/mod-serials-management'
+      },
+      {
+        label: 'Dashboard Frontend',
+        url: 'https://github.com/folio-org/ui-serials-management'
+      },
+    ],
+    wikiLinks: [
+      {
+        label: 'Wiki Home',
+        url: 'https://folio-org.atlassian.net/wiki/spaces/FOLIOtips/pages/155058265/Serials+Management'
+      },
+      {
+        label: 'Templating',
+        url: 'https://folio-org.atlassian.net/wiki/spaces/FOLIOtips/pages/154861687/Using+Templates'
+      },
+      {
+        label: 'Templating',
+        url: 'https://folio-org.atlassian.net/wiki/spaces/FOLIOtips/pages/154861687/Using+Templates'
+      },
+      {
+        label: 'Publication patterns',
+        url: 'https://folio-org.atlassian.net/wiki/spaces/FOLIOtips/pages/210468907/Setting+up+publication+patterns'
+      }
+    ],
+    tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'Handlebars', 'OOP', 'PostgreSQL'],
+    highlights: [
+      'Deep problem space -> solution space analysis and design',
+      'Working in depth with product owner and senior developer to pass on analysis and work on delivery',
+      'Focus on leadership and communication skills',
+      'Complex branching structure for domain designed in an extensible manner'
     ],
   },
   /*{

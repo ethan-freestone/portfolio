@@ -1,7 +1,7 @@
 import React from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import Autoplay from 'embla-carousel-autoplay'
-import { ArrowLeft, ExternalLink, FolderGit2, Play } from 'lucide-react'
+import { ArrowLeft, ExternalLink, FolderGit2, Play, Book } from 'lucide-react'
 import { PROJECTS_DATA } from '@/data/projects'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -130,7 +130,7 @@ function ProjectDetailView() {
         <div className="space-y-6">
           <Card className="p-6 space-y-6 border border-border bg-card/50">
             {/* Actions */}
-            <div className="space-y-2">
+            <div className="space-y-4">
               {project.liveUrl && (
                 <Button asChild className="w-full gap-2">
                   <a href={project.liveUrl} target="_blank" rel="noreferrer">
@@ -138,6 +138,7 @@ function ProjectDetailView() {
                   </a>
                 </Button>
               )}
+
               {/* Inside the sidebar card on the detail page */}
               {project.githubUrl && (
                 <div className="space-y-2">
@@ -155,23 +156,51 @@ function ProjectDetailView() {
                     <div className="space-y-2">
                       {project.githubUrl.map((repo) => (
                         <a
-                        key={repo.url}
-                        href={repo.url}
+                          key={repo.url}
+                          href={repo.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-start justify-between gap-2.5 p-2.5 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground text-xs font-mono transition-colors group"
+                        >
+                          <div className="flex items-start gap-2 min-w-0">
+                            <FolderGit2 className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />
+                            <span className="break-all whitespace-normal leading-tight text-foreground">
+                            {repo.label}
+                          </span>
+                          </div>
+                          <ExternalLink className="h-3 w-3 text-muted-foreground shrink-0 mt-0.5 opacity-70 group-hover:opacity-100 transition-opacity" />
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Wiki Links Section */}
+              {project.wikiLinks && project.wikiLinks.length > 0 && (
+                <div className="space-y-2">
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Documentation & Wiki
+                  </span>
+                  <div className="space-y-2">
+                    {project.wikiLinks.map((link) => (
+                      <a
+                        key={link.url}
+                        href={link.url}
                         target="_blank"
                         rel="noreferrer"
                         className="flex items-start justify-between gap-2.5 p-2.5 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground text-xs font-mono transition-colors group"
                       >
                         <div className="flex items-start gap-2 min-w-0">
-                          <FolderGit2 className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />
+                          <Book className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />
                           <span className="break-all whitespace-normal leading-tight text-foreground">
-                          {repo.label}
-                      </span>
-                    </div>
-                  <ExternalLink className="h-3 w-3 text-muted-foreground shrink-0 mt-0.5 opacity-70 group-hover:opacity-100 transition-opacity" />
-                </a>
-              ))}
-            </div>
-                  )}
+                            {link.label}
+                          </span>
+                        </div>
+                        <ExternalLink className="h-3 w-3 text-muted-foreground shrink-0 mt-0.5 opacity-70 group-hover:opacity-100 transition-opacity" />
+                      </a>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

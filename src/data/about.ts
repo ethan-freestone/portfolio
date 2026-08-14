@@ -32,18 +32,21 @@ export type ProfileData = {
   avatarUrl: string;
   location: string;
   bio: string;
+  bioDeep: string;
   skills: Skill[];
   experience: Experience[];
   hobbies: Hobby[];
 }
 
-export const PROFILE_DATA = {
+export const PROFILE_DATA: ProfileData = {
   name: 'Ethan Freestone',
   role: 'Full-Stack Software Engineer',
   avatarUrl: avatarImg,
   location: 'Sheffield, UK',
-  bio: "Building web applications, mainly in the libraries space since 2019. Delivering strong, robust front and back end solutions for customer's needs. Focus on maintainability, accessibility, great UX and modern frameworks.",
-
+  bio: "Building web applications, mainly in the libraries space since 2019. Delivering strong, robust front and back end solutions for customer's needs.",
+  bioDeep: "Always striving for neat, expandable and maintainable solutions, including looking for abstractions where they make sense. " +
+    "Focusing on accessibility and user needs first and foremost to deliver the best possible experience. " +
+    "Ensuring that development practises are kept and working on ways to improve developer experience over time.",
   skills: [
     {
       category: 'Frontend',
@@ -135,4 +138,4 @@ export const PROFILE_DATA = {
       description: 'Playing weekly and following my beloved West Ham'
     },
   ],
-} as ProfileData;
+};

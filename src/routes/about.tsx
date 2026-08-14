@@ -40,6 +40,9 @@ function About() {
           <p className="text-muted-foreground leading-relaxed max-w-2xl">
             {PROFILE_DATA.bio}
           </p>
+          <p className="text-muted-foreground leading-relaxed max-w-2xl">
+            {PROFILE_DATA.bioDeep}
+          </p>
         </div>
       </section>
 
