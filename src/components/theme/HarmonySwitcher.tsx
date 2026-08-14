@@ -34,7 +34,7 @@ const BASE_COLOR_KEY = 'theme-base-color'
 const CUSTOM_VALUE = '__custom__'
 
 export function HarmonySwitcher() {
-  const [harmony, setHarmony] = useState<Harmony>('analogous')
+  const [harmony, setHarmony] = useState<Harmony>('monochromatic')
   const [baseColor, setBaseColor] = useState<string>(BASE_COLORS[0].value)
   const [isCustom, setIsCustom] = useState(false)
 
