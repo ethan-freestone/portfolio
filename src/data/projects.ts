@@ -328,6 +328,12 @@ export const PROJECTS_DATA: Project[] = [
     title: 'PushKB',
     category: 'applications',
     description: 'A standalone microservice designed to harvest, cache, transform and push data from one system into another.',
+    descriptionDeep: [
+      'A microservice using reactive programming to rapidly ingest and cache records from a source, then transform them using a JSONPath extension library and push to a Destination.',
+      'Initial implementation uses GOKB as Source, FOLIO as Destination to push records and avoid long running job issues',
+      'Scalable both horizontally and vertically for rapid dissemination of resource updates across multiple FOLIO tenants at once',
+      'Designed to be extensible beyond these, potentially acting as an ITTT type API mediator in future.'
+    ],
     tags: [
       'Micronaut', 'Project Reactor', 'Reactive Programming', 'Scheduling', 'Scalability'
     ],
@@ -336,6 +342,12 @@ export const PROJECTS_DATA: Project[] = [
       'Getting to grips with reactive programming principles',
       'Designing robust algorithms for ensuring no data loss',
       'Scalability engineering for running multiple PushKB microservices in parallel'
+    ],
+    githubUrl: [
+      {
+        label: 'PushKB Repository',
+        url: 'https://gitlab.com/knowledge-integration/libraries/pushkb'
+      },
     ],
     role: [
       {
@@ -358,7 +370,13 @@ export const PROJECTS_DATA: Project[] = [
       "Learning how to project manage solo",
       "Understanding how a \"product\" launch can affect usage",
     ],
-    timeframe: "2022"
+    role: [
+      {
+        role: 'Original Author',
+        timeframe: '2022'
+      },
+    ],
+    timeframe: "2022",
   },
   /*
     // --- LIBRARIES ---
