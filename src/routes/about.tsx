@@ -17,7 +17,7 @@ function About() {
   return (
     <div className="container mx-auto max-w-4xl px-4 py-12 space-y-12">
 
-      <section className="flex flex-ycol md:flex-row items-center md:items-start gap-8 border-b pb-8">
+      <section className="flex flex-col md:flex-row items-center md:items-start gap-8 border-b pb-8">
         <Avatar className="h-32 w-32 shrink-0 border-2 border-border shadow-md">
           <AvatarImage
             src={PROFILE_DATA.avatarUrl}

@@ -82,24 +82,24 @@ export function HarmonySwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col md:flex-row md:items-center gap-2 w-full md:w-auto">
       <Select
         value={isCustom ? CUSTOM_VALUE : baseColor}
         onValueChange={handleBaseColorSelect}
       >
-        <SelectTrigger className="w-40" aria-label="Base color">
+        <SelectTrigger className="w-full md:w-40" aria-label="Base color">
           <SelectValue placeholder="Base color" />
         </SelectTrigger>
         <SelectContent>
           {BASE_COLORS.map((c) => (
             <SelectItem key={c.value} value={c.value}>
-              <span className="flex items-center gap-2">
-                <span
-                  className="h-3 w-3 rounded-full border border-border"
-                  style={{ backgroundColor: c.value }}
-                />
-                {c.label}
-              </span>
+            <span className="flex items-center gap-2">
+              <span
+                className="h-3 w-3 rounded-full border border-border"
+                style={{ backgroundColor: c.value }}
+              />
+              {c.label}
+            </span>
             </SelectItem>
           ))}
           <SelectItem value={CUSTOM_VALUE}>Custom…</SelectItem>
@@ -116,7 +116,7 @@ export function HarmonySwitcher() {
       )}
 
       <Select value={harmony} onValueChange={handleHarmonyChange}>
-        <SelectTrigger className="w-45" aria-label="Color harmony">
+        <SelectTrigger className="w-full md:w-[180px]" aria-label="Color harmony">
           <SelectValue placeholder="Select harmony" />
         </SelectTrigger>
         <SelectContent>
