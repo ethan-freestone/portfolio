@@ -139,7 +139,7 @@ export const PROFILE_DATA: ProfileData = {
     },
     {
       Icon: Cat,
-      name: 'Animals'
+      name: 'Animals',
       description: 'A total sucker for any and all creatures, fluffy, scaly or otherwise! Can often be found in an evening relaxing and watching a film cuddled with my two cats. (Kitty photos available on request!)'
     },
   ],
