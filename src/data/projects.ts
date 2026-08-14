@@ -4,6 +4,7 @@ import * as Serials from '@/assets/projects/applications/folio-serials';
 import * as PushKB from '@/assets/projects/applications/pushkb';
 import * as DocDel from '@/assets/projects/applications/docdel';
 import * as OA from '@/assets/projects/applications/folio-oa';
+import * as ILL from '@/assets/projects/applications/ill';
 
 import { FolderGit2, FolderKanban, Library, type LucideIcon, Sparkles } from "lucide-react";
 
@@ -198,12 +199,14 @@ export const PROJECTS_DATA: Project[] = [
     highlights: [
       'Lead app development for many years on the front and back end.',
       'Created "Dashboard" application for FOLIO designed to seamlessly show ERM data at a glance and be expandable to other FOLIO applications',
+      'Representing Knowledge Integration at WolfCon 2025',
       'Managed integrations with external systems such as GoKB',
       'Large scale refactors over time to raise maintainability',
+      'Heavily involved in Grails 4 -> 5 and 5 -> 6 migrations',
       'stripes-connect to Tanstack Query refactor',
       'stripes-kint-components library for better Stripes DX',
       'Helper hooks and functions donated back to stripes-core',
-      'Testing pattern inversion with Jest'
+      'Testing pattern inversion with Jest',
     ],
     timeframe: "2019-2026",
     liveUrl: 'https://folio-etesting-snapshot-diku.ci.folio.org/',
@@ -215,10 +218,96 @@ export const PROJECTS_DATA: Project[] = [
     ]
   },
   {
+    id: 'ill',
+    title: 'ILL Application',
+    category: 'applications',
+    description: 'A comprehensive resource sharing and Interlibrary Loan (ILL) platform built on ISO18626, enabling automated consortial borrowing, lending, and request fulfillment across disparate library systems.',
+    descriptionDeep: [
+      'Initially heavily involved in Project ReShare, mod-ill was forked from mod-rs and taken forward with a raft of new features.',
+      'Engineered to facilitate peer-to-peer resource sharing and consortial borrowing, enabling libraries to fulfill patron requests for materials held outside their local network.',
+      'Features state-driven workflow managing the complete lifecycle for both Requester and Supplier flows, including auto-routing and rota building through to shipping, receiving, renewals, and returns.',
+      'Includes a centralized Directory service to manage institutional metadata, library configurations, copyright compliance rules, and host LMS integration settings.',
+      'Integrates with a Shared Index to execute real-time availability lookups and intelligent load-balancing across participating supplier libraries.'
+    ],
+    media: [
+      {
+        url: ILL.supplierFlow,
+        type: 'gif',
+        alt: 'Supplier flow taking an ILL request through fulfillment'
+      },
+      {
+        url: ILL.requesterFlow,
+        type: 'gif',
+        alt: 'Requester flow on receipt of item.'
+      },
+      {
+        url: ILL.directory,
+        alt: 'Directory application lookup screen'
+      },
+      {
+        url: ILL.directoryView,
+        alt: 'Directory record'
+      },
+      {
+        url: ILL.directoryView,
+        alt: 'Directory record'
+      },
+      {
+        url: ILL.adminLibraries,
+        alt: 'Administrative management screen for Institution records'
+      },
+      {
+        url: ILL.institutionSwitcher,
+        alt: 'ILL allows soft-multitenancy via an "institution switcher"'
+      },
+      {
+        url: ILL.copyrightSettings,
+        type: 'gif',
+        alt: 'Stripes SASQ querying hooked up in the settings screen'
+      },
+      {
+        url: ILL.copyrightSettings,
+        type: 'gif',
+        alt: 'Stripes SASQ querying hooked up in the settings screen'
+      },
+      {
+        url: ILL.hostLmsSettings,
+        alt: 'Neat and tidy settings screens across the multitude of functionality switches in ILL'
+      },
+      {
+        url: ILL.sharedIndex,
+        alt: 'Real time availability checking via a shared index'
+      }
+    ],
+    role: [
+      {
+        role: 'ReShare Developer',
+        timeframe: '2019-2022'
+      },
+      {
+        role: 'ILL Senior Engineer and Frontend Lead',
+        timeframe: '2024-2026'
+      }
+    ],
+    tags: ['Grails', 'ISO Standards', 'React', 'Stripes', 'PostgreSQL'],
+    highlights: [
+      'Sitting on the ISO Standards committee for ISO 18626',
+      'Implementing an ISO standard and discussing interoperability',
+      'Developing new Stripes patterns for standard addresses',
+      'Working deeply with an engineering team to productise ILL',
+      'Representing Knowledge Integration at WolfCon 2025'
+    ]
+  },
+  {
     id: 'folio-dashboard',
     title: 'FOLIO Dashboard App',
     category: 'applications',
     description: 'An extensible dashboard app for FOLIO App integrations',
+    descriptionDeep: [
+      'Uses Okapi (okapi-facade in Eureka) to surface a multi-interface',
+      'Implementing apps can supply varying WidgetDefinitions to this interface, choosing from a select list of WidgetTypes',
+      'From there a form is dynamically generated for the user, and a user can create WidgetInstances configuring from the options made available via the WidgetDefinition'
+    ],
     media: [
       {
         url: Dashboard.dragDropGif,
