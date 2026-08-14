@@ -1,0 +1,17 @@
+export { default as appshellDemo } from './appshell-demo.gif';
+export { default as boxesHalfway } from './boxes-halfway.png';
+export { default as boxesStripes } from './boxes-stripes.png';
+export { default as buttons } from './buttons.png';
+export { default as checkbox } from './checkbox.png';
+export { default as chips } from './chips.png';
+export { default as combobox } from './combobox.png';
+export { default as datatable } from './datatable.png';
+export { default as dateTimePicker } from './date-time-picker.png';
+export { default as dialogDemo } from './dialog-demo.gif';
+export { default as dropdown } from './dropdown.png';
+export { default as formPageShellDemo } from './form-page-shell-demo.gif';
+export { default as list } from './list.png';
+export { default as lookupPageShellDemo } from './lookup-page-shell-demo.gif';
+export { default as multiComboboxDemo } from './multi-combobox-demo.gif';
+export { default as select } from './select.png';
+export { default as toastDemo } from './toast-demo.gif';

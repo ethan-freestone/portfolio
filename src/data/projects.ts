@@ -1,10 +1,16 @@
-import * as Folio from '@/assets/projects/applications/folio-erm';
-import * as Dashboard from '@/assets/projects/applications/dashboard';
-import * as Serials from '@/assets/projects/applications/folio-serials';
-import * as PushKB from '@/assets/projects/applications/pushkb';
-import * as DocDel from '@/assets/projects/applications/docdel';
-import * as OA from '@/assets/projects/applications/folio-oa';
-import * as ILL from '@/assets/projects/applications/ill';
+import {
+  Folio,
+  Dashboard,
+  Serials,
+  ILL,
+  OA,
+  DocDel,
+  PushKB
+} from '@/assets/projects/applications';
+
+import {
+ Halfway
+} from '@/assets/projects/libraries';
 
 import { FolderGit2, FolderKanban, Library, type LucideIcon, Sparkles } from "lucide-react";
 
@@ -41,12 +47,12 @@ type BaseProject = {
   tags: string[]
   role?: Role
   timeframe?: string
+  wikiLinks?: Link[]
 }
 
 export type ApplicationProject = BaseProject & {
   category: 'applications'
   liveUrl?: string
-  wikiLinks?: Link[]
   githubUrl?: string | Link[]
   architecture?: string[]
   highlights?: string[]
@@ -655,13 +661,115 @@ export const PROJECTS_DATA: Project[] = [
       id: 'halfway-ui',
       title: 'Halfway UI',
       category: 'libraries',
-      description: 'Shared heeadless UI component and utility library powering microservice frontends.',
-      tags: ['TypeScript', 'Headless Components', 'ViTest', 'Semantic Release', 'RadixUI'],
+      description: 'Shared headless UI component and utility library powering microservice frontends.',
+      descriptionDeep: [
+        'Halfway is designed to be a component library which can allow a frontend application to mimic the look and feel "well enough" for any of a number of LMS systems',
+        'The premise is "write once, maintain once, use everywhere", allowing the applications to fit nicely standalone, alongside other OpenRS components, or in a FOLIO environment',
+        'Focus is on consistent, modern looking and feeling, accessible components with intuitive APIs for Developers to implement.'
+      ],
+      tags: ['TypeScript', 'Headless Components', 'ViTest', 'Semantic Release', 'RadixUI', 'Storybook'],
       highlights: [
         'Fully accessible and easy to use component library based on Radix',
         'Implementation allows themes to fully decide layout as well as style, driving different UX in order to fit within multiple LMS systems',
         'Semi-Automated semantic releases via Gitlab Pipelines',
       ],
-      githubUrl: 'https://gitlab.com/knowledge-integration/libraries/lib-halfway-ui'
+      githubUrl: 'https://gitlab.com/knowledge-integration/libraries/lib-halfway-ui',
+      media: [
+        {
+          url: Halfway.appshellDemo,
+          type: 'gif',
+          alt: 'AppShell layout and responsive frame demo'
+        },
+        {
+          url: Halfway.formPageShellDemo,
+          type: 'gif',
+          alt: 'Form page shell layout demonstration'
+        },
+        {
+          url: Halfway.lookupPageShellDemo,
+          type: 'gif',
+          alt: 'Lookup page shell flow and layout demo'
+        },
+        {
+          url: Halfway.multiComboboxDemo,
+          type: 'gif',
+          alt: 'Multi-combobox component interaction'
+        },
+        {
+          url: Halfway.dialogDemo,
+          type: 'gif',
+          alt: 'Accessible dialog modal overlay demo'
+        },
+        {
+          url: Halfway.toastDemo,
+          type: 'gif',
+          alt: 'Toast notification system demo'
+        },
+        {
+          url: Halfway.datatable,
+          type: 'image',
+          alt: 'Data table component styling and structure'
+        },
+        {
+          url: Halfway.dateTimePicker,
+          type: 'image',
+          alt: 'Date & time picker component'
+        },
+        {
+          url: Halfway.combobox,
+          type: 'image',
+          alt: 'Combobox input component'
+        },
+        {
+          url: Halfway.dropdown,
+          type: 'image',
+          alt: 'Dropdown menu component'
+        },
+        {
+          url: Halfway.select,
+          type: 'image',
+          alt: 'Select dropdown input'
+        },
+        {
+          url: Halfway.buttons,
+          type: 'image',
+          alt: 'Button variants and states'
+        },
+        {
+          url: Halfway.checkbox,
+          type: 'image',
+          alt: 'Checkbox component'
+        },
+        {
+          url: Halfway.chips,
+          type: 'image',
+          alt: 'Chip and tag components'
+        },
+        {
+          url: Halfway.list,
+          type: 'image',
+          alt: 'List component layout'
+        },
+        {
+          url: Halfway.boxesHalfway,
+          type: 'image',
+          alt: 'Halfway layout primitives overview'
+        },
+        {
+          url: Halfway.boxesStripes,
+          type: 'image',
+          alt: 'Stripes-inspired layout boxes comparison'
+        }
+      ],
+      wikiLinks: [
+        {
+          url: 'https://gitlab.com/knowledge-integration/libraries/lib-halfway-ui/-/blob/v0.6.1/README.md',
+          label: 'HalfwayUI README'
+        },
+        {
+          url: 'https://gitlab.com/knowledge-integration/libraries/lib-halfway-ui/-/blob/v0.6.1/README.md',
+          label: 'HalfwayUI README'
+        },
+      ]
     },
 ]

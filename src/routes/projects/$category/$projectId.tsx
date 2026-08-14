@@ -234,8 +234,8 @@ function ProjectDetailView() {
                 </div>
               )}
 
-              {/* Wiki Links Section (Shared across Apps and Features) */}
-              {(project.category === 'applications' || project.category === 'features') && project.wikiLinks && project.wikiLinks.length > 0 && (
+              {/* Wiki Links Section */}
+              {project.wikiLinks && project.wikiLinks.length > 0 && (
                 <div className="space-y-2">
                   <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     Documentation & Wiki
