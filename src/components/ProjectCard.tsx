@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from '@tanstack/react-router'
 import Autoplay from 'embla-carousel-autoplay'
-import { ExternalLink, Github, Maximize2, Play } from 'lucide-react'
+import { Maximize2, Play } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -81,19 +81,6 @@ export function ProjectCard({ project }: { project: Project }) {
           >
             <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
           </Link>
-
-          <div className="flex items-center gap-2">
-            {project.githubUrl && (
-              <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground">
-                <Github className="h-4 w-4" />
-              </a>
-            )}
-            {project.liveUrl && (
-              <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground">
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            )}
-          </div>
         </div>
 
         <CardDescription className="text-sm text-muted-foreground leading-relaxed">

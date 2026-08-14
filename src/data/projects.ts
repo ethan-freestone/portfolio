@@ -13,6 +13,11 @@ export type ProjectMedia = {
   caption?: string
 }
 
+export type GithubLink = {
+  label: string
+  url: string
+}
+
 export type Project = {
   id: string
   title: string
@@ -22,7 +27,7 @@ export type Project = {
   media: ProjectMedia[]
   tags: string[]
   liveUrl?: string
-  githubUrl?: string
+  githubUrl?: string | GithubLink[]
   highlights?: string[]
   architecture?: string[]
   role?: string
@@ -84,12 +89,49 @@ export const PROJECTS_DATA: Project[] = [
         alt: 'ERM Licenses Form'
       }
     ],
+    githubUrl: [
+      {
+        label: 'Agreements Backend',
+        url: 'https://github.com/folio-org/mod-agreements'
+      },
+      {
+        label: 'Licenses Backend',
+        url: 'https://github.com/folio-org/mod-licenses'
+      },
+      {
+        label: 'Agreements Frontend',
+        url: 'https://github.com/folio-org/ui-agreements'
+      },
+      {
+        label: 'Licenses Frontend',
+        url: 'https://github.com/folio-org/ui-licenses'
+      },
+      {
+        label: 'Local KB Management Frontend',
+        url: 'https://github.com/folio-org/ui-local-kb-admin'
+      },
+      {
+        label: 'ERM Comparisons Frontend',
+        url: 'https://github.com/folio-org/ui-erm-comparisons'
+      },
+      {
+        label: 'ERM Resource Plugin',
+        url: 'https://github.com/folio-org/ui-plugin-find-eresource'
+      },
+      {
+        label: 'Agreements Plugin',
+        url: 'https://github.com/folio-org/ui-plugin-find-agreement'
+      },
+      {
+        label: 'Licenses Plugin',
+        url: 'https://github.com/folio-org/ui-plugin-find-license'
+      }
+    ],
     tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'PostgreSQL'],
     highlights: [
       'Lead app development for many years on the front and back end.',
       'Created "Dashboard" application for FOLIO designed to seamlessly show ERM data at a glance and be expandable to other FOLIO applications',
       'Managed integrations with external systems such as GoKB'
-
     ],
   },
   /*{

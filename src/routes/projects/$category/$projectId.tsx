@@ -1,7 +1,7 @@
 import React from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import Autoplay from 'embla-carousel-autoplay'
-import { ArrowLeft, ExternalLink, Github, Play } from 'lucide-react'
+import { ArrowLeft, ExternalLink, FolderGit2, Play } from 'lucide-react'
 import { PROJECTS_DATA } from '@/data/projects'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -138,12 +138,35 @@ function ProjectDetailView() {
                   </a>
                 </Button>
               )}
+              {/* Inside the sidebar card on the detail page */}
               {project.githubUrl && (
-                <Button asChild variant="outline" className="w-full gap-2">
-                  <a href={project.githubUrl} target="_blank" rel="noreferrer">
-                    <Github className="h-4 w-4" /> Source Code
-                  </a>
-                </Button>
+                <div className="space-y-2">
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Source Repositories
+                  </span>
+
+                  {typeof project.githubUrl === 'string' ? (
+                    <Button asChild variant="outline" className="w-full justify-start gap-2">
+                      <a href={project.githubUrl} target="_blank" rel="noreferrer">
+                        <FolderGit2 className="h-4 w-4" /> Repository
+                      </a>
+                    </Button>
+                  ) : (
+                    <div className="space-y-1.5">
+                      {project.githubUrl.map((repo) => (
+                        <Button key={repo.url} asChild variant="outline" size="sm" className="w-full justify-between gap-2 text-xs">
+                          <a href={repo.url} target="_blank" rel="noreferrer">
+                            <span className="flex wrap items-center gap-2 font-mono">
+                              <FolderGit2 className="h-3.5 w-3.5" />
+                              {repo.label}
+                            </span>
+                            <ExternalLink className="h-3 w-3 opacity-60" />
+                          </a>
+                        </Button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
 
