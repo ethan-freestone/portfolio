@@ -3,6 +3,7 @@ import * as Dashboard from '@/assets/projects/applications/dashboard';
 import * as Serials from '@/assets/projects/applications/folio-serials';
 import * as PushKB from '@/assets/projects/applications/pushkb';
 import * as DocDel from '@/assets/projects/applications/docdel';
+import * as OA from '@/assets/projects/applications/folio-oa';
 
 import { FolderGit2, FolderKanban, Library, type LucideIcon, Sparkles } from "lucide-react";
 
@@ -436,6 +437,79 @@ export const PROJECTS_DATA: Project[] = [
       },
     ],
     timeframe: "2026",
+  },
+  {
+    id: 'folio-oa',
+    title: 'FOLIO Open Access',
+    category: 'applications',
+    description: 'A dedicated FOLIO module for tracking Open Access publication requests, article processing charges (APCs), correspondence, and institutional funding workflows.',
+    descriptionDeep: [
+      'Built within the FOLIO ecosystem to support libraries and research institutions in managing their Open Access workflows from initial request to publisher settlement.',
+      'Includes flexible data models for tracking publication requests, publication types, journals, external authors, and associated organization agreements/entitlements.',
+      'Provides tight integration with existing FOLIO apps, pulling agreement data from mod-agreements and organisation metadata from mod-organizations.'
+    ],
+     media: [
+      {
+        url: OA.requestForm,
+        type: 'image',
+        alt: 'Open Access Request Form'
+      },
+      {
+        url: OA.checklistSettings,
+        type: 'image',
+        alt: 'Set up dynamic checklist items for APC requests'
+      },
+       {
+         url: OA.checklist,
+         type: 'image',
+         alt: 'Apply checklist items to a request'
+       },
+       {
+         url: OA.journalTypedown,
+         type: 'image',
+         alt: 'Journal typedown, create and match functionality'
+       },
+       {
+         url: OA.userTypedown,
+         type: 'image',
+         alt: 'User typedown, create and match functionality'
+       }
+    ],
+    liveUrl: 'https://folio-etesting-snapshot-diku.ci.folio.org/oa',
+    githubUrl: [
+      {
+        label: 'OA Backend',
+        url: 'https://github.com/folio-org/mod-oa'
+      },
+      {
+        label: 'OA Frontend',
+        url: 'https://github.com/folio-org/ui-oa'
+      }
+    ],
+    tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'PostgreSQL'],
+    highlights: [
+      'Architected end-to-end publication request and APC payment workflows from early stage concepts through production',
+      'Integrated with FOLIO Agreements for greater cross-app functionality',
+      'Designed new components and helper patterns for Stripes applications',
+      'Created an NPM library to sit between Stripes and developers to ease development of new apps and allow rapid development of features across FOLIO flower release apps and non-flower release apps.'
+    ],
+    role: [
+      {
+        role: 'Tech Lead / Senior Developer',
+        timeframe: '2021-2026'
+      }
+    ],
+    timeframe: '2021-2026',
+    wikiLinks: [
+      {
+        label: 'FOLIO Reference Environments (Credentials)',
+        url: 'https://folio-org.atlassian.net/wiki/spaces/FOLIJET/pages/513704182/Reference+environments'
+      },
+      {
+        label: 'Open Access App Documentation',
+        url: 'https://folio-org.atlassian.net/wiki/spaces/FOLIOtips/pages/5673362/Open+Access+Requests'
+      }
+    ]
   },
   {
     id: 'quote-wall',
