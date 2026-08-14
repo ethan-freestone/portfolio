@@ -1,15 +1,23 @@
+import packages from '@/assets/projects/applications/folio-erm/packages.png'
+import pkg from '@/assets/projects/applications/folio-erm/package.png'
+
 import { FolderGit2, Library, Sparkles } from "lucide-react";
 
 export type ProjectCategory = 'applications' | 'libraries' | 'features'
+
+export type ProjectMedia = {
+  url: string
+  type?: 'image' | 'gif'
+  alt: string
+  caption?: string
+}
 
 export type Project = {
   id: string
   title: string
   category: ProjectCategory
   description: string
-  // Supports local image imports or static public paths (.gif, .png, .webp)
-  mediaUrl: string
-  mediaType?: 'image' | 'gif'
+  media: ProjectMedia[] // Array of images/GIFs for the carousel
   tags: string[]
   liveUrl?: string
   githubUrl?: string
@@ -29,13 +37,24 @@ export const PROJECTS_DATA: Project[] = [
     title: 'FOLIO ERM App Suite',
     category: 'applications',
     description: 'Electronic Resource Management suite built for libraries to track their agreements and licenses.',
-    mediaUrl: 'https://placehold.co/800x450/173a40/4fb8b2?text=ERM+App+Demo+GIF',
-    mediaType: 'gif',
+    media: [
+      {
+        url: packages,
+        type: 'image',
+        alt: 'ERM Package Manager'
+      },
+      {
+        url: pkg,
+        type: 'image',
+        alt: 'ERM Package View'
+      }
+    ],
     tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'PostgreSQL'],
     highlights: [
       'Lead app development for many years on the front and back end.',
       'Created "Dashboard" application for FOLIO designed to seamlessly show ERM data at a glance and be expandable to other FOLIO applications',
       'Managed integrations with external systems such as GoKB'
+
     ],
   },
   /*{
