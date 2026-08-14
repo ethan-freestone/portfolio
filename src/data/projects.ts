@@ -839,6 +839,10 @@ export const PROJECTS_DATA: Project[] = [
     timeframe: '2026',
     wikiLinks: [
       {
+        label: 'Agreements implementation documentation',
+        url: 'https://github.com/folio-org/mod-agreements/blob/v7.3.4/doc/AccessControl/AccessControl.md'
+      },
+      {
         url: 'https://blog.kihosting.net/blog/2026-06-09-foundry-platform-services-docking-layer/',
         label: 'Foundry platform-services docking-layer note'
       }
