@@ -17,12 +17,12 @@ export const Route = createFileRoute('/cv')({ component: CV })
 // ---------------------------------------------------------------------------
 const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'stripes-kint-components'] as const
 
-// Turn this down (e.g. 0.9) if a new job/project pushes the sheet past one
+// Turn this down if a new job/project pushes the sheet past one
 // page; turn it up if there's spare room. `zoom` scales layout + text
 // together and is respected by Chrome's print-to-PDF, so what you see on
 // screen (at sm+ widths) is what you'll get in the PDF. It's intentionally
 // NOT applied below the `sm` breakpoint — see the zoom class on the sheet.
-const CV_SCALE = 0.88
+const CV_SCALE = 0.87
 
 // Group experience entries by company (supports any number of companies,
 // each with any number of roles), most recent company/role first.
