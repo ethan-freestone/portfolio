@@ -3,6 +3,7 @@ import {
   Building2,
   Code2,
   Gamepad2,
+  GraduationCap,
   MapPin,
   Briefcase,
 } from 'lucide-react'
@@ -108,27 +109,65 @@ function About() {
         </div>
 
         <div className="space-y-4">
-          {PROFILE_DATA.experience.map((job) => (
-            <Card key={`${job.company}-${job.role}`}>
-              <CardHeader className="pb-2">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                  <CardTitle className="text-lg font-bold">{job.role}</CardTitle>
-                  <span className="text-xs font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full w-fit">
-                    {job.period}
-                  </span>
-                </div>
-                <CardDescription className="text-sm font-medium text-foreground/80 flex items-center gap-1.5 pt-0.5">
-                  <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
-                  {job.company}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {job.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+          {/* Most recent role first */}
+          {[...PROFILE_DATA.experience]
+            .sort((a, b) => b.startDate.localeCompare(a.startDate))
+            .map((job) => (
+              <Card key={`${job.company}-${job.role}`}>
+                <CardHeader className="pb-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                    <CardTitle className="text-lg font-bold">{job.role}</CardTitle>
+                    <span className="text-xs font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full w-fit">
+                      {job.period}
+                    </span>
+                  </div>
+                  <CardDescription className="text-sm font-medium text-foreground/80 flex items-center gap-1.5 pt-0.5">
+                    <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
+                    {job.company}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {job.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <div className="flex items-center gap-2">
+          <GraduationCap className="h-5 w-5 text-primary" />
+          <h2 className="text-2xl font-bold tracking-tight">Education</h2>
+        </div>
+
+        <div className="space-y-4">
+          {[...PROFILE_DATA.education]
+            .sort((a, b) => b.startDate.localeCompare(a.startDate))
+            .map((edu) => (
+              <Card key={`${edu.institution}-${edu.qualification}`}>
+                <CardHeader className="pb-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                    <CardTitle className="text-lg font-bold">{edu.qualification}</CardTitle>
+                    <span className="text-xs font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full w-fit">
+                      {edu.period}
+                    </span>
+                  </div>
+                  <CardDescription className="text-sm font-medium text-foreground/80 flex items-center gap-1.5 pt-0.5">
+                    <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
+                    {edu.institution}
+                  </CardDescription>
+                </CardHeader>
+                {edu.description && (
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {edu.description}
+                    </p>
+                  </CardContent>
+                )}
+              </Card>
+            ))}
         </div>
       </section>
 
