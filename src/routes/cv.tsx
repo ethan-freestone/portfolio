@@ -17,6 +17,12 @@ export const Route = createFileRoute('/cv')({ component: CV })
 // ---------------------------------------------------------------------------
 const CV_PROJECT_IDS = ['folio-erm', 'access-control-engine', 'stripes-kint-components'] as const
 
+// Turn this down (e.g. 0.9) if a new job/project pushes the sheet past one
+// page; turn it up if there's spare room. `zoom` scales layout + text
+// together and is respected by Chrome's print-to-PDF, so what you see on
+// screen is what you'll get in the PDF.
+const CV_SCALE = 0.95
+
 // Group experience entries by company (supports any number of companies,
 // each with any number of roles), most recent company/role first.
 function groupExperienceByCompany(experience: Experience[]) {
@@ -30,6 +36,33 @@ function groupExperienceByCompany(experience: Experience[]) {
       roles: [...roles].sort((a, b) => b.startDate.localeCompare(a.startDate)),
     }))
     .sort((a, b) => b.roles[0].startDate.localeCompare(a.roles[0].startDate))
+}
+
+// A company's overall period, derived from its roles' sort keys rather than
+// their free-text `period` strings (which aren't formatted consistently).
+function companyPeriod(roles: Experience[]) {
+  const start = roles[roles.length - 1].startDate.slice(0, 4)
+  const latestEnd = roles[0].endDate
+  const end = latestEnd === 'Present' ? 'Present' : latestEnd.slice(0, 4)
+  return `${start}–${end}`
+}
+
+// Merge bullets across a company's roles (most recent role's bullets first),
+// dropping near-duplicates and capping the total so a promotion doesn't
+// double the space a single-role company would take.
+function mergedCompanyBullets(roles: Experience[], maxBullets = 5) {
+  const seen = new Set<string>()
+  const bullets: string[] = []
+  for (const role of roles) {
+    for (const bullet of role.bullets ?? [role.description]) {
+      const key = bullet.trim().toLowerCase()
+      if (seen.has(key)) continue
+      seen.add(key)
+      bullets.push(bullet)
+      if (bullets.length >= maxBullets) return bullets
+    }
+  }
+  return bullets
 }
 
 function CV() {
@@ -65,6 +98,7 @@ function CV() {
           print:max-w-none print:border-none print:shadow-none print:rounded-none
           print:bg-white print:text-black print:px-0 print:py-0
         "
+        style={{ zoom: CV_SCALE }}
       >
         {/* Header */}
         <header className="flex items-start justify-between gap-6 pb-5 border-b border-border print:border-black/20">
@@ -109,26 +143,24 @@ function CV() {
               <div className="space-y-4">
                 {experienceByCompany.map(({ company, roles }) => (
                   <div key={company}>
-                    <p className="text-sm font-bold text-muted-foreground print:text-black/70 mb-1">
+                    <div className="flex items-baseline justify-between mb-1">
+                      <p className="text-sm font-bold">
+                        {roles.length > 1
+                          ? [...roles].reverse().map((r) => r.role).join(' \u2192 ')
+                          : roles[0].role}
+                      </p>
+                      <span className="text-xs text-muted-foreground print:text-black/70 shrink-0 ml-3">
+                        {roles.length > 1 ? companyPeriod(roles) : roles[0].period}
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground print:text-black/70 mb-1.5">
                       {company}
                     </p>
-                    <div className="space-y-3">
-                      {roles.map((role) => (
-                        <div key={`${company}-${role.role}`}>
-                          <div className="flex items-baseline justify-between mb-1">
-                            <p className="text-sm font-bold">{role.role}</p>
-                            <span className="text-xs text-muted-foreground print:text-black/70 shrink-0 ml-3">
-                              {role.period}
-                            </span>
-                          </div>
-                          <ul className="space-y-1 text-sm text-muted-foreground print:text-black/85 leading-snug list-disc list-outside pl-4">
-                            {(role.bullets ?? [role.description]).map((bullet) => (
-                              <li key={bullet}>{bullet}</li>
-                            ))}
-                          </ul>
-                        </div>
+                    <ul className="space-y-1 text-sm text-muted-foreground print:text-black/85 leading-snug list-disc list-outside pl-4">
+                      {(roles.length > 1 ? mergedCompanyBullets(roles) : roles[0].bullets ?? [roles[0].description]).map((bullet) => (
+                        <li key={bullet}>{bullet}</li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                 ))}
               </div>
@@ -205,6 +237,13 @@ function CV() {
             </div>
           </div>
         </div>
+
+        <footer className="mt-6 pt-3 border-t border-border print:border-black/20 text-center">
+          <p className="text-xs text-muted-foreground print:text-black/70">
+            Full write-ups, screenshots and live demos for these projects (and more) at{' '}
+            <span className="font-semibold text-primary print:text-black">portfolio.efreestone.co.uk</span>
+          </p>
+        </footer>
       </div>
 
       {/* @page can only be set from real CSS, not Tailwind utilities */}

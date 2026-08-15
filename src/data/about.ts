@@ -102,6 +102,7 @@ export const PROFILE_DATA: ProfileData = {
         'GitHub Actions',
         'Vite',
         'Kubernetes',
+        'Docker',
         'Bruno/Postman',
         'Conventional Commits'
       ],
