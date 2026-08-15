@@ -20,7 +20,8 @@ const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'stripes
 // Turn this down (e.g. 0.9) if a new job/project pushes the sheet past one
 // page; turn it up if there's spare room. `zoom` scales layout + text
 // together and is respected by Chrome's print-to-PDF, so what you see on
-// screen is what you'll get in the PDF.
+// screen (at sm+ widths) is what you'll get in the PDF. It's intentionally
+// NOT applied below the `sm` breakpoint — see the zoom class on the sheet.
 const CV_SCALE = 0.89
 
 // Group experience entries by company (supports any number of companies,
@@ -76,7 +77,7 @@ function CV() {
     .filter((p): p is NonNullable<typeof p> => Boolean(p))
 
   return (
-    <div className="page-wrap py-10 print:py-0">
+    <div className="page-wrap py-6 sm:py-10 print:py-0">
       {/* Toolbar — never printed */}
       <div className="no-print print:hidden mb-6 flex items-center justify-between gap-4 flex-wrap">
         <p className="text-sm text-muted-foreground">
@@ -92,36 +93,37 @@ function CV() {
       {/* CV sheet */}
       <div
         className="
-          cv-sheet mx-auto max-w-[210mm] bg-card text-foreground
+          cv-sheet mx-auto w-full max-w-[210mm] bg-card text-foreground
           border border-border rounded-lg shadow-sm
-          px-10 py-10
+          px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10
           print:max-w-none print:border-none print:shadow-none print:rounded-none
           print:bg-white print:text-black print:px-0 print:py-0
+          zoom-[1] sm:zoom-(--cv-zoom) print:zoom-(--cv-zoom)
         "
-        style={{ zoom: CV_SCALE }}
+        style={{ '--cv-zoom': CV_SCALE } as React.CSSProperties}
       >
         {/* Header */}
-        <header className="flex items-start justify-between gap-6 pb-5 border-b border-border print:border-black/20">
+        <header className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6 pb-5 border-b border-border print:border-black/20">
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight">{PROFILE_DATA.name}</h1>
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{PROFILE_DATA.name}</h1>
             <p className="text-base font-medium text-primary print:text-black mt-0.5">
               {PROFILE_DATA.role}
             </p>
           </div>
-          <div className="text-right text-xs text-muted-foreground print:text-black/70 space-y-1 shrink-0">
-            <div className="flex items-center justify-end gap-1.5">
+          <div className="text-left sm:text-right text-xs text-muted-foreground print:text-black/70 space-y-1 shrink-0">
+            <div className="flex items-center justify-start sm:justify-end gap-1.5">
               <MapPin className="h-3 w-3" />
               <span>{PROFILE_DATA.location}</span>
             </div>
-            <div className="flex items-center justify-end gap-1.5">
+            <div className="flex items-center justify-start sm:justify-end gap-1.5">
               <Globe className="h-3 w-3" />
               <span>portfolio.efreestone.co.uk</span>
             </div>
-            <div className="flex items-center justify-end gap-1.5">
+            <div className="flex items-center justify-start sm:justify-end gap-1.5">
               <Github className="h-3 w-3" />
               <span>github.com/ethan-freestone</span>
             </div>
-            <div className="flex items-center justify-end gap-1.5">
+            <div className="flex items-center justify-start sm:justify-end gap-1.5">
               <Mail className="h-3 w-3" />
               <span>e.j.freestone@gmail.com</span>
             </div>
@@ -133,9 +135,9 @@ function CV() {
           {PROFILE_DATA.bio}
         </p>
 
-        <div className="grid grid-cols-3 gap-8 pt-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 pt-5">
           {/* Left: Experience + Education + Projects */}
-          <div className="col-span-2 space-y-6">
+          <div className="md:col-span-2 space-y-6">
             <section>
               <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
                 Experience
@@ -143,13 +145,13 @@ function CV() {
               <div className="space-y-4">
                 {experienceByCompany.map(({ company, roles }) => (
                   <div key={company}>
-                    <div className="flex items-baseline justify-between mb-1">
+                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 sm:gap-0 mb-1">
                       <p className="text-sm font-bold">
                         {roles.length > 1
                           ? [...roles].reverse().map((r) => r.role).join(' \u2192 ')
                           : roles[0].role}
                       </p>
-                      <span className="text-xs text-muted-foreground print:text-black/70 shrink-0 ml-3">
+                      <span className="text-xs text-muted-foreground print:text-black/70 shrink-0 sm:ml-3">
                         {roles.length > 1 ? companyPeriod(roles) : roles[0].period}
                       </span>
                     </div>
@@ -172,7 +174,7 @@ function CV() {
               </h2>
               <div className="space-y-2">
                 {education.map((edu) => (
-                  <div key={`${edu.institution}-${edu.qualification}`} className="flex items-baseline justify-between gap-3">
+                  <div key={`${edu.institution}-${edu.qualification}`} className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 sm:gap-3">
                     <p className="text-sm">
                       <span className="font-bold">{edu.qualification}</span>
                       <span className="text-muted-foreground print:text-black/70"> — {edu.institution}</span>
@@ -192,10 +194,10 @@ function CV() {
               <div className="space-y-3">
                 {cvProjects.map((project) => (
                   <div key={project.id}>
-                    <div className="flex items-baseline justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 sm:gap-0">
                       <p className="text-sm font-bold">{project.title}</p>
                       {project.timeframe && (
-                        <span className="text-xs text-muted-foreground print:text-black/70 shrink-0 ml-3">
+                        <span className="text-xs text-muted-foreground print:text-black/70 shrink-0 sm:ml-3">
                           {project.timeframe}
                         </span>
                       )}
@@ -210,7 +212,7 @@ function CV() {
           </div>
 
           {/* Right: Skills */}
-          <div className="col-span-1">
+          <div className="md:col-span-1">
             <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
               Skills
             </h2>
@@ -246,7 +248,7 @@ function CV() {
         </footer>
       </div>
 
-      {/* @page can only be set from real CSS, not Tailwind utilities */}
+      {/* @page can only be set from real CSS, not Tailwind utilities. */}
       <style>{`
         @media print {
           @page {
