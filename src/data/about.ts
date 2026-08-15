@@ -42,6 +42,7 @@ export type Hobby = {
 export type ProfileData = {
   name: string;
   role: string;
+  github: string;
   avatarUrl: string;
   location: string;
   bio: string;
@@ -54,6 +55,7 @@ export type ProfileData = {
 
 export const PROFILE_DATA: ProfileData = {
   name: 'Ethan Freestone',
+  github: 'github.com/ethan-freestone',
   role: 'Full-Stack Software Engineer & Architect',
   avatarUrl: avatarImg,
   location: 'Sheffield, UK',

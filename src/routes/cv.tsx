@@ -121,7 +121,7 @@ function CV() {
             </div>
             <div className="flex items-center justify-start sm:justify-end gap-1.5">
               <Github className="h-3 w-3" />
-              <span>github.com/ethan-freestone</span>
+              <span>{PROFILE_DATA.github}</span>
             </div>
             <div className="flex items-center justify-start sm:justify-end gap-1.5">
               <Mail className="h-3 w-3" />

@@ -1050,7 +1050,7 @@ export const PROJECTS_DATA: Project[] = [
     parentApp: 'folio-erm',
     description: 'Architectural refactor of the ERM electronic resource ingestion engine, transitioning from a monolithic service to a dynamic, interchangeable strategy pattern.',
     descriptionDeep: [
-      'Initially, title resolution (matching incoming KBART/package data to existing database records) was handled by a single, rigid monolithic class. I architected a transition to a polymorphic interface (`TitleInstanceResolverService`) supported by an abstract `BaseTIRS` class containing shared HQL queries, identifier normalization, and data enrichment logic.',
+      'Initially, title resolution (matching incoming KBART/package data to existing database records) was handled by a single, rigid monolithic service. I architected a transition to a polymorphic interface (`TitleInstanceResolverService`) supported by an abstract `BaseTIRS` class containing shared HQL queries, identifier normalization, and data enrichment logic.',
       'Developed multiple discrete resolution algorithms: `IdFirstTIRS` (prioritizes Class One identifiers like ISSN/ISBN), `TitleFirstTIRS` (prioritizes fuzzy text matching), and `WorkSourceIdentifierTIRS` (matches via normalized source IDs with a cascading fallback to `IdFirstTIRS`).',
       'Engineered a dynamic Spring DSL configuration that reads environment variables (e.g., `TIRS=WorkSourceIdentifier`) at startup, allowing tenants to seamlessly swap resolution strategies without altering the compiled application footprint.',
       'This was a sustained, multi-year architectural evolution spanning 2021 to 2024, culminating in `WorkSourceIdentifier` becoming the highly reliable, default resolution strategy across all environments.'
@@ -1064,7 +1064,7 @@ export const PROJECTS_DATA: Project[] = [
       'Data Import'
     ],
     highlights: [
-      'Refactored a monolithic data ingestion script into an extensible, object-oriented strategy pattern.',
+      'Refactored a monolithic data ingestion service into an extensible, object-oriented strategy pattern.',
       'Abstracted shared logic (fuzzy title matching, sibling identifier pairing, and identifier normalization) into a robust `BaseTIRS` core.',
       'Implemented dynamic bean swapping via Spring DSL, allowing runtime configuration of the active resolution algorithm.',
       'Engineered complex fallback mechanisms and custom error tracking (`TIRSException`) to safely abort or redirect ingestion when encountering data collision edge cases.'

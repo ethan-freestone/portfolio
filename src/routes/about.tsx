@@ -1,11 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import {
+  Briefcase,
   Building2,
   Code2,
   Gamepad2,
+  Github,
   GraduationCap,
   MapPin,
-  Briefcase,
 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -39,6 +40,10 @@ function About() {
             <div className="flex items-center justify-center md:justify-start gap-1.5 text-sm text-muted-foreground mt-2">
               <MapPin className="h-4 w-4" />
               <span>{PROFILE_DATA.location}</span>
+            </div>
+            <div className="flex items-center justify-center md:justify-start gap-1.5 text-sm text-muted-foreground mt-2">
+              <Github className="h-4 w-4" />
+              <a href={`https://${PROFILE_DATA.github}`}>{PROFILE_DATA.github}</a>
             </div>
           </div>
 
