@@ -905,7 +905,7 @@ export const PROJECTS_DATA: Project[] = [
     id: 'stripes-kint-components',
     title: 'Stripes Kint Components',
     category: 'libraries',
-    description: 'Component and utility library built on top of FOLIO Stripes to streamline and accelerate 3-pane Search-And-Sort-Query (SASQ) application development.',
+    description: 'Component and utility library built on top of FOLIO Stripes to streamline and accelerate 3-pane Search-And-Sort-Query (SASQ) application development, as well as deliver helpful utilities and components outside of the FOLIO release process.',
     descriptionDeep: [
       'Originally created during developer onboarding to simplify complex FOLIO Stripes patterns into intuitive, reusable abstractions.',
       'Features the core `SASQRoute` wrapper component which handles URL state management, query parameter sync, and pane layouts out of the box.',

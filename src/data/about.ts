@@ -102,7 +102,6 @@ export const PROFILE_DATA: ProfileData = {
         'GitHub Actions',
         'Vite',
         'Kubernetes',
-        'Docker',
         'Bruno/Postman',
         'Conventional Commits'
       ],
@@ -123,11 +122,14 @@ export const PROFILE_DATA: ProfileData = {
       period: '2024-2026',
       startDate: '2024-01',
       endDate: 'Present',
-      description: 'Architecting and leading development across FOLIO ERM suite, Open Access, Serials applications and ILL application. Acting as a core technical strategist, I work on turning complex domain requirements into maintainable solutions. I actively mentor engineers, champion cross-team developer experience initiatives, and collaborate directly with stakeholders to ensure our architecture delivers long-term value.',
+      description: 'Architecting and leading development across FOLIO ERM suite, Open Access, Serials applications and ILL application. Acting as a technical lead, I work on turning complex requirements into maintainable solutions. I actively mentor engineers, working wherever possible to improve the developer experience, and collaborate directly with stakeholders to ensure our applications deliver on all requirements. My work has spanned from creating centralised CI/CD components to perform security analysis on our software to engineering a new heaadless component library to drive the next era of library applications.',
+      // FOLIO ownership lives in the earlier role's bullets — this role's CV
+      // bullets focus on ILL and the leadership/DX work that's specific to
+      // the promotion, so merging the two on the CV doesn't repeat itself.
       bullets: [
-        'Architect and technical lead across FOLIO ERM, OA and Serials, as well as ILL, turning complex requirements into maintainable solutions.',
-        'Mentor engineers and drive developer-experience initiatives: shared testing libraries, centralised CI/CD pipeline components, and a team-wide migration to a Git-native API workspace (Bruno).',
-        'Represented Knowledge Integration at WolfCon 2025 and sat on the ISO 18626 (interlibrary loan) standards committee.',
+        'Architect and frontend technical lead for the ILL (Interlibrary Loan) application, after initially implementing ISO 18626 messaging and sitting on the standards committee.',
+        'Mentored engineers and worked on improving developer experience, shared testing libraries, centralised CI/CD pipeline components, and engineering a new headless component library.',
+        'Represented Knowledge Integration at WolfCon 2025, networking with existing and potential clients for the OpenRS platform and discussing FOLIO features and deliverables.',
       ],
     },
     {
@@ -136,11 +138,11 @@ export const PROFILE_DATA: ProfileData = {
       period: '2019 — 2024',
       startDate: '2019-01',
       endDate: '2024-01',
-      description: 'Engineered complex applications for the FOLIO ecosystem (ERM suite, Open Access, Serials). Progressed from feature delivery to high-level system design, focusing heavily on software library development, testing architecture inversion, and standardizing shared UI components. Work included interacting directly with stakeholders to best deliver on their needs.',
+      description: 'Engineered complex applications for the FOLIO ecosystem (ERM suite, Open Access, Serials). Progressed from feature delivery to high-level system design in a tech lead capacity, focusing heavily on software library development, testing architecture inversion, and standardizing shared UI components. Work included interacting directly with stakeholders to best deliver on their needs.',
       bullets: [
-        'Delivered and grew ownership of the FOLIO ERM suite, Open Access, and Serials apps, progressing from feature delivery into high-level system design.',
-        'Authored stripes-kint-components (900+ weekly NPM downloads) and led a testing-architecture inversion, standardising shared UI and test patterns across FOLIO modules.',
-        'Represented the company in meetings with stakeholders to discuss user needs and technical solutions.'
+        'Delivered and grew ownership of the FOLIO ERM suite, Open Access, and Serials apps, progressing from feature delivery into a tech lead capacity.',
+        'Authored stripes-kint-components (900+ weekly NPM downloads), address plugin NPM library and led a frontend testing overhaul, standardising shared UI and test patterns across FOLIO modules.',
+        'Represented knowledge integration in meetings with stakeholders and worked closely with product owners to translate requirements into working features.',
       ],
     },
   ],

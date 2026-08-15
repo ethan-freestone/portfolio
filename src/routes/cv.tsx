@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Printer, Mail, Globe, Github } from 'lucide-react'
+import { Printer, Mail, Globe, Github, MapPin } from 'lucide-react'
 import { PROFILE_DATA, type Experience } from '@/data/about'
 import { PROJECTS_DATA } from '@/data/projects'
 import { Button } from '@/components/ui/button'
@@ -15,13 +15,13 @@ export const Route = createFileRoute('/cv')({ component: CV })
 // role change to about.ts and this page updates itself, in the right order,
 // grouped correctly, with no edits needed here.
 // ---------------------------------------------------------------------------
-const CV_PROJECT_IDS = ['folio-erm', 'access-control-engine', 'stripes-kint-components'] as const
+const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'stripes-kint-components'] as const
 
 // Turn this down (e.g. 0.9) if a new job/project pushes the sheet past one
 // page; turn it up if there's spare room. `zoom` scales layout + text
 // together and is respected by Chrome's print-to-PDF, so what you see on
 // screen is what you'll get in the PDF.
-const CV_SCALE = 0.95
+const CV_SCALE = 0.89
 
 // Group experience entries by company (supports any number of companies,
 // each with any number of roles), most recent company/role first.
@@ -50,7 +50,7 @@ function companyPeriod(roles: Experience[]) {
 // Merge bullets across a company's roles (most recent role's bullets first),
 // dropping near-duplicates and capping the total so a promotion doesn't
 // double the space a single-role company would take.
-function mergedCompanyBullets(roles: Experience[], maxBullets = 5) {
+function mergedCompanyBullets(roles: Experience[], maxBullets = 7) {
   const seen = new Set<string>()
   const bullets: string[] = []
   for (const role of roles) {
@@ -110,6 +110,7 @@ function CV() {
           </div>
           <div className="text-right text-xs text-muted-foreground print:text-black/70 space-y-1 shrink-0">
             <div className="flex items-center justify-end gap-1.5">
+              <MapPin className="h-3 w-3" />
               <span>{PROFILE_DATA.location}</span>
             </div>
             <div className="flex items-center justify-end gap-1.5">
@@ -120,10 +121,9 @@ function CV() {
               <Github className="h-3 w-3" />
               <span>github.com/ethan-freestone</span>
             </div>
-            {/* Swap in a real address once you're happy to publish it */}
             <div className="flex items-center justify-end gap-1.5">
               <Mail className="h-3 w-3" />
-              <span>hello@efreestone.co.uk</span>
+              <span>e.j.freestone@gmail.com</span>
             </div>
           </div>
         </header>
@@ -240,7 +240,7 @@ function CV() {
 
         <footer className="mt-6 pt-3 border-t border-border print:border-black/20 text-center">
           <p className="text-xs text-muted-foreground print:text-black/70">
-            Full write-ups, screenshots and live demos for these projects (and more) at{' '}
+            Full write-ups, screenshots and animated demos for these projects (and more) at{' '}
             <span className="font-semibold text-primary print:text-black">portfolio.efreestone.co.uk</span>
           </p>
         </footer>
@@ -251,7 +251,7 @@ function CV() {
         @media print {
           @page {
             size: A4;
-            margin: 14mm;
+            margin: 4mm;
           }
           html, body {
             background: white !important;
