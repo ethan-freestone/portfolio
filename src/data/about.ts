@@ -70,12 +70,21 @@ export const PROFILE_DATA: ProfileData = {
         'Jest',
         'Headless Components',
         'Tailwind CSS',
+        'Vite',
         'ViTest',
         'Frontside Interactors',
         'Stripes',
-        'Semantic Release'
+        'Semantic Release',
+        'Storybook',
+        'Accessibility',
+        'Axe DevTools'
       ],
-      tried: ['Tanstack Start', 'NextJS', 'Vue', 'Nuxt']
+      tried: [
+        'Tanstack Start',
+        'NextJS',
+        'Vue',
+        'Nuxt'
+      ]
     },
     {
       category: 'Backend',
@@ -85,6 +94,10 @@ export const PROFILE_DATA: ProfileData = {
         'Grails',
         'PostgreSQL',
         'SQL',
+        'Liquibase',
+        'Flyway',
+        'Spock Tests',
+        'JUnit',
         'Project Reactor',
         'API Design',
         'System Architecture'
@@ -100,14 +113,17 @@ export const PROFILE_DATA: ProfileData = {
         'Linux Development',
         'Gradle',
         'Bash',
+        'Docker',
         'GitLab CI',
         'GitHub Actions',
-        'Vite',
         'Kubernetes',
         'Bruno/Postman',
         'Conventional Commits'
       ],
       tried: [
+        'Portainer',
+        'Rancher',
+        'Maven',
         'AI Assisted Development',
         'Caddy',
         'NGINX',
