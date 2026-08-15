@@ -886,10 +886,10 @@ export const PROJECTS_DATA: Project[] = [
     role: [
       {
         role: 'Architect & Original Author',
-        timeframe: '2026'
+        timeframe: '2025-2026'
       }
     ],
-    timeframe: '2026',
+    timeframe: '2025-2026',
     wikiLinks: [
       {
         label: 'Agreements implementation documentation',
