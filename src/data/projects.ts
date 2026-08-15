@@ -246,7 +246,7 @@ export const PROJECTS_DATA: Project[] = [
     id: 'ill',
     title: 'ILL Application',
     category: 'applications',
-    description: 'A comprehensive resource sharing and Interlibrary Loan (ILL) platform built on ISO18626, enabling automated consortial borrowing, lending, and request fulfillment across disparate library systems.',
+    description: 'A comprehensive resource sharing and Interlibrary Loan (ILL) platform built on ISO18626, enabling mediated borrowing, lending, and request fulfillment across disparate library systems, either consortial or individual.',
     descriptionDeep: [
       'Initially heavily involved in Project ReShare, mod-ill was forked from mod-rs and taken forward with a raft of new features.',
       'Engineered to facilitate peer-to-peer resource sharing and consortial borrowing, enabling libraries to fulfill patron requests for materials held outside their local network.',
