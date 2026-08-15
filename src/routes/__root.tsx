@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useState, type ReactNode, useMemo } from 'react'
 import {
   HeadContent,
   Outlet,
@@ -8,6 +8,7 @@ import {
 } from '@tanstack/react-router'
 import appCss from '../styles.css?url'
 import { HarmonySwitcher } from "#/components";
+import { Home } from "lucide-react";
 
 type NavLinkProps = {
   title: ReactNode,
@@ -29,13 +30,32 @@ const NavLink = ({ title, linkTo }: NavLinkProps) => {
 function RootComponent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const links = useMemo(() => ([
+    {
+      link: '/',
+      title: 'Home',
+    },
+    {
+      link: '/projects',
+      title: 'Projects',
+    },
+    {
+      link: '/about',
+      title: 'About',
+    },
+    {
+      link: '/cv',
+      title: 'CV',
+    },
+  ]), []);
+
   return (
     <RootDocument>
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+      <header className="print:hidden! sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
         <div className="container px-4">
           <div className="flex h-14 items-center justify-between">
             <Link to="/" className="font-bold tracking-tight text-lg mr-4">
-              Ethan Freestone
+              <Home/>
             </Link>
 
             {/* Mobile Menu Toggle Button */}
@@ -62,9 +82,9 @@ function RootComponent() {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-              <NavLink linkTo="/" title="Home" />
-              <NavLink linkTo="/projects" title="Projects" />
-              <NavLink linkTo="/about" title="About" />
+              {links.map(({ link, title }) => (
+                <NavLink linkTo={link} title={title} />
+              ))}
               <HarmonySwitcher />
             </nav>
           </div>
@@ -72,9 +92,9 @@ function RootComponent() {
           {/* Mobile Navigation Dropdown */}
           {isMobileMenuOpen && (
             <nav className="md:hidden flex flex-col gap-4 pb-4 pt-2 text-sm font-medium border-t">
-              <NavLink linkTo="/" title="Home" />
-              <NavLink linkTo="/projects" title="Projects" />
-              <NavLink linkTo="/about" title="About" />
+              {links.map(({ link, title }) => (
+                <NavLink linkTo={link} title={title} />
+              ))}
               <div className="pt-2 border-t mt-2">
                 <HarmonySwitcher />
               </div>

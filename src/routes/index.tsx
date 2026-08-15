@@ -2,8 +2,8 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   ArrowRight,
   Code2,
-  User,
-  type LucideIcon
+  User2,
+  type LucideIcon, FileUser,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -105,7 +105,7 @@ function Home() {
           title="Projects and Features"
         />
         <HomeSectionCard
-          Icon={User}
+          Icon={User2}
           description="Browse background, technologies experience, engineering philosophy, and hobbies."
           badges={[
             { text: "Background" },
@@ -115,6 +115,14 @@ function Home() {
           linkTo="/about"
           linkText="Read background"
           title="About Me"
+        />
+        <HomeSectionCard
+          Icon={FileUser}
+          description="Printable version of my CV"
+          badges={[]}
+          linkTo="/cv"
+          linkText="Read CV"
+          title="Curriculum Vitae"
         />
       </section>
       <section className="grid grid-cols-1">

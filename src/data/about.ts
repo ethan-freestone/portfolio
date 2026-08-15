@@ -1,6 +1,5 @@
 import avatarImg from '@/assets/avatar.jpeg'
 import {
-  Cat,
   CodeXml,
   Gamepad2,
   Pickaxe,
@@ -17,8 +16,21 @@ export type Skill = {
 export type Experience = {
   role: string;
   company: string;
-  period: string;
-  description: string;
+  period: string; // display string, e.g. "2024-2026" — shown as-is on About and CV
+  startDate: string; // ISO-ish sort key, e.g. "2024-01" — never displayed, just used for ordering
+  endDate: string; // ISO-ish sort key, or "Present" — never displayed, just used for ordering
+  description: string; // full prose, used on the About page
+  bullets?: string[]; // CV-specific highlights. Falls back to `description` on the CV if omitted.
+}
+
+export type Education = {
+  institution: string;
+  qualification: string;
+  period: string; // display string, e.g. "2015-2019"
+  startDate: string; // ISO-ish sort key, e.g. "2015-09"
+  endDate: string; // ISO-ish sort key, or "Present"
+  description?: string; // optional: honours, dissertation, notable modules
+  showOnCV?: boolean; // default true. Set false to keep something on /about but off the one-page CV.
 }
 
 export type Hobby = {
@@ -30,17 +42,20 @@ export type Hobby = {
 export type ProfileData = {
   name: string;
   role: string;
+  github: string;
   avatarUrl: string;
   location: string;
   bio: string;
   bioDeep: string;
   skills: Skill[];
   experience: Experience[];
+  education: Education[];
   hobbies: Hobby[];
 }
 
 export const PROFILE_DATA: ProfileData = {
   name: 'Ethan Freestone',
+  github: 'github.com/ethan-freestone',
   role: 'Full-Stack Software Engineer & Architect',
   avatarUrl: avatarImg,
   location: 'Sheffield, UK',
@@ -101,18 +116,55 @@ export const PROFILE_DATA: ProfileData = {
     },
   ],
 
+  // Ordering doesn't matter any more — both /about and /cv sort by startDate.
   experience: [
     {
       role: 'Senior Software Engineer & Team Leader',
       company: 'Knowledge Integration',
       period: '2024-2026',
-      description: 'Architecting and leading development across FOLIO, and ILL platforms, as well as smaller projects that fit into the greater whole. Acting as a technical strategist, I work on turning complex domain requirements into maintainable, innovative solutions. I actively mentor engineers, champion cross-team developer experience initiatives, and collaborate directly with stakeholders to ensure our architecture delivers long-term value.',
+      startDate: '2024-01',
+      endDate: 'Present',
+      description: 'Architecting and leading development across FOLIO ERM suite, Open Access, Serials applications and ILL application. Acting as a technical lead, I work on turning complex requirements into maintainable solutions. I actively mentor engineers, working wherever possible to improve the developer experience, and collaborate directly with stakeholders to ensure our applications deliver on all requirements. My work has spanned from creating centralised CI/CD components to perform security analysis on our software to engineering a new heaadless component library to drive the next era of library applications.',
+      // FOLIO ownership lives in the earlier role's bullets — this role's CV
+      // bullets focus on ILL and the leadership/DX work that's specific to
+      // the promotion, so merging the two on the CV doesn't repeat itself.
+      bullets: [
+        'Architect and frontend technical lead for the ILL (Interlibrary Loan) application, after initially implementing ISO 18626 messaging and sitting on the standards committee.',
+        'Mentored engineers and worked on improving developer experience, shared testing libraries, centralised CI/CD pipeline components, and engineering a new headless component library.',
+        'Represented Knowledge Integration at WolfCon 2025, networking with existing and potential clients for the OpenRS platform and discussing FOLIO features and deliverables.',
+      ],
     },
     {
       role: 'Software Engineer with DevOps Support',
       company: 'Knowledge Integration',
       period: '2019 — 2024',
-      description: 'Developed and engineered complex applications for the FOLIO ecosystem (ERM suite, Open Access, Serials). Progressed from feature delivery to high-level system design, focusing heavily on software library development, testing architecture inversion, and standardizing shared UI components. Work included interacting directly with customers to best deliver on their needs.',
+      startDate: '2019-01',
+      endDate: '2024-01',
+      description: 'Engineered complex applications for the FOLIO ecosystem (ERM suite, Open Access, Serials). Progressed from feature delivery to high-level system design in a tech lead capacity, focusing heavily on software library development, testing architecture inversion, and standardizing shared UI components. Work included interacting directly with stakeholders to best deliver on their needs.',
+      bullets: [
+        'Delivered and grew ownership of the FOLIO ERM suite, Open Access, and Serials apps, progressing from feature delivery into a tech lead capacity.',
+        'Authored stripes-kint-components (900+ weekly NPM downloads), address plugin NPM library and led a frontend testing overhaul, standardising shared UI and test patterns across FOLIO modules.',
+        'Represented knowledge integration in meetings with stakeholders and worked closely with product owners to translate requirements into working features.',
+      ],
+    },
+  ],
+
+  education: [
+    {
+      institution: 'University of Sheffield',
+      qualification: 'MMath Mathematics (1st Class)',
+      period: '2015-2019',
+      startDate: '2015-09',
+      endDate: '2019-06',
+      description: 'Focused on pure mathematics — topology, algebra, and algebraic geometry. Final year project (building on a Harry Burkill summer studentship) proved Mordell\u2019s Theorem for elliptic curves. Picked up Python during two programming courses and kept reaching for it: writing tools from scratch to visualise vector fields and to generate graphs for the final project when doing it by hand stopped being practical.',
+    },
+    {
+      institution: 'South Wolds Academy',
+      qualification: 'A-Levels: Maths (A), English Language (A), Further Maths (B)',
+      period: '2008-2015',
+      startDate: '2008-09',
+      endDate: '2015-06',
+      showOnCV: false,
     },
   ],
 
@@ -136,11 +188,6 @@ export const PROFILE_DATA: ProfileData = {
       Icon: Volleyball,
       name: 'Football',
       description: 'Playing weekly and following my beloved West Ham through the ups and downs (mostly downs).'
-    },
-    {
-      Icon: Cat,
-      name: 'Animals',
-      description: 'A total sucker for any and all creatures, fluffy, scaly or otherwise! Can often be found in an evening relaxing and watching a film cuddled with my two cats. (Kitty photos available on request!)'
     },
   ],
 };
