@@ -22,7 +22,7 @@ const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'stripes
 // together and is respected by Chrome's print-to-PDF, so what you see on
 // screen (at sm+ widths) is what you'll get in the PDF. It's intentionally
 // NOT applied below the `sm` breakpoint — see the zoom class on the sheet.
-const CV_SCALE = 0.89
+const CV_SCALE = 0.88
 
 // Group experience entries by company (supports any number of companies,
 // each with any number of roles), most recent company/role first.
