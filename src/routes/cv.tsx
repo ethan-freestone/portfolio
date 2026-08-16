@@ -9,24 +9,12 @@ export const Route = createFileRoute('/cv')({ component: CV })
 
 // ---------------------------------------------------------------------------
 // The only thing curated here (rather than pulled straight from data) is
-// which projects make the cut for a one-page CV — that's a judgement call,
-// not something to infer automatically. Everything else (experience,
-// education, skills) is entirely data-driven: add a job, a degree, or a
-// role change to about.ts and this page updates itself, in the right order,
-// grouped correctly, with no edits needed here.
+// which projects make the cut for a one-page CV. Everything else (experience,
+// education, skills) is entirely data-driven from projects.ts
 // ---------------------------------------------------------------------------
 const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'stripes-kint-components'] as const
 
-// Single scale knob. Turn down (e.g. 0.85) if a new job/project pushes the
-// sheet past one page; turn up if there's spare room.
-//
-// On screen (sm+) this drives real CSS `zoom` for a quick, cheap preview —
-// fine there because a screen preview never becomes the PDF.
-// For print, every print:text-[..]/gap-[..]/etc below is wired to this same
-// value via calc(basePx * var(--cv-zoom)), so print scales identically
-// without ever using `zoom` — which Chromium can rasterize during print,
-// silently destroying the PDF's selectable/searchable text layer. calc() on
-// font-size/spacing is just normal text layout, so there's no such risk.
+// Single scaling dial for output PDF
 const CV_SCALE = 0.85
 
 // Group experience entries by company (supports any number of companies,
@@ -104,21 +92,21 @@ function CV() {
           print:max-w-none print:border-none print:shadow-none print:rounded-none
           print:bg-white print:text-black print:px-0 print:py-0
           print:font-[ui-sans-serif,system-ui,-apple-system,Helvetica,Arial,sans-serif]
-          zoom-[1] sm:zoom-(--cv-zoom)
+          zoom-[1] sm:zoom-(--cv-zoom) print:zoom-(--cv-zoom)
         "
         style={{ '--cv-zoom': CV_SCALE } as React.CSSProperties}
       >
         {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6 pb-5 print:pb-[calc(20px*var(--cv-zoom))] border-b border-border print:border-black/20">
+        <header className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6 pb-5 border-b border-border print:border-black/20">
           <div>
-            <h1 className="text-2xl sm:text-3xl print:text-[calc(30px*var(--cv-zoom))] font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               {PROFILE_DATA.name}
             </h1>
-            <p className="text-base print:text-[calc(16px*var(--cv-zoom))] font-medium text-primary print:text-black mt-0.5">
+            <p className="text-base font-medium text-primary print:text-black mt-0.5">
               {PROFILE_DATA.role}
             </p>
           </div>
-          <div className="text-left sm:text-right text-xs print:text-[calc(12px*var(--cv-zoom))] text-muted-foreground print:text-black/70 space-y-1 shrink-0">
+          <div className="text-left sm:text-right text-xs text-muted-foreground print:text-black/70 space-y-1 shrink-0">
             <div className="flex items-center justify-start sm:justify-end gap-1.5">
               <MapPin className="h-3 w-3" />
               <span>{PROFILE_DATA.location}</span>
@@ -139,34 +127,34 @@ function CV() {
         </header>
 
         {/* Summary */}
-        <p className="text-sm print:text-[calc(14px*var(--cv-zoom))] leading-relaxed print:leading-snug py-4 print:py-[calc(16px*var(--cv-zoom))] border-b border-border print:border-black/20 text-muted-foreground print:text-black/85">
+        <p className="text-sm leading-relaxed py-4 border-b border-border print:border-black/20 text-muted-foreground print:text-black/85">
           {PROFILE_DATA.bio}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 print:gap-[calc(32px*var(--cv-zoom))] pt-5 print:pt-[calc(20px*var(--cv-zoom))]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 pt-5">
           {/* Left: Experience + Education + Projects */}
-          <div className="md:col-span-2 space-y-6 print:space-y-[calc(24px*var(--cv-zoom))]">
+          <div className="md:col-span-2 space-y-6">
             <section>
-              <h2 className="text-xs print:text-[calc(12px*var(--cv-zoom))] font-bold uppercase tracking-wider text-primary print:text-black mb-2 print:mb-[calc(8px*var(--cv-zoom))]">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
                 Experience
               </h2>
-              <div className="space-y-4 print:space-y-[calc(16px*var(--cv-zoom))]">
+              <div className="space-y-4">
                 {experienceByCompany.map(({ company, roles }) => (
                   <div key={company}>
                     <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 sm:gap-0 mb-1">
-                      <p className="text-sm print:text-[calc(14px*var(--cv-zoom))] font-bold">
+                      <p className="text-sm font-bold">
                         {roles.length > 1
                           ? [...roles].reverse().map((r) => r.role).join(' \u2192 ')
                           : roles[0].role}
                       </p>
-                      <span className="text-xs print:text-[calc(12px*var(--cv-zoom))] text-muted-foreground print:text-black/70 shrink-0 sm:ml-3">
+                      <span className="text-xs text-muted-foreground print:text-black/70 shrink-0 sm:ml-3">
                         {roles.length > 1 ? companyPeriod(roles) : roles[0].period}
                       </span>
                     </div>
-                    <p className="text-xs print:text-[calc(12px*var(--cv-zoom))] text-muted-foreground print:text-black/70 mb-1.5">
+                    <p className="text-xs text-muted-foreground print:text-black/70 mb-1.5">
                       {company}
                     </p>
-                    <ul className="space-y-1 print:space-y-[calc(4px*var(--cv-zoom))] text-sm print:text-[calc(14px*var(--cv-zoom))] text-muted-foreground print:text-black/85 leading-snug list-disc list-outside pl-4">
+                    <ul className="space-y-1 text-sm text-muted-foreground print:text-black/85 leading-snug list-disc list-outside pl-4">
                       {(roles.length > 1 ? mergedCompanyBullets(roles) : roles[0].bullets ?? [roles[0].description]).map((bullet) => (
                         <li key={bullet}>{bullet}</li>
                       ))}
@@ -177,17 +165,17 @@ function CV() {
             </section>
 
             <section>
-              <h2 className="text-xs print:text-[calc(12px*var(--cv-zoom))] font-bold uppercase tracking-wider text-primary print:text-black mb-2 print:mb-[calc(8px*var(--cv-zoom))]">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
                 Education
               </h2>
-              <div className="space-y-2 print:space-y-[calc(8px*var(--cv-zoom))]">
+              <div className="space-y-2">
                 {education.map((edu) => (
                   <div key={`${edu.institution}-${edu.qualification}`} className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 sm:gap-3">
-                    <p className="text-sm print:text-[calc(14px*var(--cv-zoom))]">
+                    <p className="text-sm">
                       <span className="font-bold">{edu.qualification}</span>
                       <span className="text-muted-foreground print:text-black/70"> — {edu.institution}</span>
                     </p>
-                    <span className="text-xs print:text-[calc(12px*var(--cv-zoom))] text-muted-foreground print:text-black/70 shrink-0">
+                    <span className="text-xs text-muted-foreground print:text-black/70 shrink-0">
                       {edu.period}
                     </span>
                   </div>
@@ -196,21 +184,21 @@ function CV() {
             </section>
 
             <section>
-              <h2 className="text-xs print:text-[calc(12px*var(--cv-zoom))] font-bold uppercase tracking-wider text-primary print:text-black mb-2 print:mb-[calc(8px*var(--cv-zoom))]">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
                 Key Projects
               </h2>
-              <div className="space-y-3 print:space-y-[calc(12px*var(--cv-zoom))]">
+              <div className="space-y-3">
                 {cvProjects.map((project) => (
                   <div key={project.id}>
                     <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 sm:gap-0">
-                      <p className="text-sm print:text-[calc(14px*var(--cv-zoom))] font-bold">{project.title}</p>
+                      <p className="text-sm font-bold">{project.title}</p>
                       {project.timeframe && (
-                        <span className="text-xs print:text-[calc(12px*var(--cv-zoom))] text-muted-foreground print:text-black/70 shrink-0 sm:ml-3">
+                        <span className="text-xs text-muted-foreground print:text-black/70 shrink-0 sm:ml-3">
                           {project.timeframe}
                         </span>
                       )}
                     </div>
-                    <p className="text-sm print:text-[calc(14px*var(--cv-zoom))] text-muted-foreground print:text-black/85 leading-snug">
+                    <p className="text-sm text-muted-foreground print:text-black/85 leading-snug">
                       {project.description}
                     </p>
                   </div>
@@ -221,13 +209,13 @@ function CV() {
 
           {/* Right: Skills */}
           <div className="md:col-span-1">
-            <h2 className="text-xs print:text-[calc(12px*var(--cv-zoom))] font-bold uppercase tracking-wider text-primary print:text-black mb-2 print:mb-[calc(8px*var(--cv-zoom))]">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
               Skills
             </h2>
-            <div className="space-y-4 print:space-y-[calc(16px*var(--cv-zoom))]">
+            <div className="space-y-4">
               {PROFILE_DATA.skills.map((group) => (
                 <div key={group.category}>
-                  <p className="text-xs print:text-[calc(12px*var(--cv-zoom))] font-semibold text-muted-foreground print:text-black/70 uppercase tracking-wide mb-1">
+                  <p className="text-xs font-semibold text-muted-foreground print:text-black/70 uppercase tracking-wide mb-1">
                     {group.category}
                   </p>
                   <div className="flex flex-wrap gap-1 print:hidden">
@@ -239,7 +227,7 @@ function CV() {
                   </div>
                   {/* Plain-text fallback for print: badge chrome wastes ink and can
                       wrap awkwardly across a printed page. */}
-                  <p className="hidden print:block print:text-[calc(14px*var(--cv-zoom))] text-black/85 leading-snug">
+                  <p className="hidden print:block text-sm text-black/85 leading-snug">
                     {group.strengths.join(', ')}
                   </p>
                 </div>
@@ -248,8 +236,8 @@ function CV() {
           </div>
         </div>
 
-        <footer className="mt-6 print:mt-[calc(24px*var(--cv-zoom))] pt-3 print:pt-[calc(12px*var(--cv-zoom))] border-t border-border print:border-black/20 text-center">
-          <p className="text-xs print:text-[calc(12px*var(--cv-zoom))] text-muted-foreground print:text-black/70">
+        <footer className="mt-6 pt-3 border-t border-border print:border-black/20 text-center">
+          <p className="text-xs text-muted-foreground print:text-black/70">
             Full write-ups, screenshots and animated demos for these projects (and more) at{' '}
             <span className="font-semibold text-primary print:text-black">portfolio.efreestone.co.uk</span>
           </p>
@@ -265,14 +253,6 @@ function CV() {
           }
           html, body {
             background: white !important;
-          }
-          /* Belt-and-braces: force zoom off for print regardless of viewport
-             width matching the sm: breakpoint. zoom during print can cause
-             Chromium to rasterize text instead of keeping it selectable —
-             print sizing is handled entirely by the calc()-based text/gap
-             classes above instead. */
-          .cv-sheet {
-            zoom: 1 !important;
           }
         }
       `}</style>
