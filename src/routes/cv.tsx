@@ -9,20 +9,13 @@ export const Route = createFileRoute('/cv')({ component: CV })
 
 // ---------------------------------------------------------------------------
 // The only thing curated here (rather than pulled straight from data) is
-// which projects make the cut for a one-page CV — that's a judgement call,
-// not something to infer automatically. Everything else (experience,
-// education, skills) is entirely data-driven: add a job, a degree, or a
-// role change to about.ts and this page updates itself, in the right order,
-// grouped correctly, with no edits needed here.
+// which projects make the cut for a one-page CV. Everything else (experience,
+// education, skills) is entirely data-driven from projects.ts
 // ---------------------------------------------------------------------------
 const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'stripes-kint-components'] as const
 
-// Turn this down if a new job/project pushes the sheet past one
-// page; turn it up if there's spare room. `zoom` scales layout + text
-// together and is respected by Chrome's print-to-PDF, so what you see on
-// screen (at sm+ widths) is what you'll get in the PDF. It's intentionally
-// NOT applied below the `sm` breakpoint — see the zoom class on the sheet.
-const CV_SCALE = 0.87
+// Single scaling dial for output PDF
+const CV_SCALE = 0.85
 
 // Group experience entries by company (supports any number of companies,
 // each with any number of roles), most recent company/role first.
@@ -98,6 +91,7 @@ function CV() {
           px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10
           print:max-w-none print:border-none print:shadow-none print:rounded-none
           print:bg-white print:text-black print:px-0 print:py-0
+          print:font-[ui-sans-serif,system-ui,-apple-system,Helvetica,Arial,sans-serif]
           zoom-[1] sm:zoom-(--cv-zoom) print:zoom-(--cv-zoom)
         "
         style={{ '--cv-zoom': CV_SCALE } as React.CSSProperties}
@@ -105,7 +99,9 @@ function CV() {
         {/* Header */}
         <header className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6 pb-5 border-b border-border print:border-black/20">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{PROFILE_DATA.name}</h1>
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              {PROFILE_DATA.name}
+            </h1>
             <p className="text-base font-medium text-primary print:text-black mt-0.5">
               {PROFILE_DATA.role}
             </p>
@@ -121,7 +117,7 @@ function CV() {
             </div>
             <div className="flex items-center justify-start sm:justify-end gap-1.5">
               <Github className="h-3 w-3" />
-              <span>{PROFILE_DATA.github}</span>
+              <span>github.com/ethan-freestone</span>
             </div>
             <div className="flex items-center justify-start sm:justify-end gap-1.5">
               <Mail className="h-3 w-3" />
