@@ -83,7 +83,7 @@ function RootComponent() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
               {links.map(({ link, title }) => (
-                <NavLink linkTo={link} title={title} />
+                <NavLink key={link} linkTo={link} title={title} />
               ))}
               <HarmonySwitcher />
             </nav>
@@ -93,7 +93,7 @@ function RootComponent() {
           {isMobileMenuOpen && (
             <nav className="md:hidden flex flex-col gap-4 pb-4 pt-2 text-sm font-medium border-t">
               {links.map(({ link, title }) => (
-                <NavLink linkTo={link} title={title} />
+                <NavLink key={link} linkTo={link} title={title} />
               ))}
               <div className="pt-2 border-t mt-2">
                 <HarmonySwitcher />
@@ -113,13 +113,23 @@ function RootComponent() {
 function RootDocument({ children }: { children: ReactNode }) {
   return (
     <html lang="en" data-harmony="triadic">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
+    <head>
+      <HeadContent />
+    </head>
+    <body>
+    {/* Google Tag Manager (noscript) */}
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-KKSCPWCR"
+        height="0"
+        width="0"
+        style={{ display: 'none', visibility: 'hidden' }}
+      />
+    </noscript>
+    {/* End Google Tag Manager (noscript) */}
+    {children}
+    <Scripts />
+    </body>
     </html>
   )
 }
@@ -133,6 +143,16 @@ export const Route = createRootRouteWithContext<Record<string, never>>()({
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
+    ],
+    scripts: [
+      {
+        // Google Tag Manager script injected high in <head>
+        children: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KKSCPWCR');`,
+      },
     ],
   }),
   component: RootComponent,
