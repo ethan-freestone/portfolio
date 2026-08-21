@@ -48,7 +48,12 @@ function mergedCompanyBullets(roles: Experience[], maxBullets = 7) {
   const seen = new Set<string>()
   const bullets: string[] = []
   for (const role of roles) {
-    for (const bullet of role.bullets ?? [role.description]) {
+    // Check if bullets exist. If so, filter out those explicitly hidden on the CV.
+    const roleBullets = role.bullets
+      ? role.bullets.filter(b => b.showOnCV !== false).map(b => b.text)
+      : [role.description]
+
+    for (const bullet of roleBullets) {
       const key = bullet.trim().toLowerCase()
       if (seen.has(key)) continue
       seen.add(key)
@@ -73,14 +78,20 @@ function CV() {
     <div className="page-wrap py-6 sm:py-10 print:py-0">
       {/* Toolbar — never printed */}
       <div className="no-print print:hidden mb-6 flex items-center justify-between gap-4 flex-wrap">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground max-w-2xl">
           This page is formatted to print cleanly as a one-page PDF. In the print dialog, save as PDF and open{' '}
           <span className="font-medium text-foreground">More settings</span> to turn off{' '}
           <span className="font-medium text-foreground">Headers and footers</span> — that removes the browser's own title/URL/date line.
         </p>
-        <Button onClick={() => window.print()} className="gap-2 shrink-0">
-          <Printer className="h-4 w-4" /> Print / Save as PDF
-        </Button>
+        <div className="flex items-center gap-2 shrink-0">
+          {/* TODO: Hook this up to a form state that overrides the showOnCV flags */}
+          {/*<Button variant="outline" className="gap-2" disabled title="TODO: Dynamic customization coming soon!">
+            <Settings2 className="h-4 w-4" /> Customize CV
+          </Button>*/}
+          <Button onClick={() => window.print()} className="gap-2">
+            <Printer className="h-4 w-4" /> Print / Save as PDF
+          </Button>
+        </div>
       </div>
 
       {/* CV sheet */}
@@ -155,7 +166,7 @@ function CV() {
                       {company}
                     </p>
                     <ul className="space-y-1 text-sm text-muted-foreground print:text-black/85 leading-snug list-disc list-outside pl-4">
-                      {(roles.length > 1 ? mergedCompanyBullets(roles) : roles[0].bullets ?? [roles[0].description]).map((bullet) => (
+                      {(roles.length > 1 ? mergedCompanyBullets(roles) : roles[0].bullets?.map(b => b.text) ?? [roles[0].description]).map((bullet) => (
                         <li key={bullet}>{bullet}</li>
                       ))}
                     </ul>

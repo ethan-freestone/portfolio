@@ -114,7 +114,6 @@ function About() {
         </div>
 
         <div className="space-y-4">
-          {/* Most recent role first */}
           {[...PROFILE_DATA.experience]
             .sort((a, b) => b.startDate.localeCompare(a.startDate))
             .map((job) => (
@@ -131,10 +130,20 @@ function About() {
                     {job.company}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-3">
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {job.description}
                   </p>
+
+                  {job.bullets && job.bullets.length > 0 && (
+                    <ul className="list-disc list-inside space-y-1.5 text-sm text-muted-foreground">
+                      {job.bullets.map((bullet, idx) => (
+                        <li key={idx} className="leading-relaxed">
+                          {bullet.text}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </CardContent>
               </Card>
             ))}
