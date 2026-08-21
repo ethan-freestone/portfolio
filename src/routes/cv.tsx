@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Printer, Mail, Globe, Github, MapPin } from 'lucide-react'
-import { PROFILE_DATA, type Experience } from '@/data/about'
+import { PROFILE_DATA } from '@/data/about'
 import { PROJECTS_DATA } from '@/data/projects'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -12,60 +12,17 @@ export const Route = createFileRoute('/cv')({ component: CV })
 // which projects make the cut for a one-page CV. Everything else (experience,
 // education, skills) is entirely data-driven from projects.ts
 // ---------------------------------------------------------------------------
-const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'stripes-kint-components'] as const
+const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'shared-pipeline-utils', 'stripes-kint-components'] as const
 
 // Single scaling dial for output PDF
-const CV_SCALE = 0.80
-
-// Group experience entries by company (supports any number of companies,
-// each with any number of roles), most recent company/role first.
-function groupExperienceByCompany(experience: Experience[]) {
-  const groups = new Map<string, Experience[]>()
-  for (const exp of experience) {
-    groups.set(exp.company, [...(groups.get(exp.company) ?? []), exp])
-  }
-  return Array.from(groups.entries())
-    .map(([company, roles]) => ({
-      company,
-      roles: [...roles].sort((a, b) => b.startDate.localeCompare(a.startDate)),
-    }))
-    .sort((a, b) => b.roles[0].startDate.localeCompare(a.roles[0].startDate))
-}
-
-// A company's overall period, derived from its roles' sort keys rather than
-// their free-text `period` strings (which aren't formatted consistently).
-function companyPeriod(roles: Experience[]) {
-  const start = roles[roles.length - 1].startDate.slice(0, 4)
-  const latestEnd = roles[0].endDate
-  const end = latestEnd === 'Present' ? 'Present' : latestEnd.slice(0, 4)
-  return `${start}–${end}`
-}
-
-// Merge bullets across a company's roles (most recent role's bullets first),
-// dropping near-duplicates and capping the total so a promotion doesn't
-// double the space a single-role company would take.
-function mergedCompanyBullets(roles: Experience[], maxBullets = 10) {
-  const seen = new Set<string>()
-  const bullets: string[] = []
-  for (const role of roles) {
-    // Check if bullets exist. If so, filter out those explicitly hidden on the CV.
-    const roleBullets = role.bullets
-      ? role.bullets.filter(b => b.showOnCV !== false).map(b => b.text)
-      : [role.description]
-
-    for (const bullet of roleBullets) {
-      const key = bullet.trim().toLowerCase()
-      if (seen.has(key)) continue
-      seen.add(key)
-      bullets.push(bullet)
-      if (bullets.length >= maxBullets) return bullets
-    }
-  }
-  return bullets
-}
+const CV_SCALE = 0.77
 
 function CV() {
-  const experienceByCompany = groupExperienceByCompany(PROFILE_DATA.experience)
+  // Sort experience newest first.
+  const sortedExperience = [...PROFILE_DATA.experience].sort((a, b) =>
+    b.startDate.localeCompare(a.startDate)
+  )
+
   const education = PROFILE_DATA.education
     .filter((edu) => edu.showOnCV !== false)
     .sort((a, b) => b.startDate.localeCompare(a.startDate))
@@ -84,10 +41,9 @@ function CV() {
           <span className="font-medium text-foreground">Headers and footers</span> — that removes the browser's own title/URL/date line.
         </p>
         <div className="flex items-center gap-2 shrink-0">
-          {/* TODO: Hook this up to a form state that overrides the showOnCV flags */}
-          {/*<Button variant="outline" className="gap-2" disabled title="TODO: Dynamic customization coming soon!">
+          {/* <Button variant="outline" className="gap-2" disabled title="TODO: Dynamic customization coming soon!">
             <Settings2 className="h-4 w-4" /> Customize CV
-          </Button>*/}
+          </Button> */}
           <Button onClick={() => window.print()} className="gap-2">
             <Printer className="h-4 w-4" /> Print / Save as PDF
           </Button>
@@ -150,28 +106,33 @@ function CV() {
                 Experience
               </h2>
               <div className="space-y-4">
-                {experienceByCompany.map(({ company, roles }) => (
-                  <div key={company}>
-                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 sm:gap-0 mb-1">
-                      <p className="text-sm font-bold">
-                        {roles.length > 1
-                          ? [...roles].reverse().map((r) => r.role).join(' \u2192 ')
-                          : roles[0].role}
+                {sortedExperience.map((job) => {
+                  // Filter bullets based on showOnCV flag, fallback to description if no bullets exist
+                  const bullets = job.bullets
+                    ? job.bullets.filter(b => b.showOnCV !== false).map(b => b.text)
+                    : [job.description];
+
+                  return (
+                    <div key={`${job.company}-${job.role}`}>
+                      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 sm:gap-0 mb-1">
+                        <p className="text-sm font-bold">
+                          {job.role}
+                        </p>
+                        <span className="text-xs text-muted-foreground print:text-black/70 shrink-0 sm:ml-3">
+                          {job.period}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground print:text-black/70 mb-1.5">
+                        {job.company}
                       </p>
-                      <span className="text-xs text-muted-foreground print:text-black/70 shrink-0 sm:ml-3">
-                        {roles.length > 1 ? companyPeriod(roles) : roles[0].period}
-                      </span>
+                      <ul className="space-y-1 text-sm text-muted-foreground print:text-black/85 leading-snug list-disc list-outside pl-4">
+                        {bullets.map((bullet, idx) => (
+                          <li key={idx}>{bullet}</li>
+                        ))}
+                      </ul>
                     </div>
-                    <p className="text-xs text-muted-foreground print:text-black/70 mb-1.5">
-                      {company}
-                    </p>
-                    <ul className="space-y-1 text-sm text-muted-foreground print:text-black/85 leading-snug list-disc list-outside pl-4">
-                      {(roles.length > 1 ? mergedCompanyBullets(roles) : roles[0].bullets?.map(b => b.text) ?? [roles[0].description]).map((bullet) => (
-                        <li key={bullet}>{bullet}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </section>
 
@@ -223,22 +184,26 @@ function CV() {
             <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
               Skills
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {PROFILE_DATA.skills.map((group) => (
                 <div key={group.category}>
-                  <p className="text-xs font-semibold text-muted-foreground print:text-black/70 uppercase tracking-wide mb-1">
-                    {group.category}
-                  </p>
-                  <div className="flex flex-wrap gap-1 print:hidden">
+                  {/* Screen version: Category title and badges inline */}
+                  <div className="flex flex-wrap items-center gap-1.5 print:hidden">
+                    <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide mr-1">
+                      {group.category}:
+                    </span>
                     {group.strengths.map((skill) => (
-                      <Badge key={skill} variant="secondary" className="text-[10px] font-medium">
+                      <Badge key={skill} variant="secondary" className="text-[10px] font-medium px-1.5 py-0">
                         {skill}
                       </Badge>
                     ))}
                   </div>
-                  {/* Plain-text fallback for print: badge chrome wastes ink and can
-                      wrap awkwardly across a printed page. */}
+
+                  {/* Print version: Category title and text inline */}
                   <p className="hidden print:block text-sm text-black/85 leading-snug">
+                    <span className="text-[11px] font-bold text-black/70 uppercase tracking-wide mr-1">
+                      {group.category}:
+                    </span>
                     {group.strengths.join(', ')}
                   </p>
                 </div>
