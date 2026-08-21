@@ -109,16 +109,25 @@ export const PROFILE_DATA: ProfileData = {
         'engineering a new heaadless component library to drive the next era of library applications.',
       bullets: [
         {
-          text: 'Architect and frontend technical lead for the ILL (Interlibrary Loan) application,' +
+          text: 'Architected centralized cross-platform CI/CD infrastructure using GitLab Components and GitHub Actions' +
+            ' for automated SBOM generation, vulnerability scanning, and documentation page deployments.'
+        },
+        {
+          text: 'Regularly managed containerized environments utilizing Docker, with working knowledge of Kubernetes and' +
+            ' Rancher to orchestrate microservices and debug complex live deployment issues.'
+        },
+        {
+          text: 'Architect and frontend technical lead for the ILL (Interlibrary Loan) application, ' +
             'after initially implementing ISO 18626 messaging and sitting on the standards committee.'
         },
         {
-          text: 'Mentored engineers and worked on improving developer experience, shared testing libraries, centralised' +
-            'CI/CD pipeline components, and engineering a new headless component library.'
+          text: 'Mentored engineers and worked on improving developer experiences'
         },
+        { text: 'Engineered new headless component library (HalfwayUI).' },
         {
-          text: 'Represented Knowledge Integration at WolfCon 2025, networking with existing and potential clients for' +
-            'the OpenRS platform and discussing FOLIO features and deliverables.' },
+          text: 'Represented Knowledge Integration at WolfCon 2025, networking with existing and potential clients for ' +
+            'the OpenRS platform and discussing FOLIO features and deliverables.'
+        },
       ],
     },
     {
@@ -133,15 +142,20 @@ export const PROFILE_DATA: ProfileData = {
         'Work included interacting directly with stakeholders to best deliver on their needs.',
       bullets: [
         {
-          text: 'Delivered and grew ownership of the FOLIO ERM suite, Open Access, and Serials apps, progressing from' +
+          text: 'Delivered and grew ownership of the FOLIO ERM suite, Open Access, and Serials apps, progressing from ' +
             'feature delivery into a tech lead capacity.'
         },
         {
-          text: 'Authored stripes-kint-components (900+ weekly NPM downloads), address plugin NPM library and led a' +
-            'frontend testing overhaul, standardising shared UI and test patterns across FOLIO modules.'
+          text: 'Authored core frontend libraries (900+ weekly NPM downloads), led a ' +
+            'frontend testing overhaul, engineered fully and semi automated semantic release pipelines via Gitlab CI to ' +
+            'streamline NPM workflows.'
         },
         {
-          text: 'Represented knowledge integration in meetings with stakeholders and worked closely with product owners' +
+          text: 'Provided DevOps support, leveraging Linux, Bash, and docker containers to resolve infrastructure ' +
+            'bottlenecks, optimize application performance, and support client testing and production environments.'
+        },
+        {
+          text: 'Represented knowledge integration in meetings with stakeholders and worked closely with product owners ' +
             'to translate requirements into working features.'
         },
       ],

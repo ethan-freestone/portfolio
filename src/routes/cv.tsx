@@ -15,7 +15,7 @@ export const Route = createFileRoute('/cv')({ component: CV })
 const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'stripes-kint-components'] as const
 
 // Single scaling dial for output PDF
-const CV_SCALE = 0.85
+const CV_SCALE = 0.80
 
 // Group experience entries by company (supports any number of companies,
 // each with any number of roles), most recent company/role first.
@@ -44,7 +44,7 @@ function companyPeriod(roles: Experience[]) {
 // Merge bullets across a company's roles (most recent role's bullets first),
 // dropping near-duplicates and capping the total so a promotion doesn't
 // double the space a single-role company would take.
-function mergedCompanyBullets(roles: Experience[], maxBullets = 7) {
+function mergedCompanyBullets(roles: Experience[], maxBullets = 10) {
   const seen = new Set<string>()
   const bullets: string[] = []
   for (const role of roles) {
