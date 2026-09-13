@@ -1,9 +1,20 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Printer, Mail, Globe, Github, MapPin } from 'lucide-react'
+import { Printer, Mail, Globe, Github, MapPin, Settings2 } from 'lucide-react'
 import { PROFILE_DATA } from '@/data/about'
 import { PROJECTS_DATA } from '@/data/projects'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 
 export const Route = createFileRoute('/cv')({ component: CV })
 
@@ -32,7 +43,8 @@ function CV() {
     .filter((p): p is NonNullable<typeof p> => Boolean(p))
 
   return (
-    <div className="page-wrap py-6 sm:py-10 print:py-0">
+    <Drawer>
+      <div className="page-wrap py-6 sm:py-10 print:py-0">
       {/* Toolbar — never printed */}
       <div className="no-print print:hidden mb-6 flex items-center justify-between gap-4 flex-wrap">
         <p className="text-sm text-muted-foreground max-w-2xl">
@@ -41,9 +53,13 @@ function CV() {
           <span className="font-medium text-foreground">Headers and footers</span> — that removes the browser's own title/URL/date line.
         </p>
         <div className="flex items-center gap-2 shrink-0">
-          {/* <Button variant="outline" className="gap-2" disabled title="TODO: Dynamic customization coming soon!">
-            <Settings2 className="h-4 w-4" /> Customize CV
-          </Button> */}
+          <DrawerTrigger
+              render={
+                <Button variant="outline" className="gap-2" disabled title="TODO: Dynamic customization coming soon!">
+                  <Settings2 className="h-4 w-4" /> Customize CV
+                </Button>
+              }
+          />
           <Button onClick={() => window.print()} className="gap-2">
             <Printer className="h-4 w-4" /> Print / Save as PDF
           </Button>
@@ -233,5 +249,6 @@ function CV() {
         }
       `}</style>
     </div>
+    </Drawer>
   )
 }
