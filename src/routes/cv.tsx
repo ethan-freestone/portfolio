@@ -125,7 +125,7 @@ function CV() {
                 id="slider-scale"
                 onValueChange={(value) => setCvScale(value)}
                 value={cvScale}
-                min={0.01}
+                min={0.4}
                 max={1}
                 step={0.01}
               />

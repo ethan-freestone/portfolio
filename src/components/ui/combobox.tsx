@@ -13,14 +13,21 @@ import {
   InputGroupInput,
 } from '#/components/ui/input-group.tsx'
 
+import { motion } from 'framer-motion'
+
 import {
   arrayMove,
-  horizontalListSortingStrategy,
+  rectSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
 } from '@dnd-kit/sortable'
+import type {
+  SortingStrategy
+} from '@dnd-kit/sortable';
+
 import { CSS } from '@dnd-kit/utilities'
+
 import {
   closestCenter,
   DndContext,
@@ -28,8 +35,9 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  type DragEndEvent,
 } from '@dnd-kit/core'
+
+import type { DragOverEvent } from '@dnd-kit/core'
 
 const Combobox = ComboboxPrimitive.Root
 
@@ -134,7 +142,7 @@ function ComboboxContent({
           data-slot="combobox-content"
           data-chips={!!anchor}
           className={cn(
-            'group/combobox-content relative max-h-96 w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] origin-(--transform-origin) overflow-hidden rounded-md bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
+            'group/combobox-content relative max-h-96 w-(--anchor-width) max-w-(--available-width) origin-(--transform-origin) overflow-hidden rounded-md text-popover-foreground ring-1 ring-foreground/10 duration-100 data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:fade-out-0 data-closed:zoom-out-95',
             className,
           )}
           {...props}
@@ -149,7 +157,7 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
     <ComboboxPrimitive.List
       data-slot="combobox-list"
       className={cn(
-        'max-h-[min(calc(--spacing(96)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-py-1 overflow-y-auto p-1 data-empty:p-0',
+        'max-h-[min(calc(--spacing(96)-(--spacing(9))),calc(var(--available-height)-(--spacing(9))))] scroll-py-1 overflow-y-auto p-1',
         className,
       )}
       {...props}
@@ -166,7 +174,7 @@ function ComboboxItem({
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -221,7 +229,7 @@ function ComboboxEmpty({ className, ...props }: ComboboxPrimitive.Empty.Props) {
     <ComboboxPrimitive.Empty
       data-slot="combobox-empty"
       className={cn(
-        'hidden w-full justify-center py-2 text-center text-sm text-muted-foreground group-data-empty/combobox-content:flex',
+        'hidden w-full justify-center py-2 text-center text-sm text-muted-foreground',
         className,
       )}
       {...props}
@@ -251,7 +259,7 @@ function ComboboxChips({
     <ComboboxPrimitive.Chips
       data-slot="combobox-chips"
       className={cn(
-        'flex min-h-9 flex-wrap items-center gap-1.5 rounded-md border border-input bg-transparent bg-clip-padding px-2.5 py-1.5 text-sm shadow-xs transition-[color,box-shadow] focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50 has-aria-invalid:border-destructive has-aria-invalid:ring-[3px] has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:px-1.5 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40',
+        'flex min-h-9 flex-wrap items-center gap-1.5 rounded-md border border-input bg-transparent bg-clip-padding px-2.5 py-1.5 text-sm shadow-xs transition-[color,box-shadow] focus-within:ring-[3px] focus-within:ring-ring/50',
         className,
       )}
       {...props}
@@ -308,7 +316,7 @@ interface ComboboxSortableChipsProps<
   T extends string | number = string,
 > extends React.ComponentPropsWithoutRef<typeof ComboboxChips> {
   items: T[]
-  strategy?: typeof horizontalListSortingStrategy
+  strategy?: SortingStrategy
   onReorder?: (items: T[]) => void
 }
 
@@ -316,55 +324,62 @@ const ComboboxSortableChips = React.forwardRef<
   HTMLDivElement,
   ComboboxSortableChipsProps<any>
 >(function ComboboxSortableChips(
-  {
-    items,
-    strategy = horizontalListSortingStrategy,
-    onReorder,
-    children,
-    className,
-    ...props
-  },
+  { items, onReorder, children, className, ...props },
   ref,
 ) {
   const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 5,
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   )
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const liveItems = React.useRef(items)
+  React.useEffect(() => {
+    liveItems.current = items
+  }, [items])
+
+  // Re-measuring on every DOM mutation (MeasuringStrategy.Always) combined
+  // with a synchronous setState in onDragOver creates a feedback loop:
+  // reorder -> DOM changes -> remeasure -> new collision -> another
+  // onDragOver -> reorder again, all in the same tick, never reaching a
+  // paint. This lock caps it to one reorder per animation frame, which
+  // breaks the synchronous recursion while still feeling instant.
+  const lockedRef = React.useRef(false)
+
+  const handleDragOver = (event: DragOverEvent) => {
+    if (lockedRef.current) return
+
     const { active, over } = event
+    if (!over || active.id === over.id) return
 
-    if (over && active.id !== over.id && onReorder) {
-      const oldIndex = items.findIndex((item) =>
-        typeof item === 'object' && item !== null
-          ? item.id === active.id
-          : item === active.id,
-      )
-      const newIndex = items.findIndex((item) =>
-        typeof item === 'object' && item !== null
-          ? item.id === over.id
-          : item === over.id,
-      )
+    const current = liveItems.current
+    const oldIndex = current.findIndex((item) =>
+      typeof item === 'object' && item !== null ? item.id === active.id : item === active.id,
+    )
+    const newIndex = current.findIndex((item) =>
+      typeof item === 'object' && item !== null ? item.id === over.id : item === over.id,
+    )
 
-      if (oldIndex !== -1 && newIndex !== -1) {
-        onReorder(arrayMove(items, oldIndex, newIndex))
-      }
-    }
+    if (oldIndex === -1 || newIndex === -1 || oldIndex === newIndex) return
+
+    lockedRef.current = true
+    const next = arrayMove(current, oldIndex, newIndex)
+    liveItems.current = next
+    onReorder?.(next)
+
+    requestAnimationFrame(() => {
+      lockedRef.current = false
+    })
   }
 
   return (
     <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
+      // Default measuring (WhileDragging, debounced) is enough now that
+      // reorders are frame-locked — Always is what caused the loop.
+      onDragOver={handleDragOver}
     >
-      <SortableContext items={items} strategy={strategy}>
+      <SortableContext items={items} strategy={rectSortingStrategy}>
         <ComboboxChips ref={ref} className={className} {...props}>
           {children}
         </ComboboxChips>
@@ -388,36 +403,41 @@ function ComboboxSortableChip({
   showRemove = true,
   ...props
 }: ComboboxSortableChipProps) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id, disabled })
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useSortable({
+      id,
+      disabled,
+      animateLayoutChanges: () => false, // we're driving layout ourselves now
+    })
 
-  const style: React.CSSProperties = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    zIndex: isDragging ? 10 : 'auto',
-    opacity: isDragging ? 0.5 : 1,
-    ...styleProp,
-  }
+  // Only apply dnd-kit's transform to the chip you're actively dragging,
+  // so it tracks the pointer. Every other chip is positioned by the real
+  // reflow + Framer Motion's `layout` FLIP animation, which measures actual
+  // rects rather than assuming a uniform grid cell size.
+  const style: React.CSSProperties = isDragging
+    ? {
+        transform: CSS.Translate.toString(transform),
+        zIndex: 10,
+        opacity: 0.5,
+        ...styleProp,
+      }
+    : { ...styleProp }
 
   return (
-    <ComboboxChip
-      ref={setNodeRef}
-      id={id}
-      style={style}
-      showRemove={showRemove}
-      className={cn(isDragging && 'touch-none opacity-50 z-10', className)}
-      {...attributes}
-      {...listeners}
-      {...props}
-    >
-      {children}
-    </ComboboxChip>
+    <motion.div layout transition={{ duration: 0.2 }} className="contents">
+      <ComboboxChip
+        ref={setNodeRef}
+        id={id}
+        style={style}
+        showRemove={showRemove}
+        className={cn(isDragging && 'touch-none', className)}
+        {...attributes}
+        {...listeners}
+        {...props}
+      >
+        {children}
+      </ComboboxChip>
+    </motion.div>
   )
 }
 
