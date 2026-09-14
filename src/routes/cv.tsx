@@ -24,13 +24,13 @@ import {
 
 import {
   Combobox,
-  ComboboxChip,
-  ComboboxChips,
   ComboboxChipsInput,
   ComboboxContent,
   ComboboxEmpty,
   ComboboxItem,
   ComboboxList,
+  ComboboxSortableChip,
+  ComboboxSortableChips,
   ComboboxValue,
   useComboboxAnchor,
 } from '#/components/ui/combobox.tsx'
@@ -93,16 +93,20 @@ function CV() {
               value={projects}
               onValueChange={setProjects}
             >
-              <ComboboxChips
+              <ComboboxSortableChips
                 ref={anchor}
+                items={projects}
+                onReorder={setProjects}
               >
                 <ComboboxValue>
                   {projects.map((val) => (
-                    <ComboboxChip key={val}>{val}</ComboboxChip>
+                    <ComboboxSortableChip id={val} key={val}>
+                      {val}
+                    </ComboboxSortableChip>
                   ))}
                 </ComboboxValue>
                 <ComboboxChipsInput />
-              </ComboboxChips>
+              </ComboboxSortableChips>
               <ComboboxContent anchor={anchor}>
                 <ComboboxEmpty>No items found.</ComboboxEmpty>
                 <ComboboxList>
