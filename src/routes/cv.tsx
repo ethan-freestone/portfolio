@@ -1,3 +1,5 @@
+import { useState} from "react";
+
 import { createFileRoute } from '@tanstack/react-router'
 import { Printer, Mail, Globe, Github, MapPin, Settings2 } from 'lucide-react'
 import { PROFILE_DATA } from '@/data/about'
@@ -20,9 +22,22 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxValue,
+  useComboboxAnchor,
+} from '#/components/ui/combobox.tsx'
+
 import {useIsMobile} from "#/components/hooks/use-mobile.ts";
 import {Slider} from "#/components/ui/slider.tsx";
-import {useState} from "react";
+
 
 export const Route = createFileRoute('/cv')({ component: CV })
 
@@ -31,23 +46,26 @@ export const Route = createFileRoute('/cv')({ component: CV })
 // which projects make the cut for a one-page CV. Everything else (experience,
 // education, skills) is entirely data-driven from projects.ts
 // ---------------------------------------------------------------------------
-const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'shared-pipeline-utils', 'stripes-kint-components'] as const
+const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'shared-pipeline-utils', 'stripes-kint-components']
 
 function CV() {
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
   // Single scaling dial for output PDF
-  const [cvScale, setCvScale] = useState<number[]>([0.77])
+  const [cvScale, setCvScale] = useState<number[]>([0.76]);
+
+  const anchor = useComboboxAnchor();
+  const [projects, setProjects] = useState<string[]>(CV_PROJECT_IDS)
 
   // Sort experience newest first.
   const sortedExperience = [...PROFILE_DATA.experience].sort((a, b) =>
     b.startDate.localeCompare(a.startDate),
-  )
+  );
 
   const education = PROFILE_DATA.education
     .filter((edu) => edu.showOnCV !== false)
     .sort((a, b) => b.startDate.localeCompare(a.startDate))
 
-  const cvProjects = CV_PROJECT_IDS.map((id) =>
+  const cvProjects = projects.map((id) =>
     PROJECTS_DATA.find((p) => p.id === id),
   ).filter((p): p is NonNullable<typeof p> => Boolean(p))
 
@@ -64,20 +82,51 @@ function CV() {
           </DrawerDescription>
         </DrawerHeader>
         <div className="flex px-2 py-3">
-          <div className="flex items-center justify-between gap-2">
-            <Label htmlFor="slider-scale">Scale</Label>
-            <span className="text-sm text-muted-foreground">
-              {cvScale}
-            </span>
+          <div className="flex flex-col mt-3 gap-1 w-full">
+            <div className="flex items-center justify-between gap-2">
+              <Label htmlFor="combobox-projects">Projects</Label>
+            </div>
+            <Combobox
+              autoHighlight
+              items={PROJECTS_DATA.map((project) => project.id)}
+              multiple
+              value={projects}
+              onValueChange={setProjects}
+            >
+              <ComboboxChips
+                ref={anchor}
+              >
+                <ComboboxValue>
+                  {projects.map((val) => (
+                    <ComboboxChip key={val}>{val}</ComboboxChip>
+                  ))}
+                </ComboboxValue>
+                <ComboboxChipsInput />
+              </ComboboxChips>
+              <ComboboxContent anchor={anchor}>
+                <ComboboxEmpty>No items found.</ComboboxEmpty>
+                <ComboboxList>
+                  {(item) => (
+                    <ComboboxItem key={item} value={item}>
+                      {item}
+                    </ComboboxItem>
+                  )}
+                </ComboboxList>
+              </ComboboxContent>
+            </Combobox>
+            <div className="flex items-center justify-between gap-2">
+              <Label htmlFor="slider-scale">Scale</Label>
+              <span className="text-sm text-muted-foreground">{cvScale}</span>
+              <Slider
+                id="slider-scale"
+                onValueChange={(value) => setCvScale(value)}
+                value={cvScale}
+                min={0.01}
+                max={1}
+                step={0.01}
+              />
+            </div>
           </div>
-          <Slider
-            id="slider-scale"
-            onValueChange={(value) => setCvScale(value)}
-            value={cvScale}
-            min={0}
-            max={1}
-            step={0.01}
-          />
         </div>
         <DrawerFooter>
           <DrawerClose render={<Button variant="outline">Close</Button>} />
