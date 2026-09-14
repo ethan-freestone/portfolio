@@ -6,6 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
 import {
+  Label
+} from '@/components/ui/label'
+
+import {
   Drawer,
   DrawerClose,
   DrawerContent,
@@ -17,6 +21,8 @@ import {
 } from "@/components/ui/drawer"
 
 import {useIsMobile} from "#/components/hooks/use-mobile.ts";
+import {Slider} from "#/components/ui/slider.tsx";
+import {useState} from "react";
 
 export const Route = createFileRoute('/cv')({ component: CV })
 
@@ -27,25 +33,23 @@ export const Route = createFileRoute('/cv')({ component: CV })
 // ---------------------------------------------------------------------------
 const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'shared-pipeline-utils', 'stripes-kint-components'] as const
 
-// Single scaling dial for output PDF
-const CV_SCALE = 0.77
-
 function CV() {
-  const isMobile = useIsMobile();
-
+  const isMobile = useIsMobile()
+  // Single scaling dial for output PDF
+  const [cvScale, setCvScale] = useState<number[]>([0.77])
 
   // Sort experience newest first.
   const sortedExperience = [...PROFILE_DATA.experience].sort((a, b) =>
-    b.startDate.localeCompare(a.startDate)
+    b.startDate.localeCompare(a.startDate),
   )
 
   const education = PROFILE_DATA.education
     .filter((edu) => edu.showOnCV !== false)
     .sort((a, b) => b.startDate.localeCompare(a.startDate))
 
-  const cvProjects = CV_PROJECT_IDS
-    .map((id) => PROJECTS_DATA.find((p) => p.id === id))
-    .filter((p): p is NonNullable<typeof p> => Boolean(p))
+  const cvProjects = CV_PROJECT_IDS.map((id) =>
+    PROJECTS_DATA.find((p) => p.id === id),
+  ).filter((p): p is NonNullable<typeof p> => Boolean(p))
 
   return (
     <Drawer
@@ -59,6 +63,22 @@ function CV() {
             Select which information to include on the CV and choose a scale
           </DrawerDescription>
         </DrawerHeader>
+        <div className="flex px-2 py-3">
+          <div className="flex items-center justify-between gap-2">
+            <Label htmlFor="slider-scale">Scale</Label>
+            <span className="text-sm text-muted-foreground">
+              {cvScale}
+            </span>
+          </div>
+          <Slider
+            id="slider-scale"
+            onValueChange={(value) => setCvScale(value)}
+            value={cvScale}
+            min={0}
+            max={1}
+            step={0.01}
+          />
+        </div>
         <DrawerFooter>
           <DrawerClose render={<Button variant="outline">Close</Button>} />
         </DrawerFooter>
@@ -105,7 +125,7 @@ function CV() {
           print:font-[ui-sans-serif,system-ui,-apple-system,Helvetica,Arial,sans-serif]
           zoom-[1] sm:zoom-(--cv-zoom) print:zoom-(--cv-zoom)
         "
-          style={{ '--cv-zoom': CV_SCALE } as React.CSSProperties}
+          style={{ '--cv-zoom': cvScale } as React.CSSProperties}
         >
           {/* Header */}
           <header className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6 pb-5 border-b border-border print:border-black/20">
