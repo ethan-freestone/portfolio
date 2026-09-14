@@ -216,7 +216,42 @@ function CV() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 pt-5">
-            {/* Left: Experience + Education + Projects */}
+            {/* Left: Skills */}
+            <div className="md:col-span-1">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
+                Skills
+              </h2>
+              <div className="space-y-3">
+                {PROFILE_DATA.skills.map((group) => (
+                  <div key={group.category}>
+                    {/* Screen version: Category title and badges inline */}
+                    <div className="flex flex-wrap items-center gap-1.5 print:hidden">
+                      <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide mr-1">
+                        {group.category}:
+                      </span>
+                      {group.strengths.map((skill) => (
+                        <Badge
+                          key={skill}
+                          variant="secondary"
+                          className="text-[10px] font-medium px-1.5 py-0"
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    {/* Print version: Category title and text inline */}
+                    <p className="hidden print:block text-sm text-black/85 leading-snug">
+                      <span className="text-[11px] font-bold text-black/70 uppercase tracking-wide mr-1">
+                        {group.category}:
+                      </span>
+                      {group.strengths.join(', ')}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Right: Experience + Education + Projects */}
             <div className="md:col-span-2 space-y-6">
               <section>
                 <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
@@ -300,42 +335,6 @@ function CV() {
                   ))}
                 </div>
               </section>
-            </div>
-
-            {/* Right: Skills */}
-            <div className="md:col-span-1">
-              <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
-                Skills
-              </h2>
-              <div className="space-y-3">
-                {PROFILE_DATA.skills.map((group) => (
-                  <div key={group.category}>
-                    {/* Screen version: Category title and badges inline */}
-                    <div className="flex flex-wrap items-center gap-1.5 print:hidden">
-                      <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide mr-1">
-                        {group.category}:
-                      </span>
-                      {group.strengths.map((skill) => (
-                        <Badge
-                          key={skill}
-                          variant="secondary"
-                          className="text-[10px] font-medium px-1.5 py-0"
-                        >
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    {/* Print version: Category title and text inline */}
-                    <p className="hidden print:block text-sm text-black/85 leading-snug">
-                      <span className="text-[11px] font-bold text-black/70 uppercase tracking-wide mr-1">
-                        {group.category}:
-                      </span>
-                      {group.strengths.join(', ')}
-                    </p>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
 

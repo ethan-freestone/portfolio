@@ -88,6 +88,8 @@ export const PROFILE_DATA: ProfileData = {
     {
       category: 'Tooling & DevOps',
       strengths: [
+        'Integration Testing', 'E2E Testing', 'Unit Testing',
+        'Test Driven Development', 'Syft/Grype Automated Security Analysis',
         'Linux Development', 'Gradle', 'Bash', 'Docker', 'GitLab CI',
         'GitHub Actions', 'Kubernetes', 'Bruno/Postman', 'Conventional Commits'
       ],
@@ -121,7 +123,7 @@ export const PROFILE_DATA: ProfileData = {
             'after initially implementing ISO 18626 messaging and sitting on the standards committee.'
         },
         {
-          text: 'Mentored engineers and worked on improving developer experiences'
+          text: 'Mentored engineers and worked on improving developer experiences.'
         },
         { text: 'Engineered new headless component library (HalfwayUI).' },
         {

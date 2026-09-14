@@ -963,7 +963,7 @@ export const PROJECTS_DATA: Project[] = [
     id: 'stripes-erm-testing',
     title: 'Stripes ERM Testing',
     category: 'libraries',
-    description: 'A specialized testing utility library for FOLIO ERM applications, standardizing Jest mocks, custom BigTest/Cypress interactors, and test setup boilerplate.',
+    description: 'I wrote a specialized testing utility library for FOLIO ERM applications, standardizing Jest mocks, custom BigTest/Cypress interactors, and test setup boilerplate.',
     descriptionDeep: [
       'Created after identifying a fundamental structural issue in default FOLIO Stripes testing patterns, where manual Jest mocks were centralized and imported everywhere—causing hoisting conflicts and breaking module-level overrides.',
       'Inverted the mock hierarchy to align with Jest best practices: centralizing global environment mocks while modularizing test-specific implementations.',
