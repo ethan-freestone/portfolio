@@ -24,7 +24,7 @@ function ProjectsLayout() {
           Projects & Code
         </h1>
         <p className="text-muted-foreground text-lg max-w-2xl">
-          A showcase of full-stack web applications, open-source libraries, and specific feature modules built for production.
+          A showcase of full-stack web applications, open-source libraries, and specific feature modules built for production. Click the buttons below to see examples of each.
         </p>
       </div>
 
