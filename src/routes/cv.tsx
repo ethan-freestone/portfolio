@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useMemo, useState } from "react";
 
 import { createFileRoute } from '@tanstack/react-router'
 import { Phone, Printer, Mail, Globe, Github, MapPin, Settings2 } from 'lucide-react'
@@ -32,6 +32,7 @@ import {
   Slider,
   // Page Components
   ContactDetail,
+  CVForm
 } from '@/components'
 
 export const Route = createFileRoute('/cv')({ component: CV })
@@ -45,11 +46,11 @@ const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'shared-
 
 function CV() {
   const isMobile = useIsMobile();
-  // Single scaling dial for output PDF
-  const [cvScale, setCvScale] = useState<number[]>([0.76]);
 
-  const anchor = useComboboxAnchor();
-  const [projects, setProjects] = useState<string[]>(CV_PROJECT_IDS)
+  const [cvFormData, setCVFormData] = useState<CVForm>({
+    scale: [0.75],
+    projects: CV_PROJECT_IDS
+  })
 
   // Sort experience newest first.
   const sortedExperience = [...PROFILE_DATA.experience].sort((a, b) =>
@@ -60,9 +61,9 @@ function CV() {
     .filter((edu) => edu.showOnCV !== false)
     .sort((a, b) => b.startDate.localeCompare(a.startDate))
 
-  const cvProjects = projects.map((id) =>
+  const cvProjects = useMemo(() => cvFormData.projects.map((id) =>
     PROJECTS_DATA.find((p) => p.id === id),
-  ).filter((p): p is NonNullable<typeof p> => Boolean(p))
+  ).filter((p): p is NonNullable<typeof p> => Boolean(p)), [cvFormData.projects]);
 
   return (
     <Drawer
@@ -76,57 +77,7 @@ function CV() {
             Select which information to include on the CV and choose a scale
           </DrawerDescription>
         </DrawerHeader>
-        <div className="flex px-2 py-3">
-          <div className="flex flex-col mt-3 gap-1 w-full">
-            <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="combobox-projects">Projects</Label>
-            </div>
-            <Combobox
-              autoHighlight
-              items={PROJECTS_DATA.map((project) => project.id)}
-              multiple
-              value={projects}
-              onValueChange={setProjects}
-            >
-              <ComboboxSortableChips
-                ref={anchor}
-                items={projects}
-                onReorder={setProjects}
-              >
-                <ComboboxValue>
-                  {projects.map((val) => (
-                    <ComboboxSortableChip id={val} key={val}>
-                      {val}
-                    </ComboboxSortableChip>
-                  ))}
-                </ComboboxValue>
-                <ComboboxChipsInput />
-              </ComboboxSortableChips>
-              <ComboboxContent anchor={anchor}>
-                <ComboboxEmpty>No items found.</ComboboxEmpty>
-                <ComboboxList>
-                  {(item) => (
-                    <ComboboxItem key={item} value={item}>
-                      {item}
-                    </ComboboxItem>
-                  )}
-                </ComboboxList>
-              </ComboboxContent>
-            </Combobox>
-            <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="slider-scale">Scale</Label>
-              <span className="text-sm text-muted-foreground">{cvScale}</span>
-              <Slider
-                id="slider-scale"
-                onValueChange={(value) => setCvScale(value)}
-                value={cvScale}
-                min={0.4}
-                max={1}
-                step={0.01}
-              />
-            </div>
-          </div>
-        </div>
+        <CVForm data={cvFormData} setData={setCVFormData} />
         <DrawerFooter>
           <DrawerClose render={<Button variant="outline">Close</Button>} />
         </DrawerFooter>
@@ -173,7 +124,7 @@ function CV() {
           print:font-[ui-sans-serif,system-ui,-apple-system,Helvetica,Arial,sans-serif]
           zoom-[1] sm:zoom-(--cv-zoom) print:zoom-(--cv-zoom)
         "
-          style={{ '--cv-zoom': cvScale } as React.CSSProperties}
+          style={{ '--cv-zoom': cvFormData.scale } as React.CSSProperties}
         >
           {/* Header */}
           <header className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6 pb-5 border-b border-border print:border-black/20">
@@ -192,10 +143,7 @@ function CV() {
                 detail="github.com/ethan-freestone"
                 Icon={Github}
               />
-              <ContactDetail
-                detail="(+44)7531922203"
-                Icon={Phone}
-              />
+              <ContactDetail detail="(+44)7531922203" Icon={Phone} />
               <ContactDetail detail="e.j.freestone@gmail.com" Icon={Mail} />
             </div>
           </header>
