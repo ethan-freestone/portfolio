@@ -2,30 +2,13 @@ import { useState} from "react";
 
 import { createFileRoute } from '@tanstack/react-router'
 import { Phone, Printer, Mail, Globe, Github, MapPin, Settings2 } from 'lucide-react'
-import { PROFILE_DATA } from '@/data/about'
-import { PROJECTS_DATA } from '@/data/projects'
 
-import { ContactDetail } from '@/components';
-
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { PROFILE_DATA, PROJECTS_DATA } from '@/data'
 
 import {
-  Label
-} from '@/components/ui/label'
-
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-
-import {
+  // Raw Components
+  Badge,
+  Button,
   Combobox,
   ComboboxChipsInput,
   ComboboxContent,
@@ -36,11 +19,20 @@ import {
   ComboboxSortableChips,
   ComboboxValue,
   useComboboxAnchor,
-} from '#/components/ui/combobox.tsx'
-
-import {useIsMobile} from "#/components/hooks/use-mobile.ts";
-import {Slider} from "#/components/ui/slider.tsx";
-
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  useIsMobile,
+  Label,
+  Slider,
+  // Page Components
+  ContactDetail,
+} from '@/components'
 
 export const Route = createFileRoute('/cv')({ component: CV })
 
