@@ -1,6 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PROJECTS_DATA, type ProjectCategory } from '@/data/projects'
-import { ProjectCard } from '@/components/ProjectCard'
+
+import type { ProjectCategory } from '@/types'
+import { PROJECTS_DATA } from '@/data'
+import { ProjectCard } from '@/components'
 
 export const Route = createFileRoute('/projects/$category/')({
   component: CategorySubpage,

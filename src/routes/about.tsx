@@ -8,10 +8,19 @@ import {
   GraduationCap,
   MapPin,
 } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { PROFILE_DATA } from '@/data/about'
+
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components'
+import { PROFILE_DATA } from '@/data'
 
 export const Route = createFileRoute('/about')({ component: About })
 

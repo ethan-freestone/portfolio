@@ -5,17 +5,18 @@ import {
   User2,
   type LucideIcon, FileUser,
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+
 import {
+  Badge,
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
-} from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+  CardTitle,
+} from '@/components'
 import type { ReactNode } from "react";
-import { PROFILE_DATA } from "#/data/about.ts";
+import { PROFILE_DATA } from "@/data";
 
 export const Route = createFileRoute('/')({ component: Home })
 

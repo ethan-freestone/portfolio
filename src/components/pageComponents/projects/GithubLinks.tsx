@@ -1,11 +1,13 @@
 import { ExternalLink, Github, ChevronDown } from 'lucide-react'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '#/components/ui/dropdown-menu.tsx'
-import type { GithubLink } from '#/data/projects.ts'
+} from '#/components'
+
+import type { GithubLink } from '@/types';
 
 export function GithubLinks({ github }: { github: string | GithubLink[] }) {
   if (!github) return null

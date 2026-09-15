@@ -1,16 +1,19 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, ExternalLink, FolderGit2, Play, Book, Package } from 'lucide-react'
-import { PROJECTS_DATA } from '@/data/projects'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+
+import { PROJECTS_DATA } from '@/data'
+
 import {
+  Badge,
+  Button,
+  Card,
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel'
+} from '@/components'
+
 import { getTitleMedia } from "#/lib";
 
 export const Route = createFileRoute('/projects/$category/$projectId')({

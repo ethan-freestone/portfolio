@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router'
-import { CATEGORIES } from "#/data/projects.ts"
+import { CATEGORIES } from "@/data"
 
 export const Route = createFileRoute('/projects')({
   beforeLoad: ({ location }) => {
