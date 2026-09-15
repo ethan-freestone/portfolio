@@ -1,28 +1,14 @@
-import { useState} from "react";
+import { useMemo, useState } from "react";
 
 import { createFileRoute } from '@tanstack/react-router'
-import { Printer, Mail, Globe, Github, MapPin, Settings2 } from 'lucide-react'
-import { PROFILE_DATA } from '@/data/about'
-import { PROJECTS_DATA } from '@/data/projects'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Phone, Printer, Mail, Globe, Github, MapPin, Settings2 } from 'lucide-react'
+
+import { PROFILE_DATA, PROJECTS_DATA } from '@/data'
 
 import {
-  Label
-} from '@/components/ui/label'
-
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-
-import {
+  // Raw Components
+  Badge,
+  Button,
   Combobox,
   ComboboxChipsInput,
   ComboboxContent,
@@ -33,11 +19,21 @@ import {
   ComboboxSortableChips,
   ComboboxValue,
   useComboboxAnchor,
-} from '#/components/ui/combobox.tsx'
-
-import {useIsMobile} from "#/components/hooks/use-mobile.ts";
-import {Slider} from "#/components/ui/slider.tsx";
-
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  useIsMobile,
+  Label,
+  Slider,
+  // Page Components
+  ContactDetail,
+  CVForm
+} from '@/components'
 
 export const Route = createFileRoute('/cv')({ component: CV })
 
@@ -50,11 +46,11 @@ const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'shared-
 
 function CV() {
   const isMobile = useIsMobile();
-  // Single scaling dial for output PDF
-  const [cvScale, setCvScale] = useState<number[]>([0.76]);
 
-  const anchor = useComboboxAnchor();
-  const [projects, setProjects] = useState<string[]>(CV_PROJECT_IDS)
+  const [cvFormData, setCVFormData] = useState<CVForm>({
+    scale: [0.75],
+    projects: CV_PROJECT_IDS
+  })
 
   // Sort experience newest first.
   const sortedExperience = [...PROFILE_DATA.experience].sort((a, b) =>
@@ -65,9 +61,9 @@ function CV() {
     .filter((edu) => edu.showOnCV !== false)
     .sort((a, b) => b.startDate.localeCompare(a.startDate))
 
-  const cvProjects = projects.map((id) =>
+  const cvProjects = useMemo(() => cvFormData.projects.map((id) =>
     PROJECTS_DATA.find((p) => p.id === id),
-  ).filter((p): p is NonNullable<typeof p> => Boolean(p))
+  ).filter((p): p is NonNullable<typeof p> => Boolean(p)), [cvFormData.projects]);
 
   return (
     <Drawer
@@ -81,57 +77,7 @@ function CV() {
             Select which information to include on the CV and choose a scale
           </DrawerDescription>
         </DrawerHeader>
-        <div className="flex px-2 py-3">
-          <div className="flex flex-col mt-3 gap-1 w-full">
-            <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="combobox-projects">Projects</Label>
-            </div>
-            <Combobox
-              autoHighlight
-              items={PROJECTS_DATA.map((project) => project.id)}
-              multiple
-              value={projects}
-              onValueChange={setProjects}
-            >
-              <ComboboxSortableChips
-                ref={anchor}
-                items={projects}
-                onReorder={setProjects}
-              >
-                <ComboboxValue>
-                  {projects.map((val) => (
-                    <ComboboxSortableChip id={val} key={val}>
-                      {val}
-                    </ComboboxSortableChip>
-                  ))}
-                </ComboboxValue>
-                <ComboboxChipsInput />
-              </ComboboxSortableChips>
-              <ComboboxContent anchor={anchor}>
-                <ComboboxEmpty>No items found.</ComboboxEmpty>
-                <ComboboxList>
-                  {(item) => (
-                    <ComboboxItem key={item} value={item}>
-                      {item}
-                    </ComboboxItem>
-                  )}
-                </ComboboxList>
-              </ComboboxContent>
-            </Combobox>
-            <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="slider-scale">Scale</Label>
-              <span className="text-sm text-muted-foreground">{cvScale}</span>
-              <Slider
-                id="slider-scale"
-                onValueChange={(value) => setCvScale(value)}
-                value={cvScale}
-                min={0.4}
-                max={1}
-                step={0.01}
-              />
-            </div>
-          </div>
-        </div>
+        <CVForm data={cvFormData} setData={setCVFormData} />
         <DrawerFooter>
           <DrawerClose render={<Button variant="outline">Close</Button>} />
         </DrawerFooter>
@@ -178,7 +124,7 @@ function CV() {
           print:font-[ui-sans-serif,system-ui,-apple-system,Helvetica,Arial,sans-serif]
           zoom-[1] sm:zoom-(--cv-zoom) print:zoom-(--cv-zoom)
         "
-          style={{ '--cv-zoom': cvScale } as React.CSSProperties}
+          style={{ '--cv-zoom': cvFormData.scale } as React.CSSProperties}
         >
           {/* Header */}
           <header className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6 pb-5 border-b border-border print:border-black/20">
@@ -191,22 +137,14 @@ function CV() {
               </p>
             </div>
             <div className="text-left sm:text-right text-xs text-muted-foreground print:text-black/70 space-y-1 shrink-0">
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <MapPin className="h-3 w-3" />
-                <span>{PROFILE_DATA.location}</span>
-              </div>
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <Globe className="h-3 w-3" />
-                <span>portfolio.efreestone.co.uk</span>
-              </div>
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <Github className="h-3 w-3" />
-                <span>github.com/ethan-freestone</span>
-              </div>
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <Mail className="h-3 w-3" />
-                <span>e.j.freestone@gmail.com</span>
-              </div>
+              <ContactDetail detail={PROFILE_DATA.location} Icon={MapPin} />
+              <ContactDetail detail="portfolio.efreestone.co.uk" Icon={Globe} />
+              <ContactDetail
+                detail="github.com/ethan-freestone"
+                Icon={Github}
+              />
+              <ContactDetail detail="(+44)7531922203" Icon={Phone} />
+              <ContactDetail detail="e.j.freestone@gmail.com" Icon={Mail} />
             </div>
           </header>
 
