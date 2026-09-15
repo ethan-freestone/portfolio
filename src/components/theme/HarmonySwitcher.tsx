@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
+
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@/components'
 
 const HARMONIES = [
   { value: 'monochromatic', label: 'Monochromatic' },
@@ -21,12 +22,16 @@ type Harmony = (typeof HARMONIES)[number]['value']
 // Curated seed colors — feel free to tweak these OKLCH values
 const BASE_COLORS = [
   { value: 'oklch(0.74 0.11 192)', label: 'Lagoon Teal' },
-  { value: 'oklch(0.72 0.14 25)', label: 'Coral' },
+  { value: 'oklch(0.02 0.4 250)', label: 'Night Sky' },
+  { value: 'oklch(0.4587 0.1966 308.06)', label: 'Royal Sheen' },
+  { value: 'oklch(0.6438 0.19 35.95)', label: 'Shattered Rust' },
+  { value: 'oklch(0.94 0.64 23)', label: 'Alert' },
+  { value: 'oklch(0.9 0.20 104)', label: 'Sun Glow' },
+  { value: 'oklch(0.45 0.7 145)', label: 'Rich Meadow' },
   { value: 'oklch(0.70 0.15 300)', label: 'Violet' },
-  { value: 'oklch(0.75 0.13 145)', label: 'Meadow Green' },
-  { value: 'oklch(0.78 0.14 85)', label: 'Amber' },
-  { value: 'oklch(0.65 0.16 265)', label: 'Indigo' },
   { value: 'oklch(0.72 0.12 350)', label: 'Rose' },
+  { value: 'oklch(0.65 0.16 265)', label: 'Indigo' },
+  { value: 'oklch(1 0.02 360)', label: 'Page' },
 ] as const
 
 const HARMONY_KEY = 'theme-harmony'
@@ -38,7 +43,7 @@ export function HarmonySwitcher() {
   const [baseColor, setBaseColor] = useState<string>(BASE_COLORS[0].value)
   const [isCustom, setIsCustom] = useState(false)
 
-  // Read saved preferences on mount (client-only — avoids SSR mismatch)
+  // Read saved preferences on mount (client-only, in localstorage)
   useEffect(() => {
     const savedHarmony = localStorage.getItem(HARMONY_KEY) as Harmony | null
     const savedColor = localStorage.getItem(BASE_COLOR_KEY)
@@ -116,7 +121,7 @@ export function HarmonySwitcher() {
       )}
 
       <Select value={harmony} onValueChange={handleHarmonyChange}>
-        <SelectTrigger className="w-full md:w-[180px]" aria-label="Color harmony">
+        <SelectTrigger className="w-full md:w-45" aria-label="Color harmony">
           <SelectValue placeholder="Select harmony" />
         </SelectTrigger>
         <SelectContent>

@@ -106,7 +106,7 @@
   --text-main:         var(--base-neutral);
   --text-muted:        color-mix(in oklab, var(--base-neutral) 65%, var(--base-surface));
   --text-kicker:       var(--base-accent);
-  --text-link:         color-mix(in oklab, var(--base-primary) 80%, black);
+  --text-link:         color-mix(in oklab, var(--base-primary) 70%, black);
   --text-link-hover:   color-mix(in oklab, var(--base-primary) 95%, black);
 
   /* --- Interactive & Accent States --- */
@@ -251,7 +251,6 @@ body {
 }
 
 a {
-  color: var(--text-link);
   text-decoration-color: oklch(from var(--base-primary) l c h / 0.4);
 }
 
