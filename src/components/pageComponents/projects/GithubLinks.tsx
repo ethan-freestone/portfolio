@@ -4,8 +4,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import type { GithubLink } from '@/data/projects'
+} from '#/components/ui/dropdown-menu.tsx'
+import type { GithubLink } from '#/data/projects.ts'
 
 export function GithubLinks({ github }: { github: string | GithubLink[] }) {
   if (!github) return null

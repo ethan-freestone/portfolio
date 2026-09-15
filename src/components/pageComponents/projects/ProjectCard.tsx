@@ -2,17 +2,17 @@ import React from 'react'
 import { Link } from '@tanstack/react-router'
 import Autoplay from 'embla-carousel-autoplay'
 import { Maximize2, Play } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '#/components/ui/card.tsx'
+import { Badge } from '#/components/ui/badge.tsx'
+import { Button } from '#/components/ui/button.tsx'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel'
-import type { Project } from '@/data/projects'
+} from '#/components/ui/carousel.tsx'
+import type { Project } from '#/data/projects.ts'
 import { getTitleMedia } from "#/lib";
 
 export function ProjectCard({ project }: { project: Project }) {

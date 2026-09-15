@@ -1,9 +1,12 @@
 import { useState} from "react";
 
 import { createFileRoute } from '@tanstack/react-router'
-import { Printer, Mail, Globe, Github, MapPin, Settings2 } from 'lucide-react'
+import { Phone, Printer, Mail, Globe, Github, MapPin, Settings2 } from 'lucide-react'
 import { PROFILE_DATA } from '@/data/about'
 import { PROJECTS_DATA } from '@/data/projects'
+
+import { ContactDetail } from '@/components';
+
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
@@ -191,22 +194,17 @@ function CV() {
               </p>
             </div>
             <div className="text-left sm:text-right text-xs text-muted-foreground print:text-black/70 space-y-1 shrink-0">
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <MapPin className="h-3 w-3" />
-                <span>{PROFILE_DATA.location}</span>
-              </div>
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <Globe className="h-3 w-3" />
-                <span>portfolio.efreestone.co.uk</span>
-              </div>
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <Github className="h-3 w-3" />
-                <span>github.com/ethan-freestone</span>
-              </div>
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <Mail className="h-3 w-3" />
-                <span>e.j.freestone@gmail.com</span>
-              </div>
+              <ContactDetail detail={PROFILE_DATA.location} Icon={MapPin} />
+              <ContactDetail detail="portfolio.efreestone.co.uk" Icon={Globe} />
+              <ContactDetail
+                detail="github.com/ethan-freestone"
+                Icon={Github}
+              />
+              <ContactDetail
+                detail="(+44)7531922203"
+                Icon={Phone}
+              />
+              <ContactDetail detail="e.j.freestone@gmail.com" Icon={Mail} />
             </div>
           </header>
 
