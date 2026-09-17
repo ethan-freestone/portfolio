@@ -1,7 +1,7 @@
 # Portfolio Project Context
 
-Generated: 2026-09-14T14:46:08.526Z
-Total Files Included: 66
+Generated: 2026-09-17T11:51:22.316Z
+Total Files Included: 81
 
 ## Directory Structure
 ```
@@ -13,6 +13,7 @@ components.json
 eslint.config.js
 package.json
 prettier.config.js
+src/assets/index.ts
 src/assets/projects/applications/dashboard/index.ts
 src/assets/projects/applications/docdel/index.ts
 src/assets/projects/applications/folio-erm/index.ts
@@ -25,6 +26,7 @@ src/assets/projects/applications/pushkb/index.ts
 src/assets/projects/features/index.ts
 src/assets/projects/features/resourceDeletion/index.ts
 src/assets/projects/features/tirsResolvers/index.ts
+src/assets/projects/index.ts
 src/assets/projects/libraries/access-control/index.ts
 src/assets/projects/libraries/address-plugins/index.ts
 src/assets/projects/libraries/halfway/index.ts
@@ -33,10 +35,19 @@ src/assets/projects/libraries/kint-components/index.ts
 src/assets/projects/other/bruno/index.ts
 src/assets/projects/other/index.ts
 src/assets/projects/other/pipeline-utils/index.ts
-src/components/GithubLinks.tsx
-src/components/ProjectCard.tsx
+src/components/hooks/index.ts
 src/components/hooks/use-mobile.ts
 src/components/index.ts
+src/components/pageComponents/cv/CVForm/CVForm.tsx
+src/components/pageComponents/cv/CVForm/index.ts
+src/components/pageComponents/cv/ContactDetail.tsx
+src/components/pageComponents/cv/index.ts
+src/components/pageComponents/home/HomeSectionCard.tsx
+src/components/pageComponents/home/index.ts
+src/components/pageComponents/index.ts
+src/components/pageComponents/projects/GithubLinks.tsx
+src/components/pageComponents/projects/ProjectCard.tsx
+src/components/pageComponents/projects/index.ts
 src/components/theme/HarmonySwitcher.tsx
 src/components/theme/index.ts
 src/components/ui/avatar.tsx
@@ -47,6 +58,7 @@ src/components/ui/carousel.tsx
 src/components/ui/combobox.tsx
 src/components/ui/drawer.tsx
 src/components/ui/dropdown-menu.tsx
+src/components/ui/index.ts
 src/components/ui/input-group.tsx
 src/components/ui/input.tsx
 src/components/ui/label.tsx
@@ -54,6 +66,7 @@ src/components/ui/select.tsx
 src/components/ui/slider.tsx
 src/components/ui/textarea.tsx
 src/data/about.ts
+src/data/index.ts
 src/data/projects.ts
 src/lib/index.ts
 src/lib/titleMedia.ts
@@ -68,6 +81,8 @@ src/routes/projects/$category/index.tsx
 src/routes/projects/index.tsx
 src/routes/projects.tsx
 src/styles.css
+src/types/index.ts
+src/types/projects.ts
 tsconfig.json
 tsr.config.json
 vite.config.ts
@@ -380,6 +395,16 @@ export default config;
 
 ---
 
+## File: `src/assets/index.ts`
+
+```typescript
+export * from './projects';
+export { default as avatarImg } from './avatar.jpeg';
+
+```
+
+---
+
 ## File: `src/assets/projects/applications/dashboard/index.ts`
 
 ```typescript
@@ -534,6 +559,18 @@ export { default as WorkSourceTIRS } from './WorkSourceIdTIRS - Revised 7th Sept
 
 ---
 
+## File: `src/assets/projects/index.ts`
+
+```typescript
+export * from './applications';
+export * from './features'
+export * from './libraries'
+export * from './other'
+
+```
+
+---
+
 ## File: `src/assets/projects/libraries/access-control/index.ts`
 
 ```typescript
@@ -640,17 +677,301 @@ export { default as helloWorldGitlab } from './hello-world-gitlab.png';
 
 ---
 
-## File: `src/components/GithubLinks.tsx`
+## File: `src/components/hooks/index.ts`
+
+```typescript
+export * from './use-mobile';
+
+```
+
+---
+
+## File: `src/components/hooks/use-mobile.ts`
+
+```typescript
+import * as React from 'react'
+
+export function useIsMobile(mobileBreakpoint = 768) {
+  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+
+  React.useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${mobileBreakpoint - 1}px)`)
+    const onChange = () => {
+      setIsMobile(window.innerWidth < mobileBreakpoint)
+    }
+    mql.addEventListener('change', onChange)
+    setIsMobile(window.innerWidth < mobileBreakpoint)
+    return () => mql.removeEventListener('change', onChange)
+  }, [mobileBreakpoint])
+
+  return !!isMobile
+}
+
+```
+
+---
+
+## File: `src/components/index.ts`
+
+```typescript
+export * from './hooks';
+
+export * from './theme';
+export * from './pageComponents';
+
+// Manually export all shadcn components
+export * from './ui'
+```
+
+---
+
+## File: `src/components/pageComponents/cv/CVForm/CVForm.tsx`
+
+```typescript
+import {
+  Combobox,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxSortableChip,
+  ComboboxSortableChips,
+  ComboboxValue,
+  Label,
+  Slider,
+  useComboboxAnchor
+} from '#/components'
+import { PROJECTS_DATA } from '#/data'
+
+export type CVFormData = {
+  scale: number[],
+  projects: string[]
+};
+
+export type CVFormProps = {
+  data: CVFormData,
+  setData: (data: CVFormData) => void,
+};
+
+export const CVForm = ({ data, setData }) => {
+    const anchor = useComboboxAnchor()
+
+  return (
+    <div className="flex px-2 py-3">
+      <div className="flex flex-col mt-3 gap-1 w-full">
+        <div className="flex items-center justify-between gap-2">
+          <Label htmlFor="combobox-projects">Projects</Label>
+        </div>
+        <Combobox
+          autoHighlight
+          items={PROJECTS_DATA.map((project) => project.id)}
+          multiple
+          value={data.projects}
+          onValueChange={(projects) => setData({ ...data, projects })}
+        >
+          <ComboboxSortableChips
+            ref={anchor}
+            items={data.projects}
+            onReorder={(projects) => setData({ ...data, projects })}
+          >
+            <ComboboxValue>
+              {data.projects.map((val) => (
+                <ComboboxSortableChip id={val} key={val}>
+                  {val}
+                </ComboboxSortableChip>
+              ))}
+            </ComboboxValue>
+            <ComboboxChipsInput />
+          </ComboboxSortableChips>
+          <ComboboxContent anchor={anchor}>
+            <ComboboxEmpty>No items found.</ComboboxEmpty>
+            <ComboboxList>
+              {(item) => (
+                <ComboboxItem key={item} value={item}>
+                  {item}
+                </ComboboxItem>
+              )}
+            </ComboboxList>
+          </ComboboxContent>
+        </Combobox>
+        <div className="flex items-center justify-between gap-2">
+          <Label htmlFor="slider-scale">Scale</Label>
+          <span className="text-sm text-muted-foreground">{data.scale}</span>
+          <Slider
+            id="slider-scale"
+            onValueChange={(scale) => setData({ ...data, scale })}
+            value={data.scale}
+            min={0.4}
+            max={1}
+            step={0.01}
+          />
+        </div>
+      </div>
+    </div>
+  )
+};
+
+```
+
+---
+
+## File: `src/components/pageComponents/cv/CVForm/index.ts`
+
+```typescript
+export * from './CVForm';
+
+```
+
+---
+
+## File: `src/components/pageComponents/cv/ContactDetail.tsx`
+
+```typescript
+export const ContactDetail = ({
+  detail,
+  Icon,
+}: {
+  detail: string
+  Icon: LucideIcon
+}) => {
+  return (
+    <div className="flex items-center justify-start sm:justify-end gap-1.5">
+      <Icon className="h-3 w-3" />
+      <span>{detail}</span>
+    </div>
+  )
+};
+
+```
+
+---
+
+## File: `src/components/pageComponents/cv/index.ts`
+
+```typescript
+export * from './ContactDetail';
+export * from './CVForm';
+
+```
+
+---
+
+## File: `src/components/pageComponents/home/HomeSectionCard.tsx`
+
+```typescript
+import { Link } from '@tanstack/react-router'
+
+import {
+  ArrowRight,
+  Code2,
+  FileUser,
+  User2,
+  type LucideIcon,
+} from 'lucide-react'
+
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '#/components';
+import { PROFILE_DATA } from '#/data';
+
+export type HomeSectionCardBadge = {
+  Icon?: LucideIcon
+  text: string
+}
+
+export type HomeSectionCardProps = {
+  Icon: LucideIcon
+  description: ReactNode
+  badges: HomeSectionCardBadge[]
+  linkTo: string
+  linkText: string
+  title: string
+}
+
+export const HomeSectionCard = ({
+  Icon,
+  description,
+  badges,
+  linkTo,
+  linkText,
+  title,
+}: HomeSectionCardProps) => {
+  return (
+    <Card className="group relative overflow-hidden transition-all hover:shadow-md hover:border-primary/50 flex flex-col justify-between">
+      <CardHeader>
+        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-2">
+          <Icon className="h-5 w-5" />
+        </div>
+        <CardTitle className="text-2xl">{title}</CardTitle>
+        <CardDescription className="text-base">{description}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="flex flex-wrap gap-2">
+          {badges?.map(({ Icon, text }) => (
+            <Badge variant="outline">
+              {Icon && <Icon />}
+              {text}
+            </Badge>
+          ))}
+        </div>
+        <Button
+          variant="ghost"
+          className="p-0 h-auto font-semibold group-hover:translate-x-1 transition-transform"
+          asChild
+        >
+          <Link to={linkTo} className="text-primary inline-flex items-center">
+            {linkText} <ArrowRight className="ml-1.5 h-4 w-4" />
+          </Link>
+        </Button>
+      </CardContent>
+    </Card>
+  )
+}
+
+```
+
+---
+
+## File: `src/components/pageComponents/home/index.ts`
+
+```typescript
+export * from './HomeSectionCard';
+
+```
+
+---
+
+## File: `src/components/pageComponents/index.ts`
+
+```typescript
+export * from './cv';
+export * from './projects';
+export * from './home';
+
+```
+
+---
+
+## File: `src/components/pageComponents/projects/GithubLinks.tsx`
 
 ```typescript
 import { ExternalLink, Github, ChevronDown } from 'lucide-react'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import type { GithubLink } from '@/data/projects'
+} from '#/components'
+
+import type { GithubLink } from '@/types';
 
 export function GithubLinks({ github }: { github: string | GithubLink[] }) {
   if (!github) return null
@@ -695,24 +1016,24 @@ export function GithubLinks({ github }: { github: string | GithubLink[] }) {
 
 ---
 
-## File: `src/components/ProjectCard.tsx`
+## File: `src/components/pageComponents/projects/ProjectCard.tsx`
 
 ```typescript
 import React from 'react'
 import { Link } from '@tanstack/react-router'
 import Autoplay from 'embla-carousel-autoplay'
 import { Maximize2, Play } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '#/components/ui/card.tsx'
+import { Badge } from '#/components/ui/badge.tsx'
+import { Button } from '#/components/ui/button.tsx'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel'
-import type { Project } from '@/data/projects'
+} from '#/components/ui/carousel.tsx'
+import type { Project } from '#/data/projects.ts'
 import { getTitleMedia } from "#/lib";
 
 export function ProjectCard({ project }: { project: Project }) {
@@ -820,35 +1141,11 @@ export function ProjectCard({ project }: { project: Project }) {
 
 ---
 
-## File: `src/components/hooks/use-mobile.ts`
+## File: `src/components/pageComponents/projects/index.ts`
 
 ```typescript
-import * as React from 'react'
-
-export function useIsMobile(mobileBreakpoint = 768) {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
-
-  React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${mobileBreakpoint - 1}px)`)
-    const onChange = () => {
-      setIsMobile(window.innerWidth < mobileBreakpoint)
-    }
-    mql.addEventListener('change', onChange)
-    setIsMobile(window.innerWidth < mobileBreakpoint)
-    return () => mql.removeEventListener('change', onChange)
-  }, [mobileBreakpoint])
-
-  return !!isMobile
-}
-
-```
-
----
-
-## File: `src/components/index.ts`
-
-```typescript
-export * from './theme';
+export * from './GithubLinks';
+export * from './ProjectCard';
 
 ```
 
@@ -858,13 +1155,14 @@ export * from './theme';
 
 ```typescript
 import { useEffect, useState } from 'react'
+
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@/components'
 
 const HARMONIES = [
   { value: 'monochromatic', label: 'Monochromatic' },
@@ -880,12 +1178,16 @@ type Harmony = (typeof HARMONIES)[number]['value']
 // Curated seed colors — feel free to tweak these OKLCH values
 const BASE_COLORS = [
   { value: 'oklch(0.74 0.11 192)', label: 'Lagoon Teal' },
-  { value: 'oklch(0.72 0.14 25)', label: 'Coral' },
+  { value: 'oklch(0.02 0.4 250)', label: 'Night Sky' },
+  { value: 'oklch(0.4587 0.1966 308.06)', label: 'Royal Sheen' },
+  { value: 'oklch(0.6438 0.19 35.95)', label: 'Shattered Rust' },
+  { value: 'oklch(0.94 0.64 23)', label: 'Alert' },
+  { value: 'oklch(0.9 0.20 104)', label: 'Sun Glow' },
+  { value: 'oklch(0.45 0.7 145)', label: 'Rich Meadow' },
   { value: 'oklch(0.70 0.15 300)', label: 'Violet' },
-  { value: 'oklch(0.75 0.13 145)', label: 'Meadow Green' },
-  { value: 'oklch(0.78 0.14 85)', label: 'Amber' },
-  { value: 'oklch(0.65 0.16 265)', label: 'Indigo' },
   { value: 'oklch(0.72 0.12 350)', label: 'Rose' },
+  { value: 'oklch(0.65 0.16 265)', label: 'Indigo' },
+  { value: 'oklch(1 0.02 360)', label: 'Page' },
 ] as const
 
 const HARMONY_KEY = 'theme-harmony'
@@ -897,7 +1199,7 @@ export function HarmonySwitcher() {
   const [baseColor, setBaseColor] = useState<string>(BASE_COLORS[0].value)
   const [isCustom, setIsCustom] = useState(false)
 
-  // Read saved preferences on mount (client-only — avoids SSR mismatch)
+  // Read saved preferences on mount (client-only, in localstorage)
   useEffect(() => {
     const savedHarmony = localStorage.getItem(HARMONY_KEY) as Harmony | null
     const savedColor = localStorage.getItem(BASE_COLOR_KEY)
@@ -975,7 +1277,7 @@ export function HarmonySwitcher() {
       )}
 
       <Select value={harmony} onValueChange={handleHarmonyChange}>
-        <SelectTrigger className="w-full md:w-[180px]" aria-label="Color harmony">
+        <SelectTrigger className="w-full md:w-45" aria-label="Color harmony">
           <SelectValue placeholder="Select harmony" />
         </SelectTrigger>
         <SelectContent>
@@ -2566,6 +2868,29 @@ export {
 
 ---
 
+## File: `src/components/ui/index.ts`
+
+```typescript
+export * from './avatar';
+export * from './badge'
+export * from './button'
+export * from './card'
+export * from './carousel'
+export * from './combobox'
+export * from './drawer'
+export * from './dropdown-menu'
+export * from './input'
+export * from './input-group'
+export * from './label'
+export * from './select'
+export * from './slider'
+export * from './textarea'
+
+
+```
+
+---
+
 ## File: `src/components/ui/input-group.tsx`
 
 ```typescript
@@ -3091,14 +3416,15 @@ export { Textarea }
 ## File: `src/data/about.ts`
 
 ```typescript
-import avatarImg from '@/assets/avatar.jpeg'
+import { avatarImg } from '@/assets'
+
 import {
   CodeXml,
   Gamepad2,
   Pickaxe,
-  Volleyball,
-  type LucideIcon,
+  Volleyball
 } from 'lucide-react'
+import type {LucideIcon} from 'lucide-react';
 
 export type Skill = {
   category: string;
@@ -3181,6 +3507,8 @@ export const PROFILE_DATA: ProfileData = {
     {
       category: 'Tooling & DevOps',
       strengths: [
+        'Integration Testing', 'E2E Testing', 'Unit Testing',
+        'Test Driven Development', 'Syft/Grype Automated Security Analysis',
         'Linux Development', 'Gradle', 'Bash', 'Docker', 'GitLab CI',
         'GitHub Actions', 'Kubernetes', 'Bruno/Postman', 'Conventional Commits'
       ],
@@ -3214,7 +3542,7 @@ export const PROFILE_DATA: ProfileData = {
             'after initially implementing ISO 18626 messaging and sitting on the standards committee.'
         },
         {
-          text: 'Mentored engineers and worked on improving developer experiences'
+          text: 'Mentored engineers and worked on improving developer experiences.'
         },
         { text: 'Engineered new headless component library (HalfwayUI).' },
         {
@@ -3300,10 +3628,21 @@ export const PROFILE_DATA: ProfileData = {
 
 ---
 
+## File: `src/data/index.ts`
+
+```typescript
+export * from './about';
+export * from './projects';
+
+```
+
+---
+
 ## File: `src/data/projects.ts`
 
 ```typescript
 import {
+  // APPLICATIONS
   Folio,
   Dashboard,
   Serials,
@@ -3311,92 +3650,27 @@ import {
   OA,
   DocDel,
   PushKB,
-  Portfolio
-} from '@/assets/projects/applications';
-
-import {
+  Portfolio,
+  // LIBRARIES
   AccessControl,
   AddressPlugins,
   Halfway,
-  KintComponents
-} from '@/assets/projects/libraries';
-
-import {
+  KintComponents,
+  // FEATURES
   ResourceDeletion,
-  TIRSResolvers
-} from '@/assets/projects/features';
-
-import {
+  TIRSResolvers,
+  // OTHER
   Bruno,
-  PipelineUtils
-} from '@/assets/projects/other';
+  PipelineUtils,
+} from '@/assets'
 
-import { FolderGit2, FolderKanban, Library, type LucideIcon, Sparkles } from "lucide-react";
+import { FolderGit2, FolderKanban, Library, Sparkles } from "lucide-react";
 
-export type ProjectCategory = 'applications' | 'libraries' | 'features' | 'other'
-export type ProjectCategoryDefinition = {
-  slug: ProjectCategory
-  label: string,
-  icon: LucideIcon
-}
+import type {
+  Project,
+  ProjectCategoryDefinition
+} from '@/types'
 
-export type ProjectMedia = {
-  url: string
-  type?: 'image' | 'gif'
-  alt: string
-  caption?: string
-}
-
-export type Link = {
-  label: string
-  url: string
-}
-
-export type Role = string | {
-  role: string,
-  timeframe: string
-}[]
-
-type BaseProject = {
-  id: string
-  title: string
-  description: string
-  descriptionDeep?: string | string[]
-  media?: ProjectMedia[]
-  tags: string[]
-  role?: Role
-  timeframe?: string
-  wikiLinks?: Link[],
-  highlights?: string[]
-}
-
-export type ApplicationProject = BaseProject & {
-  category: 'applications'
-  liveUrl?: string
-  githubUrl?: string | Link[]
-  architecture?: string[]
-}
-
-export type LibraryProject = BaseProject & {
-  category: 'libraries'
-  npmUrl?: string
-  bundleSize?: string
-  githubUrl: string
-}
-
-export type FeatureProject = BaseProject & {
-  category: 'features'
-  parentApp: string,
-}
-
-export type OtherProject = BaseProject & {
-  category: 'other'
-  highlights?: string[]
-  githubUrl?: string | Link[]
-  npmUrl?: string
-}
-
-export type Project = ApplicationProject | LibraryProject | FeatureProject | OtherProject
 
 export const CATEGORIES: ProjectCategoryDefinition[] = [
   { slug: 'applications', label: 'Applications', icon: FolderGit2 },
@@ -3527,7 +3801,7 @@ export const PROJECTS_DATA: Project[] = [
     ],
     tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'PostgreSQL'],
     highlights: [
-      'Lead app development for many years on the front and back end.',
+      'Led app development for many years on the front and back end',
       'Created "Dashboard" application for FOLIO designed to seamlessly show ERM data at a glance and be expandable to other FOLIO applications',
       'Representing Knowledge Integration at WolfCon 2025',
       'Managed integrations with external systems such as GoKB',
@@ -4268,7 +4542,7 @@ export const PROJECTS_DATA: Project[] = [
     id: 'stripes-erm-testing',
     title: 'Stripes ERM Testing',
     category: 'libraries',
-    description: 'A specialized testing utility library for FOLIO ERM applications, standardizing Jest mocks, custom BigTest/Cypress interactors, and test setup boilerplate.',
+    description: 'I wrote a specialized testing utility library for FOLIO ERM applications, standardizing Jest mocks, custom BigTest/Cypress interactors, and test setup boilerplate.',
     descriptionDeep: [
       'Created after identifying a fundamental structural issue in default FOLIO Stripes testing patterns, where manual Jest mocks were centralized and imported everywhere—causing hoisting conflicts and breaking module-level overrides.',
       'Inverted the mock hierarchy to align with Jest best practices: centralizing global environment mocks while modularizing test-specific implementations.',
@@ -4891,10 +5165,19 @@ import {
   GraduationCap,
   MapPin,
 } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { PROFILE_DATA } from '@/data/about'
+
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components'
+import { PROFILE_DATA } from '@/data'
 
 export const Route = createFileRoute('/about')({ component: About })
 
@@ -5102,31 +5385,17 @@ function About() {
 ## File: `src/routes/cv.tsx`
 
 ```typescript
-import { useState} from "react";
+import { useMemo, useState } from "react";
 
 import { createFileRoute } from '@tanstack/react-router'
-import { Printer, Mail, Globe, Github, MapPin, Settings2 } from 'lucide-react'
-import { PROFILE_DATA } from '@/data/about'
-import { PROJECTS_DATA } from '@/data/projects'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Phone, Printer, Mail, Globe, Github, MapPin, Settings2 } from 'lucide-react'
+
+import { PROFILE_DATA, PROJECTS_DATA } from '@/data'
 
 import {
-  Label
-} from '@/components/ui/label'
-
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-
-import {
+  // Raw Components
+  Badge,
+  Button,
   Combobox,
   ComboboxChipsInput,
   ComboboxContent,
@@ -5137,11 +5406,21 @@ import {
   ComboboxSortableChips,
   ComboboxValue,
   useComboboxAnchor,
-} from '#/components/ui/combobox.tsx'
-
-import {useIsMobile} from "#/components/hooks/use-mobile.ts";
-import {Slider} from "#/components/ui/slider.tsx";
-
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  useIsMobile,
+  Label,
+  Slider,
+  // Page Components
+  ContactDetail,
+  CVForm
+} from '@/components'
 
 export const Route = createFileRoute('/cv')({ component: CV })
 
@@ -5154,11 +5433,11 @@ const CV_PROJECT_IDS = ['folio-erm', 'pushkb', 'access-control-engine', 'shared-
 
 function CV() {
   const isMobile = useIsMobile();
-  // Single scaling dial for output PDF
-  const [cvScale, setCvScale] = useState<number[]>([0.76]);
 
-  const anchor = useComboboxAnchor();
-  const [projects, setProjects] = useState<string[]>(CV_PROJECT_IDS)
+  const [cvFormData, setCVFormData] = useState<CVForm>({
+    scale: [0.75],
+    projects: CV_PROJECT_IDS
+  })
 
   // Sort experience newest first.
   const sortedExperience = [...PROFILE_DATA.experience].sort((a, b) =>
@@ -5169,9 +5448,9 @@ function CV() {
     .filter((edu) => edu.showOnCV !== false)
     .sort((a, b) => b.startDate.localeCompare(a.startDate))
 
-  const cvProjects = projects.map((id) =>
+  const cvProjects = useMemo(() => cvFormData.projects.map((id) =>
     PROJECTS_DATA.find((p) => p.id === id),
-  ).filter((p): p is NonNullable<typeof p> => Boolean(p))
+  ).filter((p): p is NonNullable<typeof p> => Boolean(p)), [cvFormData.projects]);
 
   return (
     <Drawer
@@ -5185,57 +5464,7 @@ function CV() {
             Select which information to include on the CV and choose a scale
           </DrawerDescription>
         </DrawerHeader>
-        <div className="flex px-2 py-3">
-          <div className="flex flex-col mt-3 gap-1 w-full">
-            <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="combobox-projects">Projects</Label>
-            </div>
-            <Combobox
-              autoHighlight
-              items={PROJECTS_DATA.map((project) => project.id)}
-              multiple
-              value={projects}
-              onValueChange={setProjects}
-            >
-              <ComboboxSortableChips
-                ref={anchor}
-                items={projects}
-                onReorder={setProjects}
-              >
-                <ComboboxValue>
-                  {projects.map((val) => (
-                    <ComboboxSortableChip id={val} key={val}>
-                      {val}
-                    </ComboboxSortableChip>
-                  ))}
-                </ComboboxValue>
-                <ComboboxChipsInput />
-              </ComboboxSortableChips>
-              <ComboboxContent anchor={anchor}>
-                <ComboboxEmpty>No items found.</ComboboxEmpty>
-                <ComboboxList>
-                  {(item) => (
-                    <ComboboxItem key={item} value={item}>
-                      {item}
-                    </ComboboxItem>
-                  )}
-                </ComboboxList>
-              </ComboboxContent>
-            </Combobox>
-            <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="slider-scale">Scale</Label>
-              <span className="text-sm text-muted-foreground">{cvScale}</span>
-              <Slider
-                id="slider-scale"
-                onValueChange={(value) => setCvScale(value)}
-                value={cvScale}
-                min={0.4}
-                max={1}
-                step={0.01}
-              />
-            </div>
-          </div>
-        </div>
+        <CVForm data={cvFormData} setData={setCVFormData} />
         <DrawerFooter>
           <DrawerClose render={<Button variant="outline">Close</Button>} />
         </DrawerFooter>
@@ -5282,7 +5511,7 @@ function CV() {
           print:font-[ui-sans-serif,system-ui,-apple-system,Helvetica,Arial,sans-serif]
           zoom-[1] sm:zoom-(--cv-zoom) print:zoom-(--cv-zoom)
         "
-          style={{ '--cv-zoom': cvScale } as React.CSSProperties}
+          style={{ '--cv-zoom': cvFormData.scale } as React.CSSProperties}
         >
           {/* Header */}
           <header className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6 pb-5 border-b border-border print:border-black/20">
@@ -5295,22 +5524,14 @@ function CV() {
               </p>
             </div>
             <div className="text-left sm:text-right text-xs text-muted-foreground print:text-black/70 space-y-1 shrink-0">
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <MapPin className="h-3 w-3" />
-                <span>{PROFILE_DATA.location}</span>
-              </div>
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <Globe className="h-3 w-3" />
-                <span>portfolio.efreestone.co.uk</span>
-              </div>
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <Github className="h-3 w-3" />
-                <span>github.com/ethan-freestone</span>
-              </div>
-              <div className="flex items-center justify-start sm:justify-end gap-1.5">
-                <Mail className="h-3 w-3" />
-                <span>e.j.freestone@gmail.com</span>
-              </div>
+              <ContactDetail detail={PROFILE_DATA.location} Icon={MapPin} />
+              <ContactDetail detail="portfolio.efreestone.co.uk" Icon={Globe} />
+              <ContactDetail
+                detail="github.com/ethan-freestone"
+                Icon={Github}
+              />
+              <ContactDetail detail="(+44)7531922203" Icon={Phone} />
+              <ContactDetail detail="e.j.freestone@gmail.com" Icon={Mail} />
             </div>
           </header>
 
@@ -5320,7 +5541,42 @@ function CV() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 pt-5">
-            {/* Left: Experience + Education + Projects */}
+            {/* Left: Skills */}
+            <div className="md:col-span-1">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
+                Skills
+              </h2>
+              <div className="space-y-3">
+                {PROFILE_DATA.skills.map((group) => (
+                  <div key={group.category}>
+                    {/* Screen version: Category title and badges inline */}
+                    <div className="flex flex-wrap items-center gap-1.5 print:hidden">
+                      <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide mr-1">
+                        {group.category}:
+                      </span>
+                      {group.strengths.map((skill) => (
+                        <Badge
+                          key={skill}
+                          variant="secondary"
+                          className="text-[10px] font-medium px-1.5 py-0"
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    {/* Print version: Category title and text inline */}
+                    <p className="hidden print:block text-sm text-black/85 leading-snug">
+                      <span className="text-[11px] font-bold text-black/70 uppercase tracking-wide mr-1">
+                        {group.category}:
+                      </span>
+                      {group.strengths.join(', ')}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Right: Experience + Education + Projects */}
             <div className="md:col-span-2 space-y-6">
               <section>
                 <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
@@ -5405,42 +5661,6 @@ function CV() {
                 </div>
               </section>
             </div>
-
-            {/* Right: Skills */}
-            <div className="md:col-span-1">
-              <h2 className="text-xs font-bold uppercase tracking-wider text-primary print:text-black mb-2">
-                Skills
-              </h2>
-              <div className="space-y-3">
-                {PROFILE_DATA.skills.map((group) => (
-                  <div key={group.category}>
-                    {/* Screen version: Category title and badges inline */}
-                    <div className="flex flex-wrap items-center gap-1.5 print:hidden">
-                      <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wide mr-1">
-                        {group.category}:
-                      </span>
-                      {group.strengths.map((skill) => (
-                        <Badge
-                          key={skill}
-                          variant="secondary"
-                          className="text-[10px] font-medium px-1.5 py-0"
-                        >
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    {/* Print version: Category title and text inline */}
-                    <p className="hidden print:block text-sm text-black/85 leading-snug">
-                      <span className="text-[11px] font-bold text-black/70 uppercase tracking-wide mr-1">
-                        {group.category}:
-                      </span>
-                      {group.strengths.join(', ')}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           <footer className="mt-6 pt-3 border-t border-border print:border-black/20 text-center">
@@ -5478,81 +5698,30 @@ function CV() {
 ## File: `src/routes/index.tsx`
 
 ```typescript
+import type { ReactNode } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   ArrowRight,
   Code2,
+  FileUser,
   User2,
-  type LucideIcon, FileUser,
+  type LucideIcon,
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+
 import {
+  Badge,
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
-} from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import type { ReactNode } from "react";
-import { PROFILE_DATA } from "#/data/about.ts";
+  CardTitle,
+  HomeSectionCard
+} from '@/components'
+
+import { PROFILE_DATA } from "@/data";
 
 export const Route = createFileRoute('/')({ component: Home })
-
-type HomeSectionCardBadge = {
-  Icon?: LucideIcon,
-  text: string,
-}
-
-type HomeSectionCardProps = {
-  Icon: LucideIcon,
-  description: ReactNode,
-  badges: HomeSectionCardBadge[],
-  linkTo: string,
-  linkText: string,
-  title: string,
-}
-
-const HomeSectionCard = ({
-  Icon,
-  description,
-  badges,
-  linkTo,
-  linkText,
-  title
-}: HomeSectionCardProps) => {
-  return (
-    <Card className="group relative overflow-hidden transition-all hover:shadow-md hover:border-primary/50 flex flex-col justify-between">
-      <CardHeader>
-        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-2">
-          <Icon className="h-5 w-5" />
-        </div>
-        <CardTitle className="text-2xl">{title}</CardTitle>
-        <CardDescription className="text-base">
-          {description}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex flex-wrap gap-2">
-          {badges?.map(({
-            Icon,
-            text
-          }) => (
-            <Badge variant="outline">
-              {Icon && <Icon/>}
-              {text}
-            </Badge>
-          ))}
-        </div>
-        <Button variant="ghost" className="p-0 h-auto font-semibold text-primary group-hover:translate-x-1 transition-transform" asChild>
-          <Link to={linkTo} className="inline-flex items-center">
-          {linkText} <ArrowRight className="ml-1.5 h-4 w-4" />
-          </Link>
-        </Button>
-      </CardContent>
-    </Card>
-  )
-}
 
 function Home() {
   return (
@@ -5623,17 +5792,20 @@ function Home() {
 ```typescript
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, ExternalLink, FolderGit2, Play, Book, Package } from 'lucide-react'
-import { PROJECTS_DATA } from '@/data/projects'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+
+import { PROJECTS_DATA } from '@/data'
+
 import {
+  Badge,
+  Button,
+  Card,
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel'
+} from '@/components'
+
 import { getTitleMedia } from "#/lib";
 
 export const Route = createFileRoute('/projects/$category/$projectId')({
@@ -5920,8 +6092,10 @@ function ProjectDetailView() {
 
 ```typescript
 import { createFileRoute } from '@tanstack/react-router'
-import { PROJECTS_DATA, type ProjectCategory } from '@/data/projects'
-import { ProjectCard } from '@/components/ProjectCard'
+
+import type { ProjectCategory } from '@/types'
+import { PROJECTS_DATA } from '@/data'
+import { ProjectCard } from '@/components'
 
 export const Route = createFileRoute('/projects/$category/')({
   component: CategorySubpage,
@@ -5962,8 +6136,8 @@ function CategorySubpage() {
 
 ```typescript
 import { createFileRoute } from '@tanstack/react-router'
-import { PROJECTS_DATA } from '@/data/projects'
-import { ProjectCard } from '@/components/ProjectCard'
+import { PROJECTS_DATA } from '@/data'
+import { ProjectCard } from '@/components'
 
 export const Route = createFileRoute('/projects/')({
   component: ProjectsIndex,
@@ -5989,7 +6163,7 @@ function ProjectsIndex() {
 
 ```typescript
 import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router'
-import { CATEGORIES } from "#/data/projects.ts"
+import { CATEGORIES } from "@/data"
 
 export const Route = createFileRoute('/projects')({
   beforeLoad: ({ location }) => {
@@ -6014,7 +6188,7 @@ function ProjectsLayout() {
           Projects & Code
         </h1>
         <p className="text-muted-foreground text-lg max-w-2xl">
-          A showcase of full-stack web applications, open-source libraries, and specific feature modules built for production.
+          A showcase of full-stack web applications, open-source libraries, and specific feature modules built for production. Click the buttons below to see examples of each.
         </p>
       </div>
 
@@ -6163,7 +6337,7 @@ function ProjectsLayout() {
   --text-main:         var(--base-neutral);
   --text-muted:        color-mix(in oklab, var(--base-neutral) 65%, var(--base-surface));
   --text-kicker:       var(--base-accent);
-  --text-link:         color-mix(in oklab, var(--base-primary) 80%, black);
+  --text-link:         color-mix(in oklab, var(--base-primary) 70%, black);
   --text-link-hover:   color-mix(in oklab, var(--base-primary) 95%, black);
 
   /* --- Interactive & Accent States --- */
@@ -6308,7 +6482,6 @@ body {
 }
 
 a {
-  color: var(--text-link);
   text-decoration-color: oklch(from var(--base-primary) l c h / 0.4);
 }
 
@@ -6363,6 +6536,92 @@ code {
   border-top: 1px solid var(--border-subtle);
   background: color-mix(in oklab, var(--surface-header) 84%, transparent 16%);
 }
+
+```
+
+---
+
+## File: `src/types/index.ts`
+
+```typescript
+export type * from './projects';
+export type * from './about'
+
+```
+
+---
+
+## File: `src/types/projects.ts`
+
+```typescript
+export type ProjectCategory =
+  'applications' | 'libraries' | 'features' | 'other'
+export type ProjectCategoryDefinition = {
+  slug: ProjectCategory
+  label: string
+  icon: LucideIcon
+}
+
+export type ProjectMedia = {
+  url: string
+  type?: 'image' | 'gif'
+  alt: string
+  caption?: string
+}
+
+export type Link = {
+  label: string
+  url: string
+}
+
+export type Role =
+  | string
+  | {
+      role: string
+      timeframe: string
+    }[]
+
+type BaseProject = {
+  id: string
+  title: string
+  description: string
+  descriptionDeep?: string | string[]
+  media?: ProjectMedia[]
+  tags: string[]
+  role?: Role
+  timeframe?: string
+  wikiLinks?: Link[]
+  highlights?: string[]
+}
+
+export type ApplicationProject = BaseProject & {
+  category: 'applications'
+  liveUrl?: string
+  githubUrl?: string | Link[]
+  architecture?: string[]
+}
+
+export type LibraryProject = BaseProject & {
+  category: 'libraries'
+  npmUrl?: string
+  bundleSize?: string
+  githubUrl: string
+}
+
+export type FeatureProject = BaseProject & {
+  category: 'features'
+  parentApp: string
+}
+
+export type OtherProject = BaseProject & {
+  category: 'other'
+  highlights?: string[]
+  githubUrl?: string | Link[]
+  npmUrl?: string
+}
+
+export type Project =
+  ApplicationProject | LibraryProject | FeatureProject | OtherProject
 
 ```
 
