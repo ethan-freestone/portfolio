@@ -1,4 +1,5 @@
 import {
+  // APPLICATIONS
   Folio,
   Dashboard,
   Serials,
@@ -6,27 +7,21 @@ import {
   OA,
   DocDel,
   PushKB,
-  Portfolio
-} from '@/assets/projects/applications';
-
-import {
+  Portfolio,
+  // LIBRARIES
   AccessControl,
   AddressPlugins,
   Halfway,
-  KintComponents
-} from '@/assets/projects/libraries';
-
-import {
+  KintComponents,
+  // FEATURES
   ResourceDeletion,
-  TIRSResolvers
-} from '@/assets/projects/features';
-
-import {
+  TIRSResolvers,
+  // OTHER
   Bruno,
-  PipelineUtils
-} from '@/assets/projects/other';
+  PipelineUtils,
+} from '@/assets'
 
-import { FolderGit2, FolderKanban, Library, type LucideIcon, Sparkles } from "lucide-react";
+import { FolderGit2, FolderKanban, Library, Sparkles } from "lucide-react";
 
 import type {
   Project,
@@ -163,7 +158,7 @@ export const PROJECTS_DATA: Project[] = [
     ],
     tags: ['React', 'Javascript', 'Stripes', 'Java', 'Grails', 'PostgreSQL'],
     highlights: [
-      'Lead app development for many years on the front and back end.',
+      'Led app development for many years on the front and back end',
       'Created "Dashboard" application for FOLIO designed to seamlessly show ERM data at a glance and be expandable to other FOLIO applications',
       'Representing Knowledge Integration at WolfCon 2025',
       'Managed integrations with external systems such as GoKB',

@@ -1,11 +1,12 @@
-import avatarImg from '@/assets/avatar.jpeg'
+import { avatarImg } from '@/assets'
+
 import {
   CodeXml,
   Gamepad2,
   Pickaxe,
-  Volleyball,
-  type LucideIcon,
+  Volleyball
 } from 'lucide-react'
+import type {LucideIcon} from 'lucide-react';
 
 export type Skill = {
   category: string;
